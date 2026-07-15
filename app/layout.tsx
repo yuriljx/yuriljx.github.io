@@ -3,7 +3,7 @@ import { headers } from "next/headers";
 import "./globals.css";
 
 const title = "Jixiao Li | Plant Science & Research Software";
-const description = "李继潇的论文发表、学会报告、作物表型研究与科研软件项目。";
+const description = "Jixiao Li's publications, society presentations, crop phenotyping research and research software.";
 
 export async function generateMetadata(): Promise<Metadata> {
   const requestHeaders = await headers();
@@ -22,7 +22,7 @@ export async function generateMetadata(): Promise<Metadata> {
     icons: { icon: "/favicon.svg", shortcut: "/favicon.svg" },
     openGraph: {
       title,
-      description: "作物表型、育种、品质分析与可追溯研究软件。",
+      description: "Crop phenotyping, breeding, quality analysis and traceable research software.",
       type: "website",
       images: [{ url: socialImage, width: 1731, height: 909, alt: title }],
     },
@@ -36,5 +36,5 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
-  return <html lang="zh-CN"><body>{children}</body></html>;
+  return <html lang="en"><body>{children}</body></html>;
 }

@@ -34,16 +34,21 @@ test("server-renders the finished academic portfolio", async () => {
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
 
   const html = await response.text();
-  assert.match(html, /<html lang="zh-CN">/);
+  assert.match(html, /<html lang="en">/);
   assert.match(html, /<title>Jixiao Li \| Plant Science &amp; Research Software<\/title>/);
-  assert.match(html, /北海道大学农学院/);
+  assert.match(html, /Graduate School of Agriculture, Hokkaido University/);
   assert.match(html, /yuriljx@gmail\.com/);
-  assert.match(html, /P2 Rice DH Record System/);
+  assert.match(html, /Rice DH Record System/);
   assert.match(html, /Rice Genome Resource Finder/);
-  assert.match(html, /Aphros Trait Tool/);
+  assert.match(html, /Rice Trait Evidence Explorer/);
   assert.match(html, /RicePerturbNet/);
   assert.match(html, /STRIDE-DH/);
   assert.match(html, /Grape Length/);
+  assert.match(html, />English<\/button>/);
+  assert.match(html, />中文<\/button>/);
+  assert.match(html, />日本語<\/button>/);
+  assert.match(html, /doi\.org\/10\.2503\/hortj\.SZD-110/);
+  assert.doesNotMatch(html, /P2 Rice DH Record System|Aphros Trait Tool/);
   assert.equal((html.match(/class="software-case"/g) ?? []).length, 6);
 });
 
@@ -63,6 +68,9 @@ test("keeps profile scope narrow and emits host-derived social metadata", async 
     "../public/software/trait/home.png",
     "../public/software/riceperturb/framework.png",
     "../public/software/grape/growth-curve.png",
+    "../public/software/grape/detection-results.webp",
+    "../public/publications/yolo-apple-framework.webp",
+    "../public/publications/ice-nuclei-microscopy.webp",
   ];
   await Promise.all(requiredAssets.map((path) => access(new URL(path, import.meta.url))));
 
