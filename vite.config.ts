@@ -40,8 +40,12 @@ export default defineConfig(async () => {
   process.env.WRANGLER_LOG_PATH ??= ".wrangler/logs";
   process.env.MINIFLARE_REGISTRY_PATH ??= ".wrangler/registry";
 
-  // Wrangler snapshots its log path while the Cloudflare plugin is imported.
-  const { cloudflare } = await import("@cloudflare/vite-plugin");
+  // Local visual QA does not need Cloudflare bindings. Keeping the plugin out
+  // of that one opt-in mode also avoids an unnecessary network probe.
+  const cloudflare =
+    process.env.CODEX_LOCAL_PREVIEW === "1"
+      ? null
+      : (await import("@cloudflare/vite-plugin")).cloudflare;
 
   return {
     server: isCodexSeatbeltSandbox
@@ -50,10 +54,14 @@ export default defineConfig(async () => {
     plugins: [
       vinext(),
       sites(),
-      cloudflare({
-        viteEnvironment: { name: "rsc", childEnvironments: ["ssr"] },
-        config: localBindingConfig,
-      }),
+      ...(cloudflare
+        ? [
+            cloudflare({
+              viteEnvironment: { name: "rsc", childEnvironments: ["ssr"] },
+              config: localBindingConfig,
+            }),
+          ]
+        : []),
     ],
   };
 });
