@@ -52,13 +52,13 @@ test("server-renders the finished academic portfolio", async () => {
   assert.equal((html.match(/class="software-case"/g) ?? []).length, 6);
 });
 
-test("keeps profile scope narrow and emits host-derived social metadata", async () => {
+test("keeps profile scope narrow and emits canonical social metadata", async () => {
   const response = await render();
   const html = await response.text();
 
   assert.doesNotMatch(html, /教育背景|工作经历|employment history|curriculum vitae/i);
   assert.doesNotMatch(html, /codex-preview|Starter Project|Your site is taking shape/i);
-  assert.match(html, /property="og:image" content="https:\/\/portfolio\.example\/og\.png"/);
+  assert.match(html, /property="og:image" content="https:\/\/yuriljx\.github\.io\/og\.png"/);
   assert.match(html, /name="twitter:card" content="summary_large_image"/);
 
   const requiredAssets = [
