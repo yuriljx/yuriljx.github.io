@@ -9,6 +9,11 @@ import {
   requestDetectedLocale,
   saveLocale,
 } from "../app/language-preference.js";
+import {
+  REDUCED_MOTION_QUERY,
+  scrollPageToTop,
+  tokenizeHeroLine,
+} from "../app/page-navigation.js";
 
 function memoryStorage(initialValue = null) {
   let value = initialValue;
@@ -64,4 +69,41 @@ test("renders one globe dropdown and places it to the right of Menu on mobile", 
   assert.doesNotMatch(pageSource, /className="language-switch"/);
   assert.match(styles, /\.menu-toggle \{ grid-column: 2; grid-row: 1;/);
   assert.match(styles, /\.language-menu \{ grid-column: 3; grid-row: 1;/);
+});
+
+test("keeps CJK closing punctuation with the preceding title phrase", () => {
+  const japanese = tokenizeHeroLine("計算的エビデンスと結ぶ。");
+  assert.equal(japanese.usesWordSpacing, false);
+  assert.equal(japanese.tokens.at(-1), "結ぶ。");
+
+  const english = tokenizeHeroLine("Aligning field observations");
+  assert.equal(english.usesWordSpacing, true);
+  assert.deepEqual(english.tokens, ["Aligning", "field", "observations"]);
+});
+
+test("scrolls explicitly to the page origin and respects reduced motion", () => {
+  const calls = [];
+  const smoothView = {
+    matchMedia(query) {
+      assert.equal(query, REDUCED_MOTION_QUERY);
+      return { matches: false };
+    },
+    scrollTo(options) {
+      calls.push(options);
+    },
+  };
+
+  scrollPageToTop(smoothView);
+  assert.deepEqual(calls[0], { top: 0, left: 0, behavior: "smooth" });
+
+  const reducedCalls = [];
+  scrollPageToTop({
+    matchMedia() {
+      return { matches: true };
+    },
+    scrollTo(options) {
+      reducedCalls.push(options);
+    },
+  });
+  assert.equal(reducedCalls[0].behavior, "auto");
 });

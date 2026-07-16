@@ -18,6 +18,7 @@ import {
   readSavedLocale,
   saveLocale,
 } from "./language-preference";
+import { scrollPageToTop, tokenizeHeroLine } from "./page-navigation";
 import { startVisitorAnalytics } from "./visitor-analytics";
 
 const tx = (value: LocalizedText | string, locale: Locale) =>
@@ -212,20 +213,24 @@ function HeroTitle({ lines, locale }: { lines: [string, string]; locale: Locale 
   return (
     <h1 id="hero-title" lang={locale === "zh" ? "zh-CN" : locale} aria-label={lines.join(" ")}>
       {lines.map((line, lineIndex) => {
-        const usesWordSpacing = line.includes(" ");
-        const words = usesWordSpacing ? line.split(" ") : Array.from(line);
+        const { tokens, usesWordSpacing }: { tokens: string[]; usesWordSpacing: boolean } = tokenizeHeroLine(line);
         const lineStart = lines.slice(0, lineIndex).reduce((total, item) => total + item.length + 1, 0);
         return (
           <span className="hero-title-line" aria-hidden="true" key={lineIndex}>
-            {words.map((word, wordIndex) => {
-              const wordStart = lineStart + words.slice(0, wordIndex).reduce(
+            {tokens.map((word, wordIndex) => {
+              const wordStart = lineStart + tokens.slice(0, wordIndex).reduce(
                 (total, item) => total + item.length + (usesWordSpacing ? 1 : 0),
                 0,
               );
+              const keepsClosingPunctuation = !usesWordSpacing && word.length > 1;
               return (
                 <span
-                  className={`hero-title-word ${usesWordSpacing ? "" : "hero-title-glyph"}`}
-                  data-last-word={wordIndex === words.length - 1 ? "true" : undefined}
+                  className={[
+                    "hero-title-word",
+                    usesWordSpacing ? "" : "hero-title-glyph",
+                    keepsClosingPunctuation ? "hero-title-tail" : "",
+                  ].filter(Boolean).join(" ")}
+                  data-last-word={wordIndex === tokens.length - 1 ? "true" : undefined}
                   style={{ "--char-index": wordStart } as CSSProperties}
                   key={wordIndex}
                 >{word}</span>
@@ -732,15 +737,16 @@ export default function Home() {
         </section>
       </main>
 
-      <a
+      <button
+        type="button"
         className={`floating-back-to-top ${showBackToTop ? "visible" : ""}`}
-        href="#top"
         aria-label={tx(ui.backToTop, locale)}
         aria-hidden={!showBackToTop}
         tabIndex={showBackToTop ? 0 : -1}
+        onClick={() => scrollPageToTop(window)}
       >
         <span>{tx(ui.backToTop, locale)}</span><UpArrow />
-      </a>
+      </button>
       <footer><span>© 2026 {profile.englishName}</span></footer>
     </>
   );

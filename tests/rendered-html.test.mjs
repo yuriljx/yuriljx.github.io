@@ -69,6 +69,8 @@ test("server-renders the finished academic portfolio", async () => {
   assert.match(html, /Previous visual: Field and laboratory research visuals/);
   assert.match(html, /Next visual: Grape phenotyping visuals/);
   assert.match(html, /class="hero-title-word/);
+  assert.match(html, /<button type="button" class="floating-back-to-top/);
+  assert.doesNotMatch(html, /class="floating-back-to-top[^"]*" href="#top"/);
   assert.doesNotMatch(html, /<figcaption><span>1 \/ [234]<\/span>/);
   assert.doesNotMatch(html, /class="section-code"|class="software-index"|class="talk-code"|01—03/);
   assert.doesNotMatch(html, /Research · Publications · Software/);
