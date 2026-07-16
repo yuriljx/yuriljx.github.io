@@ -38,7 +38,8 @@ test("server-renders the finished academic portfolio", async () => {
   assert.match(html, /<title>Jixiao Li \| Plant Science &amp; Research Software<\/title>/);
   assert.match(html, /Graduate School of Agriculture, Hokkaido University/);
   assert.match(html, /Postdoctoral Researcher/);
-  assert.match(html, /yuriljx@gmail\.com/);
+  assert.match(html, /lijixiao327@gmail\.com/);
+  assert.doesNotMatch(html, /yuriljx@gmail\.com/);
   assert.match(html, /Rice DH Record System/);
   assert.match(html, /Rice Genome Resource Finder/);
   assert.match(html, /Rice Trait Evidence Explorer/);
@@ -51,6 +52,7 @@ test("server-renders the finished academic portfolio", async () => {
   assert.match(html, /doi\.org\/10\.2503\/hortj\.SZD-110/);
   assert.match(html, /Show earlier presentations/);
   assert.match(html, /Publications<\/a>.*Software<\/a>.*Presentations<\/a>/s);
+  assert.doesNotMatch(html, /Research · Publications · Software/);
   assert.doesNotMatch(html, /P2 Rice DH Record System|Aphros Trait Tool/);
   assert.equal((html.match(/class="software-case"/g) ?? []).length, 6);
 });

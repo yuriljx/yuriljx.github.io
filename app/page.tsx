@@ -34,8 +34,8 @@ const ui = {
     ja: ["圃場観測と実験記録を、", "計算的エビデンスと結ぶ。"],
   } satisfies Record<Locale, [string, string]>,
   heroLede: localize(
-    "My work integrates crop phenotyping, breeding and quality science with purpose-built research software, connecting field imagery, experimental workflows and traceable computational evidence.",
-    "我的研究将作物表型、育种与品质科学同专用研究软件开发相结合，连接田间影像、实验流程与可追溯的计算证据。",
+    "Integrating crop phenotyping, breeding and quality science with purpose-built research software to connect field imagery, experimental workflows and traceable computational evidence.",
+    "融合作物表型、育种与品质科学和专用研究软件开发，连接田间影像、实验流程与可追溯的计算证据。",
     "作物表現型・育種・品質科学と専用研究ソフトウェア開発を統合し、圃場画像、実験ワークフロー、追跡可能な計算エビデンスを結び付けています。",
   ),
   publicationCta: localize("View publications", "查看论文发表", "論文を見る"),
@@ -313,8 +313,7 @@ export default function Home() {
             </h1>
             <p className="hero-lede">{tx(ui.heroLede, locale)}</p>
             <div className="identity-lines">
-              <span><strong>{tx(profile.role, locale)}</strong><span> · {tx(profile.affiliation, locale)}</span></span>
-              <a href={`mailto:${profile.email}`}>{profile.email}</a>
+              <span>{tx(profile.affiliation, locale)}</span>
             </div>
           </div>
 
@@ -409,7 +408,7 @@ export default function Home() {
         <section className="contact-section" id="contact" aria-labelledby="contact-title">
           <div><p className="eyebrow">CONTACT / ACADEMIC EXCHANGE</p><h2 id="contact-title">{tx(ui.contact, locale)}</h2></div>
           <address>
-            <span><strong>{tx(profile.role, locale)}</strong><br />{tx(profile.affiliation, locale)}</span>
+            <span>{tx(profile.affiliation, locale)}</span>
             <a href={`mailto:${profile.email}`}>{profile.email}</a>
             <a href={profile.scholarUrl} target="_blank" rel="noreferrer">Google Scholar ↗</a>
             <a href={profile.githubUrl} target="_blank" rel="noreferrer">GitHub ↗</a>
@@ -420,7 +419,7 @@ export default function Home() {
       <a className="floating-back-to-top" href="#top" aria-label={tx(ui.backToTop, locale)}>
         <span>{tx(ui.backToTop, locale)}</span><UpArrow />
       </a>
-      <footer><span>© 2026 {profile.englishName}</span><span>Research · Publications · Software</span><a href="#top">{tx(ui.backToTop, locale)} ↑</a></footer>
+      <footer><span>© 2026 {profile.englishName}</span></footer>
     </>
   );
 }

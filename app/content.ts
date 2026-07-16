@@ -11,7 +11,7 @@ export const profile = {
     "北海道大学农学院",
     "北海道大学大学院農学院",
   ),
-  email: "yuriljx@gmail.com",
+  email: "lijixiao327@gmail.com",
   scholarUrl: "https://scholar.google.com/citations?user=m2FLOrUAAAAJ&hl=en",
   githubUrl: "https://github.com/yuriljx",
 };
