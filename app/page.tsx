@@ -51,27 +51,80 @@ const ui = {
   code: localize("View public code", "查看公开代码", "公開コードを見る"),
   figurePicker: localize("Figure selector", "图片选择", "図の選択"),
   showFigure: localize("Show figure", "显示图", "図を表示"),
-  heroFigures: [
+  previousFigure: localize("Previous visual", "上一张图片", "前の画像"),
+  nextFigure: localize("Next visual", "下一张图片", "次の画像"),
+  heroGalleries: [
     {
-      src: "/research/anther-culture.webp",
-      className: "hero-lab",
-      code: "LAB / 2026",
-      alt: localize("Rice anther-culture material with a scale reference", "带尺度参照的水稻花药培养实验材料", "スケール参照を含むイネ葯培養実験材料"),
-      caption: localize("Anther-culture material and scale reference", "花药培养实验材料与尺度参照", "葯培養材料とスケール参照"),
+      className: "hero-main",
+      autoAdvance: true,
+      label: localize("Field and laboratory research visuals", "田间与实验研究图片", "圃場・実験研究画像"),
+      slides: [
+        {
+          src: "/research/anther-culture.webp",
+          code: "LAB / CULTURE",
+          alt: localize("Rice anther-culture material with a scale reference", "带尺度参照的水稻花药培养实验材料", "スケール参照を含むイネ葯培養実験材料"),
+          caption: localize("Rice anther-culture material", "水稻花药培养材料", "イネ葯培養材料"),
+        },
+        {
+          src: "/research/haskap-field.webp",
+          code: "FIELD / PHENOTYPE",
+          alt: localize("Haskap fruit phenotype observed in the field", "田间观测的蓝靛果表型", "圃場で観測したハスカップ果実形質"),
+          caption: localize("Haskap fruit phenotype in the field", "田间蓝靛果表型", "圃場のハスカップ果実形質"),
+        },
+        {
+          src: "/research/microspore.webp",
+          code: "MICROSCOPY",
+          alt: localize("Microspore microscopy with a scale reference", "带尺度参照的小孢子显微图像", "スケール参照を含む小胞子顕微鏡像"),
+          caption: localize("Microspore morphology and scale", "小孢子形态与尺度", "小胞子の形態とスケール"),
+        },
+      ],
     },
     {
-      src: "/software/genome/overview.png",
       className: "hero-genome",
-      code: "SOFTWARE",
-      alt: localize("Public rice genome resource finder interface", "水稻公共基因组资源检索界面", "公開イネゲノム資源検索画面"),
-      caption: localize("Public genome resource discovery", "公共基因组资源筛选", "公開ゲノム資源の探索"),
+      autoAdvance: false,
+      label: localize("Rice genome software interface visuals", "水稻基因组软件界面图片", "イネゲノムソフトウェア画面"),
+      slides: [
+        {
+          src: "/software/genome/overview.png",
+          code: "SOFTWARE",
+          alt: localize("Public rice genome resource finder interface", "水稻公共基因组资源检索界面", "公開イネゲノム資源検索画面"),
+          caption: localize("Public genome resource discovery", "公共基因组资源筛选", "公開ゲノム資源の探索"),
+          imageClassName: "crop-genome",
+        },
+        {
+          src: "/software/genome/options.png",
+          code: "RESOURCE / SEARCH",
+          alt: localize("Search options in the rice genome resource finder", "水稻基因组资源检索工具的搜索选项", "イネゲノム資源検索ツールの検索条件"),
+          caption: localize("Structured resource search options", "结构化资源搜索选项", "構造化された資源検索条件"),
+          imageClassName: "crop-genome",
+        },
+      ],
     },
     {
-      src: "/software/grape/detection-results.webp",
       className: "hero-grape",
-      code: "FIELD / AI",
-      alt: localize("Detected grape berries in a field image", "田间图像中被识别的葡萄果粒", "圃場画像で検出されたブドウ果粒"),
-      caption: localize("Berry detection across field time series", "田间时序中的果粒检测", "圃場時系列における果粒検出"),
+      autoAdvance: false,
+      label: localize("Grape phenotyping visuals", "葡萄表型分析图片", "ブドウ表現型解析画像"),
+      slides: [
+        {
+          src: "/software/grape/detection-results.webp",
+          code: "FIELD / AI",
+          alt: localize("Detected grape berries in a field image", "田间图像中被识别的葡萄果粒", "圃場画像で検出されたブドウ果粒"),
+          caption: localize("Berry detection across field time series", "田间时序果粒检测", "圃場時系列の果粒検出"),
+          imageClassName: "crop-grape-detection",
+        },
+        {
+          src: "/software/grape/early-stage.webp",
+          code: "FIELD / EARLY",
+          alt: localize("Early-stage grape berries photographed with a scale card", "带尺度卡拍摄的早期葡萄果粒", "スケールカードと撮影した初期ブドウ果粒"),
+          caption: localize("Early-stage field observation", "早期田间观测", "初期の圃場観測"),
+        },
+        {
+          src: "/software/grape/mature-stage.webp",
+          code: "FIELD / MATURE",
+          alt: localize("Mature grape berries photographed with a scale card", "带尺度卡拍摄的成熟葡萄果粒", "スケールカードと撮影した成熟ブドウ果粒"),
+          caption: localize("Mature-stage field observation", "成熟期田间观测", "成熟期の圃場観測"),
+        },
+      ],
     },
   ],
   contact: localize(
@@ -115,16 +168,71 @@ function DisclosureArrow({ open }: { open: boolean }) {
   );
 }
 
-function SectionHeading({ id, index, label, title }: {
+function SectionHeading({ id, title }: {
   id: string;
-  index: string;
-  label: string;
   title: string;
 }) {
   return (
-    <div className="section-heading">
-      <div className="section-code"><span>{index}</span><span>{label}</span></div>
+    <div className="section-heading" data-reveal>
       <h2 id={id}>{title}</h2>
+    </div>
+  );
+}
+
+type HeroGalleryData = (typeof ui.heroGalleries)[number];
+
+function CarouselArrow({ direction }: { direction: "previous" | "next" }) {
+  const previous = direction === "previous";
+  return (
+    <svg viewBox="0 0 18 18" aria-hidden="true">
+      <path d={previous ? "M11.5 3.5 6 9l5.5 5.5" : "M6.5 3.5 12 9l-5.5 5.5"} fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function HeroGallery({ gallery, locale }: { gallery: HeroGalleryData; locale: Locale }) {
+  const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
+  const total = gallery.slides.length;
+
+  useEffect(() => {
+    if (!gallery.autoAdvance || paused || total < 2 || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    const timer = window.setTimeout(() => setActive((current) => (current + 1) % total), 6500);
+    return () => window.clearTimeout(timer);
+  }, [active, gallery.autoAdvance, paused, total]);
+
+  const move = (step: number) => setActive((current) => (current + step + total) % total);
+
+  return (
+    <div
+      className={`hero-gallery ${gallery.className}`}
+      role="region"
+      aria-roledescription="carousel"
+      aria-label={tx(gallery.label, locale)}
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+      onFocusCapture={() => setPaused(true)}
+      onBlurCapture={() => setPaused(false)}
+    >
+      <div className="hero-gallery-track" style={{ transform: `translateX(-${active * 100}%)` }}>
+        {gallery.slides.map((slide, index) => (
+          <figure key={slide.src} aria-hidden={active !== index}>
+            <img className={slide.imageClassName ?? ""} src={slide.src} alt={tx(slide.alt, locale)} />
+            <figcaption>
+              <span className="hero-figure-code">{slide.code}</span>
+              <span className="hero-caption-text">{tx(slide.caption, locale)}</span>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+      <div className="hero-gallery-controls">
+        <button type="button" onClick={() => move(-1)} aria-label={`${tx(ui.previousFigure, locale)}: ${tx(gallery.label, locale)}`}>
+          <CarouselArrow direction="previous" />
+        </button>
+        <button type="button" onClick={() => move(1)} aria-label={`${tx(ui.nextFigure, locale)}: ${tx(gallery.label, locale)}`}>
+          <CarouselArrow direction="next" />
+        </button>
+      </div>
     </div>
   );
 }
@@ -223,14 +331,13 @@ function SoftwareMedia({ visual, locale }: { visual: SoftwareVisual; locale: Loc
   );
 }
 
-function SoftwareCase({ project, index, locale }: { project: SoftwareProject; index: number; locale: Locale }) {
+function SoftwareCase({ project, locale }: { project: SoftwareProject; locale: Locale }) {
   const [active, setActive] = useState(0);
   const visual = project.visuals[active];
 
   return (
-    <article className="software-case" id={`software-${project.slug}`}>
+    <article className="software-case" id={`software-${project.slug}`} data-reveal>
       <div className="software-copy">
-        <div className="software-index">{String(index + 1).padStart(2, "0")} / {String(softwareProjects.length).padStart(2, "0")}</div>
         <span className="software-status">{project.status}</span>
         <h3>{project.title}</h3>
         <h4>{tx(project.subtitle, locale)}</h4>
@@ -265,6 +372,7 @@ export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [locale, setLocale] = useState<Locale>("en");
   const [showAllPresentations, setShowAllPresentations] = useState(false);
+  const [showBackToTop, setShowBackToTop] = useState(false);
   const languageNames: Array<[Locale, string]> = [["en", "English"], ["zh", "中文"], ["ja", "日本語"]];
   const visiblePresentations = showAllPresentations ? presentations : recentPresentations;
   const earlierPresentationCount = presentations.length - recentPresentations.length;
@@ -272,6 +380,42 @@ export default function Home() {
   useEffect(() => {
     document.documentElement.lang = locale === "zh" ? "zh-CN" : locale === "ja" ? "ja" : "en";
   }, [locale]);
+
+  useEffect(() => {
+    const updateBackToTop = () => setShowBackToTop(window.scrollY > Math.max(360, window.innerHeight * 0.5));
+    updateBackToTop();
+    window.addEventListener("scroll", updateBackToTop, { passive: true });
+    window.addEventListener("resize", updateBackToTop);
+    return () => {
+      window.removeEventListener("scroll", updateBackToTop);
+      window.removeEventListener("resize", updateBackToTop);
+    };
+  }, []);
+
+  useEffect(() => {
+    const elements = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    document.documentElement.classList.add("reveal-ready");
+
+    if (reducedMotion || !("IntersectionObserver" in window)) {
+      elements.forEach((element) => element.classList.add("is-visible"));
+      return () => document.documentElement.classList.remove("reveal-ready");
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        entry.target.classList.add("is-visible");
+        observer.unobserve(entry.target);
+      });
+    }, { rootMargin: "0px 0px -8%", threshold: 0.08 });
+
+    elements.forEach((element) => observer.observe(element));
+    return () => {
+      observer.disconnect();
+      document.documentElement.classList.remove("reveal-ready");
+    };
+  }, []);
 
   return (
     <>
@@ -318,12 +462,7 @@ export default function Home() {
           </div>
 
           <div className="hero-evidence" aria-label="Research visuals">
-            {ui.heroFigures.map((figure, index) => (
-              <figure className={[index === 0 && "evidence-main", figure.className].filter(Boolean).join(" ")} key={figure.src}>
-                <img src={figure.src} alt={tx(figure.alt, locale)} />
-                <figcaption><span>{figure.code}</span>{tx(figure.caption, locale)}</figcaption>
-              </figure>
-            ))}
+            {ui.heroGalleries.map((gallery) => <HeroGallery gallery={gallery} locale={locale} key={gallery.className} />)}
           </div>
 
           <div className="hero-actions">
@@ -332,19 +471,19 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="focus-rail" aria-label={tx(ui.focus, locale)}>
-          <div className="rail-label"><span>RESEARCH FOCUS</span><small>01—03</small></div>
+        <section className="focus-rail" aria-label={tx(ui.focus, locale)} data-reveal>
+          <div className="rail-label"><span>RESEARCH FOCUS</span></div>
           {researchFocus.map((focus) => (
             <article key={focus.code}>
-              <span>{focus.code}</span><div><h2>{tx(focus.title, locale)}</h2><p>{tx(focus.description, locale)}</p></div>
+              <h2>{tx(focus.title, locale)}</h2><p>{tx(focus.description, locale)}</p>
             </article>
           ))}
         </section>
 
         <section className="section-block" id="publications" aria-labelledby="publications-title">
-          <SectionHeading id="publications-title" index="01" label="PUBLICATIONS" title={tx(ui.sections.publications, locale)} />
-          <div className="publication-list">
-            {publications.map((publication, index) => (
+          <SectionHeading id="publications-title" title={tx(ui.sections.publications, locale)} />
+          <div className="publication-list" data-reveal>
+            {publications.map((publication) => (
               <article className="publication-item" key={publication.title}>
                 <div className="paper-thumb"><img src={publication.thumb} alt={tx(publication.thumbAlt, locale)} loading="lazy" /></div>
                 <div className="paper-copy">
@@ -353,26 +492,26 @@ export default function Home() {
                   <p>{publication.authors}</p>
                   <div className="paper-venue-line"><strong>{publication.venue}</strong><a href={publication.doi} target="_blank" rel="noreferrer">DOI ↗</a></div>
                 </div>
-                <div className="paper-meta"><span>{String(index + 1).padStart(2, "0")}</span><b>{publication.year}</b></div>
+                <time className="paper-year" dateTime={publication.year}>{publication.year}</time>
               </article>
             ))}
           </div>
-          <a className="section-link" href={profile.scholarUrl} target="_blank" rel="noreferrer">{tx(ui.scholar, locale)} ↗</a>
+          <a className="section-link" href={profile.scholarUrl} target="_blank" rel="noreferrer" data-reveal>{tx(ui.scholar, locale)} ↗</a>
         </section>
 
         <section className="section-block software-section" id="software" aria-labelledby="software-title">
-          <SectionHeading id="software-title" index="02" label="RESEARCH SOFTWARE" title={tx(ui.sections.software, locale)} />
+          <SectionHeading id="software-title" title={tx(ui.sections.software, locale)} />
           <div className="software-list">
-            {softwareProjects.map((project, index) => <SoftwareCase project={project} index={index} locale={locale} key={project.slug} />)}
+            {softwareProjects.map((project) => <SoftwareCase project={project} locale={locale} key={project.slug} />)}
           </div>
         </section>
 
         <section className="section-block" id="presentations" aria-labelledby="presentations-title">
-          <SectionHeading id="presentations-title" index="03" label="SOCIETY PRESENTATIONS" title={tx(ui.sections.presentations, locale)} />
-          <div className="talk-list" id="presentation-list">
+          <SectionHeading id="presentations-title" title={tx(ui.sections.presentations, locale)} />
+          <div className="talk-list" id="presentation-list" data-reveal>
             {visiblePresentations.map((presentation, index) => (
               <article key={`${presentation.year}-${index}`}>
-                <div className="talk-code"><span>{String(index + 1).padStart(2, "0")}</span><b>{presentation.year}</b></div>
+                <time className="talk-year" dateTime={presentation.year}>{presentation.year}</time>
                 <div><small>{tx(presentation.format, locale)}</small><h3>{tx(presentation.title, locale)}</h3><p>{tx(presentation.event, locale)}</p></div>
               </article>
             ))}
@@ -393,11 +532,11 @@ export default function Home() {
         </section>
 
         <section className="section-block" id="projects" aria-labelledby="projects-title">
-          <SectionHeading id="projects-title" index="04" label="PROJECT THREADS" title={tx(ui.sections.projects, locale)} />
-          <div className="project-list">
+          <SectionHeading id="projects-title" title={tx(ui.sections.projects, locale)} />
+          <div className="project-list" data-reveal>
             {researchProjects.map((project) => (
               <article key={project.code}>
-                <span>{project.code}</span><div><h3>{tx(project.title, locale)}</h3><p>{tx(project.description, locale)}</p>
+                <div><h3>{tx(project.title, locale)}</h3><p>{tx(project.description, locale)}</p>
                   <div className="tag-row">{project.tags.map((tag) => <small key={tag}>{tag}</small>)}</div>
                 </div>
               </article>
@@ -405,7 +544,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="contact-section" id="contact" aria-labelledby="contact-title">
+        <section className="contact-section" id="contact" aria-labelledby="contact-title" data-reveal>
           <div><p className="eyebrow">CONTACT / ACADEMIC EXCHANGE</p><h2 id="contact-title">{tx(ui.contact, locale)}</h2></div>
           <address>
             <span>{tx(profile.affiliation, locale)}</span>
@@ -416,7 +555,13 @@ export default function Home() {
         </section>
       </main>
 
-      <a className="floating-back-to-top" href="#top" aria-label={tx(ui.backToTop, locale)}>
+      <a
+        className={`floating-back-to-top ${showBackToTop ? "visible" : ""}`}
+        href="#top"
+        aria-label={tx(ui.backToTop, locale)}
+        aria-hidden={!showBackToTop}
+        tabIndex={showBackToTop ? 0 : -1}
+      >
         <span>{tx(ui.backToTop, locale)}</span><UpArrow />
       </a>
       <footer><span>© 2026 {profile.englishName}</span></footer>

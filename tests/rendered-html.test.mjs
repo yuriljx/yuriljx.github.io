@@ -52,6 +52,11 @@ test("server-renders the finished academic portfolio", async () => {
   assert.match(html, /doi\.org\/10\.2503\/hortj\.SZD-110/);
   assert.match(html, /Show earlier presentations/);
   assert.match(html, /Publications<\/a>.*Software<\/a>.*Presentations<\/a>/s);
+  assert.equal((html.match(/class="hero-gallery /g) ?? []).length, 3);
+  assert.match(html, /aria-roledescription="carousel"/);
+  assert.match(html, /Previous visual: Field and laboratory research visuals/);
+  assert.match(html, /Next visual: Grape phenotyping visuals/);
+  assert.doesNotMatch(html, /class="section-code"|class="software-index"|class="talk-code"|01—03/);
   assert.doesNotMatch(html, /Research · Publications · Software/);
   assert.doesNotMatch(html, /P2 Rice DH Record System|Aphros Trait Tool/);
   assert.equal((html.match(/class="software-case"/g) ?? []).length, 6);
