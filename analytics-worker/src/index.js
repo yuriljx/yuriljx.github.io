@@ -6,7 +6,7 @@ const BOT_PATTERN = /bot|crawler|spider|slurp|bingpreview|facebookexternalhit|he
 function corsHeaders(origin) {
   return {
     "Access-Control-Allow-Origin": origin,
-    "Access-Control-Allow-Methods": "POST, OPTIONS",
+    "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
     "Access-Control-Allow-Headers": "Content-Type",
     "Access-Control-Max-Age": "86400",
     Vary: "Origin",
@@ -136,14 +136,39 @@ async function collect(request, env) {
   return emptyResponse(204, origin);
 }
 
+function countryLocale(country) {
+  if (country === "CN") return "zh";
+  if (country === "JP") return "ja";
+  return "en";
+}
+
+function localeResponse(request) {
+  const origin = request.headers.get("Origin") ?? "";
+  if (!ALLOWED_ORIGINS.has(origin)) return emptyResponse(403);
+
+  return Response.json(
+    { locale: countryLocale(request.cf?.country) },
+    {
+      headers: {
+        ...corsHeaders(origin),
+        "Cache-Control": "no-store",
+      },
+    },
+  );
+}
+
 async function handleRequest(request, env) {
   const url = new URL(request.url);
   const origin = request.headers.get("Origin") ?? "";
 
-  if (url.pathname !== "/collect") return emptyResponse(404);
   if (request.method === "OPTIONS") {
     return ALLOWED_ORIGINS.has(origin) ? emptyResponse(204, origin) : emptyResponse(403);
   }
+
+  if (url.pathname === "/locale") {
+    return request.method === "GET" ? localeResponse(request) : emptyResponse(405, origin);
+  }
+  if (url.pathname !== "/collect") return emptyResponse(404);
   if (request.method !== "POST") return emptyResponse(405, origin);
 
   try {
@@ -161,6 +186,7 @@ export {
   browserCategory,
   cleanPath,
   cleanReferrerHost,
+  countryLocale,
   dailyVisitorHash,
   deleteExpiredVisits,
   deviceCategory,

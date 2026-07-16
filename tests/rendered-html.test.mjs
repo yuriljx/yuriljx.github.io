@@ -46,9 +46,10 @@ test("server-renders the finished academic portfolio", async () => {
   assert.match(html, /RicePerturbNet/);
   assert.match(html, /STRIDE-DH/);
   assert.match(html, /Grape Length/);
-  assert.match(html, />English<\/button>/);
-  assert.match(html, />中文<\/button>/);
-  assert.match(html, />日本語<\/button>/);
+  assert.match(html, /aria-label="Select language"/);
+  assert.match(html, /<span>English<\/span>/);
+  assert.match(html, /<span>中文<\/span>/);
+  assert.match(html, /<span>日本語<\/span>/);
   assert.match(html, /doi\.org\/10\.2503\/hortj\.SZD-110/);
   assert.match(html, /Show earlier presentations/);
   assert.match(html, /Publications<\/a>.*Software<\/a>.*Presentations<\/a>/s);

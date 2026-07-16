@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import {
   type Locale,
   type LocalizedText,
@@ -12,6 +12,11 @@ import {
   researchProjects,
   softwareProjects,
 } from "./content";
+import {
+  detectDefaultLocale,
+  readSavedLocale,
+  saveLocale,
+} from "./language-preference";
 import { startVisitorAnalytics } from "./visitor-analytics";
 
 const tx = (value: LocalizedText | string, locale: Locale) =>
@@ -22,6 +27,7 @@ const ui = {
   menu: localize("Menu", "目录", "メニュー"),
   close: localize("Close", "关闭", "閉じる"),
   navigationLabel: localize("Primary navigation", "主要导航", "メインナビゲーション"),
+  languageLabel: localize("Select language", "选择语言", "言語を選択"),
   navigation: [
     [localize("Publications", "论文", "論文"), "#publications"],
     [localize("Software", "软件", "ソフトウェア"), "#software"],
@@ -165,6 +171,15 @@ function DisclosureArrow({ open }: { open: boolean }) {
   return (
     <svg className={open ? "open" : ""} viewBox="0 0 16 16" aria-hidden="true">
       <path d="m4 6 4 4 4-4" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function GlobeIcon() {
+  return (
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <circle cx="12" cy="12" r="8.5" fill="none" stroke="currentColor" />
+      <path d="M3.8 12h16.4M12 3.5c2.2 2.3 3.3 5.1 3.3 8.5S14.2 18.2 12 20.5M12 3.5C9.8 5.8 8.7 8.6 8.7 12s1.1 6.2 3.3 8.5" fill="none" stroke="currentColor" />
     </svg>
   );
 }
@@ -401,18 +416,58 @@ function SoftwareCase({ project, locale }: { project: SoftwareProject; locale: L
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [locale, setLocale] = useState<Locale>("en");
+  const [languageOpen, setLanguageOpen] = useState(false);
   const [showAllPresentations, setShowAllPresentations] = useState(false);
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [introComplete, setIntroComplete] = useState(false);
   const languageNames: Array<[Locale, string]> = [["en", "English"], ["zh", "中文"], ["ja", "日本語"]];
+  const languageMenuRef = useRef<HTMLDivElement>(null);
+  const languageTriggerRef = useRef<HTMLButtonElement>(null);
   const visiblePresentations = showAllPresentations ? presentations : recentPresentations;
   const earlierPresentationCount = presentations.length - recentPresentations.length;
 
   useEffect(() => startVisitorAnalytics(), []);
 
   useEffect(() => {
+    let cancelled = false;
+    const savedLocale = readSavedLocale() as Locale | null;
+    const initialLocale: Promise<Locale> = savedLocale
+      ? Promise.resolve(savedLocale)
+      : detectDefaultLocale() as Promise<Locale>;
+
+    void initialLocale.then((detectedLocale) => {
+      if (!cancelled && !readSavedLocale()) setLocale(detectedLocale);
+      else if (!cancelled && savedLocale) setLocale(savedLocale);
+    });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
+
+  useEffect(() => {
     document.documentElement.lang = locale === "zh" ? "zh-CN" : locale === "ja" ? "ja" : "en";
   }, [locale]);
+
+  useEffect(() => {
+    if (!languageOpen) return;
+
+    const closeOnOutsidePress = (event: PointerEvent) => {
+      if (!languageMenuRef.current?.contains(event.target as Node)) setLanguageOpen(false);
+    };
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key !== "Escape") return;
+      setLanguageOpen(false);
+      languageTriggerRef.current?.focus();
+    };
+
+    document.addEventListener("pointerdown", closeOnOutsidePress, { passive: true });
+    document.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.removeEventListener("pointerdown", closeOnOutsidePress);
+      document.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [languageOpen]);
 
   useEffect(() => {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -473,15 +528,49 @@ export default function Home() {
             type="button"
             aria-expanded={menuOpen}
             aria-controls="site-navigation"
-            onClick={() => setMenuOpen((open) => !open)}
+            onClick={() => {
+              setLanguageOpen(false);
+              setMenuOpen((open) => !open);
+            }}
           ><span>{menuOpen ? tx(ui.close, locale) : tx(ui.menu, locale)}</span><i aria-hidden="true" /></button>
           <nav id="site-navigation" className={menuOpen ? "open" : ""} aria-label={tx(ui.navigationLabel, locale)}>
             {ui.navigation.map(([label, href]) => <a href={href} key={href} onClick={() => setMenuOpen(false)}>{tx(label, locale)}</a>)}
           </nav>
-          <div className="language-switch" role="group" aria-label="Language">
-            {languageNames.map(([code, label]) => (
-              <button key={code} type="button" className={locale === code ? "active" : ""} aria-pressed={locale === code} onClick={() => setLocale(code)}>{label}</button>
-            ))}
+          <div className={`language-menu ${languageOpen ? "open" : ""}`} ref={languageMenuRef}>
+            <button
+              className="language-trigger"
+              type="button"
+              ref={languageTriggerRef}
+              aria-expanded={languageOpen}
+              aria-controls="language-options"
+              aria-label={tx(ui.languageLabel, locale)}
+              title={tx(ui.languageLabel, locale)}
+              onClick={() => {
+                setMenuOpen(false);
+                setLanguageOpen((open) => !open);
+              }}
+            >
+              <GlobeIcon />
+              <span className="language-chevron" aria-hidden="true" />
+            </button>
+            <div id="language-options" className="language-options" aria-label={tx(ui.languageLabel, locale)}>
+              {languageNames.map(([code, label]) => (
+                <button
+                  key={code}
+                  type="button"
+                  className={locale === code ? "active" : ""}
+                  aria-pressed={locale === code}
+                  onClick={() => {
+                    saveLocale(code);
+                    setLocale(code);
+                    setLanguageOpen(false);
+                  }}
+                >
+                  <span>{label}</span>
+                  <small>{code === "en" ? "EN" : code === "zh" ? "ZH" : "JA"}</small>
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </header>

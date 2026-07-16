@@ -4,6 +4,7 @@ import worker, {
   browserCategory,
   cleanPath,
   cleanReferrerHost,
+  countryLocale,
   dailyVisitorHash,
   deviceCategory,
 } from "../analytics-worker/src/index.js";
@@ -90,6 +91,24 @@ test("rejects other origins and exposes no read endpoint", async () => {
   assert.equal(forbidden.status, 403);
   assert.equal(readAttempt.status, 404);
   assert.equal(DB.calls.length, 0);
+});
+
+test("returns a country-derived locale without writing visitor data", async () => {
+  for (const [country, expectedLocale] of [["CN", "zh"], ["JP", "ja"], ["US", "en"], [undefined, "en"]]) {
+    const DB = createDatabase();
+    const request = new Request("https://analytics.example/locale", {
+      headers: { Origin: "https://yuriljx.github.io" },
+    });
+    Object.defineProperty(request, "cf", { value: { country } });
+    const response = await worker.fetch(request, { DB });
+    assert.equal(response.status, 200);
+    assert.deepEqual(await response.json(), { locale: expectedLocale });
+    assert.equal(response.headers.get("cache-control"), "no-store");
+    assert.equal(DB.calls.length, 0);
+  }
+  assert.equal(countryLocale("CN"), "zh");
+  assert.equal(countryLocale("JP"), "ja");
+  assert.equal(countryLocale("DE"), "en");
 });
 
 test("normalization and classification helpers are deterministic", async () => {

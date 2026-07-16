@@ -11,6 +11,7 @@ This Worker is the write-only analytics backend for `https://yuriljx.github.io`.
 - Query strings, URL fragments, full referrers, and full user-agent strings are discarded.
 - Records older than 365 days are deleted by a daily cron trigger.
 - `/collect` accepts writes only from the production GitHub Pages origin. No public statistics endpoint exists.
+- `/locale` returns only `zh`, `ja`, or `en` from Cloudflare's request country and does not write a database record.
 
 ## Administration
 
