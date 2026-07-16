@@ -56,6 +56,8 @@ test("server-renders the finished academic portfolio", async () => {
   assert.match(html, /aria-roledescription="carousel"/);
   assert.match(html, /Previous visual: Field and laboratory research visuals/);
   assert.match(html, /Next visual: Grape phenotyping visuals/);
+  assert.match(html, /class="hero-title-word/);
+  assert.doesNotMatch(html, /<figcaption><span>1 \/ [234]<\/span>/);
   assert.doesNotMatch(html, /class="section-code"|class="software-index"|class="talk-code"|01—03/);
   assert.doesNotMatch(html, /Research · Publications · Software/);
   assert.doesNotMatch(html, /P2 Rice DH Record System|Aphros Trait Tool/);

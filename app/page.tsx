@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, type CSSProperties } from "react";
 import {
   type Locale,
   type LocalizedText,
@@ -179,6 +179,36 @@ function SectionHeading({ id, title }: {
   );
 }
 
+function HeroTitle({ lines, locale }: { lines: [string, string]; locale: Locale }) {
+  return (
+    <h1 id="hero-title" lang={locale === "zh" ? "zh-CN" : locale} aria-label={lines.join(" ")}>
+      {lines.map((line, lineIndex) => {
+        const usesWordSpacing = line.includes(" ");
+        const words = usesWordSpacing ? line.split(" ") : Array.from(line);
+        const lineStart = lines.slice(0, lineIndex).reduce((total, item) => total + item.length + 1, 0);
+        return (
+          <span className="hero-title-line" aria-hidden="true" key={lineIndex}>
+            {words.map((word, wordIndex) => {
+              const wordStart = lineStart + words.slice(0, wordIndex).reduce(
+                (total, item) => total + item.length + (usesWordSpacing ? 1 : 0),
+                0,
+              );
+              return (
+                <span
+                  className={`hero-title-word ${usesWordSpacing ? "" : "hero-title-glyph"}`}
+                  data-last-word={wordIndex === words.length - 1 ? "true" : undefined}
+                  style={{ "--char-index": wordStart } as CSSProperties}
+                  key={wordIndex}
+                >{word}</span>
+              );
+            })}
+          </span>
+        );
+      })}
+    </h1>
+  );
+}
+
 type HeroGalleryData = (typeof ui.heroGalleries)[number];
 
 function CarouselArrow({ direction }: { direction: "previous" | "next" }) {
@@ -347,7 +377,6 @@ function SoftwareCase({ project, locale }: { project: SoftwareProject; locale: L
       </div>
       <figure className="software-media">
         <SoftwareMedia visual={visual} locale={locale} />
-        <figcaption><span>{active + 1} / {project.visuals.length}</span>{tx(visual.caption, locale)}</figcaption>
         <div className="media-selector" aria-label={`${project.title} ${tx(ui.figurePicker, locale)}`}>
           {project.visuals.map((item, itemIndex) => (
             <button
@@ -373,6 +402,7 @@ export default function Home() {
   const [locale, setLocale] = useState<Locale>("en");
   const [showAllPresentations, setShowAllPresentations] = useState(false);
   const [showBackToTop, setShowBackToTop] = useState(false);
+  const [introComplete, setIntroComplete] = useState(false);
   const languageNames: Array<[Locale, string]> = [["en", "English"], ["zh", "中文"], ["ja", "日本語"]];
   const visiblePresentations = showAllPresentations ? presentations : recentPresentations;
   const earlierPresentationCount = presentations.length - recentPresentations.length;
@@ -380,6 +410,12 @@ export default function Home() {
   useEffect(() => {
     document.documentElement.lang = locale === "zh" ? "zh-CN" : locale === "ja" ? "ja" : "en";
   }, [locale]);
+
+  useEffect(() => {
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const timer = window.setTimeout(() => setIntroComplete(true), reducedMotion ? 0 : 1650);
+    return () => window.clearTimeout(timer);
+  }, []);
 
   useEffect(() => {
     const updateBackToTop = () => setShowBackToTop(window.scrollY > Math.max(360, window.innerHeight * 0.5));
@@ -448,13 +484,10 @@ export default function Home() {
       </header>
 
       <main id="main-content">
-        <section className="hero" aria-labelledby="hero-title">
+        <section className={`hero ${introComplete ? "intro-complete" : ""}`} aria-labelledby="hero-title">
           <div className="hero-intro">
             <p className="eyebrow">PLANT SCIENCE × COMPUTATIONAL METHODS</p>
-            <h1 id="hero-title" lang={locale === "zh" ? "zh-CN" : locale}>
-              <span>{ui.heroTitle[locale][0]}</span>
-              <span>{ui.heroTitle[locale][1]}</span>
-            </h1>
+            <HeroTitle lines={ui.heroTitle[locale]} locale={locale} />
             <p className="hero-lede">{tx(ui.heroLede, locale)}</p>
             <div className="identity-lines">
               <span>{tx(profile.affiliation, locale)}</span>
