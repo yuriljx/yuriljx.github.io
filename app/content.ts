@@ -198,6 +198,109 @@ export const presentations = [
   },
 ] as const;
 
+export const patents = [
+  {
+    year: "2024",
+    title: localize(
+      "Preparation method for a high-specific-energy battery and the resulting battery",
+      "一种高比能电池制备方法及高比能电池",
+      "高比エネルギー電池の製造方法および高比エネルギー電池",
+    ),
+    type: localize("Patent publication", "发明专利公开", "発明特許公開"),
+    publicationNumber: "CN117747967A",
+    inventors: localize(
+      "Xiaokun Zhang; Chunyue Li; Zhangling Li; Jixiao Li; Guo Wang; Fei Li; Yong Xiang",
+      "张晓琨；李春月；李彰凌；李继潇；王果；李飞；向勇",
+      "Xiaokun Zhang; Chunyue Li; Zhangling Li; Jixiao Li; Guo Wang; Fei Li; Yong Xiang",
+    ),
+    link: "https://patents.google.com/patent/CN117747967A",
+  },
+  {
+    year: "2024",
+    title: localize(
+      "Integrated assembly method for a flexible battery, flexible battery and wearable device",
+      "柔性电池的一体化集成方法、柔性电池及可穿戴设备",
+      "フレキシブル電池の一体製造方法、フレキシブル電池およびウェアラブル機器",
+    ),
+    type: localize("Patent publication", "发明专利公开", "発明特許公開"),
+    publicationNumber: "CN117747955A",
+    inventors: localize(
+      "Xiaokun Zhang; Jixiao Li; Xinyan Luo; Zhangling Li; Weili Liao; Fei Li; Yong Xiang",
+      "张晓琨；李继潇；骆鑫妍；李彰凌；廖微莉；李飞；向勇",
+      "Xiaokun Zhang; Jixiao Li; Xinyan Luo; Zhangling Li; Weili Liao; Fei Li; Yong Xiang",
+    ),
+    link: "https://patents.google.com/patent/CN117747955A",
+  },
+  {
+    year: "2021",
+    title: localize(
+      "Rapid detection device for histamine in food",
+      "一种食品中组胺成分的快速检测装置",
+      "食品中ヒスタミン成分の迅速検出装置",
+    ),
+    type: localize("Utility model", "实用新型", "実用新案"),
+    publicationNumber: "CN212808065U",
+    inventors: localize(
+      "Jixiao Li; Hui Gao; Zhihong Fan; Yakun Hao",
+      "李继潇；高慧；樊志宏；郝雅坤",
+      "Jixiao Li; Hui Gao; Zhihong Fan; Yakun Hao",
+    ),
+    link: "https://patents.google.com/patent/CN212808065U",
+  },
+  {
+    year: "2019",
+    title: localize(
+      "Tool and process for removing scale from the inner wall of a circular pipe",
+      "一种圆管内壁除垢工具及除垢工艺",
+      "円管内壁のスケール除去工具および除去方法",
+    ),
+    type: localize("Patent publication", "发明专利公开", "発明特許公開"),
+    publicationNumber: "CN109201659A",
+    inventors: localize(
+      "Ying Li; Tiegang Hu; Jingyi Wei; Baochun Yao; Xiaofeng Jiang; Baoqing Xue; Kaifeng Li; Shuchang Hua; Qibao Guo; Jian Li; Xiaojun Zhong; Jixiao Li",
+      "李颖；胡铁刚；魏靖依；姚保春；姜晓峰；薛宝庆；李凯锋；桦树常；郭启宝；李见；钟晓军；李继潇",
+      "Ying Li; Tiegang Hu; Jingyi Wei; Baochun Yao; Xiaofeng Jiang; Baoqing Xue; Kaifeng Li; Shuchang Hua; Qibao Guo; Jian Li; Xiaojun Zhong; Jixiao Li",
+    ),
+    link: "https://patents.google.com/patent/CN109201659A",
+  },
+  {
+    year: "2015",
+    title: localize("Indoor air purifier", "室内空气净化器", "室内空気清浄機"),
+    type: localize("Utility model", "实用新型", "実用新案"),
+    publicationNumber: "CN204460473U",
+    inventors: localize(
+      "Jie Xiao; Jixiao Li; Chengjun You; Jianghua Chen",
+      "肖杰；李继潇；游成军；陈江华",
+      "Jie Xiao; Jixiao Li; Chengjun You; Jianghua Chen",
+    ),
+    link: "https://patents.google.com/patent/CN204460473U",
+  },
+  {
+    year: "2015",
+    title: localize("Solar street light with camera", "带摄像头的太阳能路灯", "カメラ付き太陽光街路灯"),
+    type: localize("Utility model", "实用新型", "実用新案"),
+    publicationNumber: "CN204420843U",
+    inventors: localize(
+      "Jixiao Li; Qing Lin; Wenbo Si; Jianghua Chen",
+      "李继潇；林庆；司文博；陈江华",
+      "Jixiao Li; Qing Lin; Wenbo Si; Jianghua Chen",
+    ),
+    link: "https://patents.google.com/patent/CN204420843U",
+  },
+  {
+    year: "2014",
+    title: localize(
+      "Fully automatic pharmaceutical bottle inspection instrument",
+      "全自动药瓶检测仪器",
+      "全自動薬瓶検査装置",
+    ),
+    type: localize("Utility model", "实用新型", "実用新案"),
+    publicationNumber: "CN203396717U",
+    inventors: localize("Jixiao Li", "李继潇", "Jixiao Li"),
+    link: "https://patents.google.com/patent/CN203396717U",
+  },
+] as const;
+
 export const softwareProjects = [
   {
     slug: "rice-dh-record",

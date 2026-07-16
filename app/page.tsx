@@ -5,6 +5,7 @@ import {
   type Locale,
   type LocalizedText,
   localize,
+  patents,
   presentations,
   profile,
   publications,
@@ -32,6 +33,7 @@ const ui = {
     [localize("Publications", "论文", "論文"), "#publications"],
     [localize("Software", "软件", "ソフトウェア"), "#software"],
     [localize("Presentations", "学会发表", "学会発表"), "#presentations"],
+    [localize("Patents", "专利", "特許"), "#patents"],
     [localize("Projects", "项目", "研究テーマ"), "#projects"],
     [localize("Contact", "联系", "連絡先"), "#contact"],
   ] as const,
@@ -52,6 +54,7 @@ const ui = {
     publications: localize("Publications", "论文发表", "論文発表"),
     software: localize("Research software & computational frameworks", "研究软件与计算框架", "研究ソフトウェアと計算フレームワーク"),
     presentations: localize("Society presentations", "学会发表", "学会発表"),
+    patents: localize("Patents", "专利", "特許"),
     projects: localize("Research threads", "研究项目脉络", "研究テーマ"),
   },
   scholar: localize("View full record on Google Scholar", "在 Google Scholar 查看完整记录", "Google Scholarで全記録を見る"),
@@ -142,6 +145,16 @@ const ui = {
   backToTop: localize("Back to top", "返回顶部", "トップへ戻る"),
   showEarlierPresentations: localize("Show earlier presentations", "查看历年发表", "過去の発表を見る"),
   hideEarlierPresentations: localize("Hide earlier presentations", "折叠历年发表", "過去の発表を閉じる"),
+  patentRecords: localize(`${patents.length} patent records`, `${patents.length} 项专利记录`, `特許記録 ${patents.length}件`),
+  patentOverview: localize(
+    "Patent work spanning energy storage, analytical detection, environmental systems and automated inspection.",
+    "涵盖储能、分析检测、环境设备与自动化检验的专利工作。",
+    "蓄電、分析検出、環境機器、自動検査にわたる特許実績。",
+  ),
+  showPatents: localize("View patent records", "查看专利记录", "特許記録を見る"),
+  hidePatents: localize("Hide patent records", "折叠专利记录", "特許記録を閉じる"),
+  patentPublication: localize("Publication", "公开号", "公開番号"),
+  patentInventors: localize("Inventors", "发明人", "発明者"),
 };
 
 const latestPresentationYear = Math.max(...presentations.map(({ year }) => Number(year)));
@@ -418,6 +431,7 @@ export default function Home() {
   const [locale, setLocale] = useState<Locale>("en");
   const [languageOpen, setLanguageOpen] = useState(false);
   const [showAllPresentations, setShowAllPresentations] = useState(false);
+  const [showPatents, setShowPatents] = useState(false);
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [introComplete, setIntroComplete] = useState(false);
   const languageNames: Array<[Locale, string]> = [["en", "English"], ["zh", "中文"], ["ja", "日本語"]];
@@ -654,6 +668,44 @@ export default function Home() {
               <DisclosureArrow open={showAllPresentations} />
             </button>
           )}
+        </section>
+
+        <section className="section-block" id="patents" aria-labelledby="patents-title">
+          <SectionHeading id="patents-title" title={tx(ui.sections.patents, locale)} />
+          <div className="patent-disclosure" data-reveal>
+            <button
+              className="patent-summary"
+              type="button"
+              aria-expanded={showPatents}
+              aria-controls="patent-list"
+              onClick={() => setShowPatents((open) => !open)}
+            >
+              <span className="patent-summary-copy">
+                <small>{tx(ui.patentRecords, locale)} · 2014—2024</small>
+                <strong>{tx(ui.patentOverview, locale)}</strong>
+              </span>
+              <span className="patent-summary-action">
+                {tx(showPatents ? ui.hidePatents : ui.showPatents, locale)}
+                <DisclosureArrow open={showPatents} />
+              </span>
+            </button>
+            <div className="patent-list" id="patent-list" hidden={!showPatents}>
+              {patents.map((patent) => (
+                <article key={patent.publicationNumber}>
+                  <time className="patent-year" dateTime={patent.year}>{patent.year}</time>
+                  <div className="patent-copy">
+                    <small>{tx(patent.type, locale)}</small>
+                    <h3>{tx(patent.title, locale)}</h3>
+                    <p><span>{tx(ui.patentInventors, locale)}</span>{tx(patent.inventors, locale)}</p>
+                  </div>
+                  <a className="patent-publication" href={patent.link} target="_blank" rel="noreferrer">
+                    <span>{tx(ui.patentPublication, locale)}</span>
+                    <strong>{patent.publicationNumber}</strong>
+                  </a>
+                </article>
+              ))}
+            </div>
+          </div>
         </section>
 
         <section className="section-block" id="projects" aria-labelledby="projects-title">

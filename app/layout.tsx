@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 
 const title = "Jixiao Li | Plant Science & Research Software";
-const description = "Jixiao Li's publications, society presentations, crop phenotyping research and research software.";
+const description = "Jixiao Li's publications, society presentations, patents, crop phenotyping research and research software.";
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL ?? "https://yuriljx.github.io";
 
 export const metadata: Metadata = {
