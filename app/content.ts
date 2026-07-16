@@ -5,6 +5,7 @@ export const localize = (en: string, zh: string, ja: string): LocalizedText => (
 
 export const profile = {
   englishName: "Jixiao Li",
+  role: localize("Postdoctoral Researcher", "博士后研究员", "博士研究員"),
   affiliation: localize(
     "Graduate School of Agriculture, Hokkaido University",
     "北海道大学农学院",
@@ -153,6 +154,48 @@ export const presentations = [
     title: localize("GC–MS analysis of sugars and organic acids in polyploid haskap fruit", "多倍体蓝靛果果实中糖类和有机酸的 GC–MS 分析", "倍数性ハスカップ果実における糖・有機酸のGC–MS分析"),
     format: localize("Oral presentation", "口头报告", "口頭発表"),
   },
+  {
+    year: "2020",
+    event: localize("3rd International Conference on Agriculture, Food and Biotechnology (ICAFB)", "第三届农业、食品与生物技术国际会议（ICAFB）", "第3回農業・食品・バイオテクノロジー国際会議（ICAFB）"),
+    title: localize("Coupled effects of soil trace-element transfer on flavor-metabolite fingerprints and co-accumulation of toxic elements in specialty crops", "土壤微量元素转移对特种作物风味代谢指纹图谱及有毒元素共积累的耦合效应", "土壌微量元素移行が特殊作物の風味代謝フィンガープリントと有害元素共蓄積に及ぼす連関効果"),
+    format: localize("Oral presentation", "口头报告", "口頭発表"),
+  },
+  {
+    year: "2018",
+    event: localize("31st Chinese Chemical Society Congress (CCS)", "第31届中国化学会（CCS）年会", "第31回中国化学会年会（CCS）"),
+    title: localize("Rapid HPLC–MS quantification of free amino acids in tea infusions: method optimization and validation", "茶汤中游离氨基酸的快速 HPLC–MS 定量：方法优化与验证", "茶抽出液中遊離アミノ酸の迅速HPLC–MS定量：分析法の最適化と妥当性確認"),
+    format: localize("Oral presentation", "口头报告", "口頭発表"),
+  },
+  {
+    year: "2017",
+    event: localize("3rd International Conference on Chemical Materials and Process (ICCMP)", "第三届化学材料与工艺国际会议（ICCMP）", "第3回化学材料・プロセス国際会議（ICCMP）"),
+    title: localize("Headspace gas chromatographic determination of benzene-series VOCs released from cigarette filters: equilibrium kinetics and sensitivity analysis", "顶空气相色谱法测定卷烟滤嘴释放的苯系挥发性有机物：平衡动力学与灵敏度分析", "たばこフィルターから放出されるベンゼン系VOCのヘッドスペースGC定量：平衡動力学と感度解析"),
+    format: localize("Oral presentation", "口头报告", "口頭発表"),
+  },
+  {
+    year: "2015",
+    event: localize("249th ACS National Meeting", "第249届美国化学会（ACS）全国会议", "第249回米国化学会（ACS）全国大会"),
+    title: localize("Multi-instrument characterization of marine bioaerosols and their links to cloud and precipitation processes", "多仪器表征海洋生物气溶胶及其与云和降水过程的联系", "複数機器による海洋バイオエアロゾルの特性評価と雲・降水過程との関連"),
+    format: localize("Oral presentation", "口头报告", "口頭発表"),
+  },
+  {
+    year: "2014",
+    event: localize("247th ACS National Meeting", "第247届美国化学会（ACS）全国会议", "第247回米国化学会（ACS）全国大会"),
+    title: localize("A controlled pollen aerosolization apparatus for laboratory ice nucleation and optical measurements", "用于实验室冰成核与光学测量的可控花粉气溶胶发生装置", "実験室での氷核生成・光学測定に用いる制御型花粉エアロゾル発生装置"),
+    format: localize("Poster presentation", "海报发表", "ポスター発表"),
+  },
+  {
+    year: "2012",
+    event: localize("Minnesota State Science and Engineering Fair", "明尼苏达州科学与工程博览会", "ミネソタ州科学工学フェア"),
+    title: localize("Differential effects and mechanisms of regional soil microbial communities on the degradation of plasticized polylactic acid (PLA)", "不同地区土壤微生物群落对增塑聚乳酸（PLA）降解的差异性影响与机制", "地域別土壌微生物群集が可塑化ポリ乳酸（PLA）の分解に及ぼす差異と機構"),
+    format: localize("Oral presentation", "口头报告", "口頭発表"),
+  },
+  {
+    year: "2011",
+    event: localize("Minnesota State Science and Engineering Fair", "明尼苏达州科学与工程博览会", "ミネソタ州科学工学フェア"),
+    title: localize("Effects of plasticizer type on degradation behavior and efficiency of polylactic acid (PLA) films in simulated soil environments", "增塑剂类型对模拟土壤环境中聚乳酸（PLA）薄膜降解行为与效率的影响", "可塑剤の種類が模擬土壌環境におけるポリ乳酸（PLA）フィルムの分解挙動と効率に及ぼす影響"),
+    format: localize("Poster presentation", "海报发表", "ポスター発表"),
+  },
 ] as const;
 
 export const softwareProjects = [
@@ -187,8 +230,8 @@ export const softwareProjects = [
     features: ["Alias expansion", "Multi-source search", "Identity evidence", "Audit workbook"],
     link: null,
     visuals: [
-      { kind: "image", src: "/software/genome/overview.png", alt: localize("Rice genome resource finder home screen", "水稻基因组资源检索工具首页", "イネゲノム資源検索ツールのホーム画面"), caption: localize("Input template, database scope and operating boundary", "输入模板、数据库范围与工具边界", "入力テンプレート、データベース範囲、ツール境界"), aspect: "2.16", position: "center 49%" },
-      { kind: "image", src: "/software/genome/options.png", alt: localize("Rice genome resource search options", "水稻基因组资源筛选参数", "イネゲノム資源の検索オプション"), caption: localize("Connectors, platform compatibility and conservative ranking", "连接器、平台兼容性与保守排序逻辑", "コネクタ、プラットフォーム互換性、保守的ランキング"), aspect: "2.16", position: "center 51%" },
+      { kind: "image", src: "/software/genome/overview.png", alt: localize("Rice genome resource finder home screen", "水稻基因组资源检索工具首页", "イネゲノム資源検索ツールのホーム画面"), caption: localize("Input template, database scope and operating boundary", "输入模板、数据库范围与工具边界", "入力テンプレート、データベース範囲、ツール境界"), aspect: "1.78", crop: "genome-ui", position: "center 49%" },
+      { kind: "image", src: "/software/genome/options.png", alt: localize("Rice genome resource search options", "水稻基因组资源筛选参数", "イネゲノム資源の検索オプション"), caption: localize("Connectors, platform compatibility and conservative ranking", "连接器、平台兼容性与保守排序逻辑", "コネクタ、プラットフォーム互換性、保守的ランキング"), aspect: "1.78", crop: "genome-ui", position: "center 51%" },
       { kind: "panel", panel: "audit-workbook", caption: localize("Output structure: summary, candidates, input QC and source audit", "输出结构：摘要、候选、输入质控与来源审计", "出力構造：概要、候補、入力QC、情報源監査") },
     ],
   },

@@ -23,8 +23,8 @@ const ui = {
   navigationLabel: localize("Primary navigation", "主要导航", "メインナビゲーション"),
   navigation: [
     [localize("Publications", "论文", "論文"), "#publications"],
-    [localize("Presentations", "学会发表", "学会発表"), "#presentations"],
     [localize("Software", "软件", "ソフトウェア"), "#software"],
+    [localize("Presentations", "学会发表", "学会発表"), "#presentations"],
     [localize("Projects", "项目", "研究テーマ"), "#projects"],
     [localize("Contact", "联系", "連絡先"), "#contact"],
   ] as const,
@@ -34,9 +34,9 @@ const ui = {
     ja: ["圃場観測と実験記録を、", "計算的エビデンスと結ぶ。"],
   } satisfies Record<Locale, [string, string]>,
   heroLede: localize(
-    "I study crop phenotypes, breeding and quality, while developing research software that connects images, experimental workflows and traceable evidence.",
-    "研究聚焦作物表型、育种与品质分析，并将研究软件作为连接影像、实验流程和可追溯证据的基础设施。",
-    "作物表現型、育種、品質分析を研究し、画像・実験ワークフロー・追跡可能なエビデンスをつなぐ研究ソフトウェアを開発しています。",
+    "My work integrates crop phenotyping, breeding and quality science with purpose-built research software, connecting field imagery, experimental workflows and traceable computational evidence.",
+    "我的研究将作物表型、育种与品质科学同专用研究软件开发相结合，连接田间影像、实验流程与可追溯的计算证据。",
+    "作物表現型・育種・品質科学と専用研究ソフトウェア開発を統合し、圃場画像、実験ワークフロー、追跡可能な計算エビデンスを結び付けています。",
   ),
   publicationCta: localize("View publications", "查看论文发表", "論文を見る"),
   softwareCta: localize("Explore research software", "浏览研究软件", "研究ソフトウェアを見る"),
@@ -54,18 +54,21 @@ const ui = {
   heroFigures: [
     {
       src: "/research/anther-culture.webp",
+      className: "hero-lab",
       code: "LAB / 2026",
       alt: localize("Rice anther-culture material with a scale reference", "带尺度参照的水稻花药培养实验材料", "スケール参照を含むイネ葯培養実験材料"),
       caption: localize("Anther-culture material and scale reference", "花药培养实验材料与尺度参照", "葯培養材料とスケール参照"),
     },
     {
       src: "/software/genome/overview.png",
+      className: "hero-genome",
       code: "SOFTWARE",
       alt: localize("Public rice genome resource finder interface", "水稻公共基因组资源检索界面", "公開イネゲノム資源検索画面"),
       caption: localize("Public genome resource discovery", "公共基因组资源筛选", "公開ゲノム資源の探索"),
     },
     {
       src: "/software/grape/detection-results.webp",
+      className: "hero-grape",
       code: "FIELD / AI",
       alt: localize("Detected grape berries in a field image", "田间图像中被识别的葡萄果粒", "圃場画像で検出されたブドウ果粒"),
       caption: localize("Berry detection across field time series", "田间时序中的果粒检测", "圃場時系列における果粒検出"),
@@ -77,7 +80,13 @@ const ui = {
     "共同研究、学術交流、研究ソフトウェアの方法論。",
   ),
   backToTop: localize("Back to top", "返回顶部", "トップへ戻る"),
+  showEarlierPresentations: localize("Show earlier presentations", "查看历年发表", "過去の発表を見る"),
+  hideEarlierPresentations: localize("Hide earlier presentations", "折叠历年发表", "過去の発表を閉じる"),
 };
+
+const latestPresentationYear = Math.max(...presentations.map(({ year }) => Number(year)));
+const recentPresentationYearFloor = latestPresentationYear - 4;
+const recentPresentations = presentations.filter(({ year }) => Number(year) >= recentPresentationYearFloor);
 
 type SoftwareProject = (typeof softwareProjects)[number];
 type SoftwareVisual = SoftwareProject["visuals"][number];
@@ -86,6 +95,22 @@ function DownArrow() {
   return (
     <svg viewBox="0 0 16 16" aria-hidden="true">
       <path d="M8 2v10M4 8l4 4 4-4" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function UpArrow() {
+  return (
+    <svg viewBox="0 0 16 16" aria-hidden="true">
+      <path d="M8 14V4M4 8l4-4 4 4" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
+    </svg>
+  );
+}
+
+function DisclosureArrow({ open }: { open: boolean }) {
+  return (
+    <svg className={open ? "open" : ""} viewBox="0 0 16 16" aria-hidden="true">
+      <path d="m4 6 4 4 4-4" fill="none" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" />
     </svg>
   );
 }
@@ -239,7 +264,10 @@ function SoftwareCase({ project, index, locale }: { project: SoftwareProject; in
 export default function Home() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [locale, setLocale] = useState<Locale>("en");
+  const [showAllPresentations, setShowAllPresentations] = useState(false);
   const languageNames: Array<[Locale, string]> = [["en", "English"], ["zh", "中文"], ["ja", "日本語"]];
+  const visiblePresentations = showAllPresentations ? presentations : recentPresentations;
+  const earlierPresentationCount = presentations.length - recentPresentations.length;
 
   useEffect(() => {
     document.documentElement.lang = locale === "zh" ? "zh-CN" : locale === "ja" ? "ja" : "en";
@@ -252,7 +280,10 @@ export default function Home() {
         <div className="nav-shell">
           <a className="wordmark" href="#top" aria-label="Jixiao Li">
             <span className="wordmark-mark" aria-hidden="true">JL</span>
-            <span><strong>{profile.englishName}</strong><small>PLANT SCIENCE · RESEARCH SOFTWARE</small></span>
+            <span>
+              <span className="wordmark-name-line"><strong>{profile.englishName}</strong><em>{tx(profile.role, locale)}</em></span>
+              <small>PLANT SCIENCE · RESEARCH SOFTWARE</small>
+            </span>
           </a>
           <button
             className="menu-toggle"
@@ -282,14 +313,14 @@ export default function Home() {
             </h1>
             <p className="hero-lede">{tx(ui.heroLede, locale)}</p>
             <div className="identity-lines">
-              <span>{tx(profile.affiliation, locale)}</span>
+              <span><strong>{tx(profile.role, locale)}</strong><span> · {tx(profile.affiliation, locale)}</span></span>
               <a href={`mailto:${profile.email}`}>{profile.email}</a>
             </div>
           </div>
 
           <div className="hero-evidence" aria-label="Research visuals">
             {ui.heroFigures.map((figure, index) => (
-              <figure className={index === 0 ? "evidence-main" : ""} key={figure.src}>
+              <figure className={[index === 0 && "evidence-main", figure.className].filter(Boolean).join(" ")} key={figure.src}>
                 <img src={figure.src} alt={tx(figure.alt, locale)} />
                 <figcaption><span>{figure.code}</span>{tx(figure.caption, locale)}</figcaption>
               </figure>
@@ -339,14 +370,27 @@ export default function Home() {
 
         <section className="section-block" id="presentations" aria-labelledby="presentations-title">
           <SectionHeading id="presentations-title" index="03" label="SOCIETY PRESENTATIONS" title={tx(ui.sections.presentations, locale)} />
-          <div className="talk-list">
-            {presentations.map((presentation, index) => (
+          <div className="talk-list" id="presentation-list">
+            {visiblePresentations.map((presentation, index) => (
               <article key={`${presentation.year}-${index}`}>
                 <div className="talk-code"><span>{String(index + 1).padStart(2, "0")}</span><b>{presentation.year}</b></div>
                 <div><small>{tx(presentation.format, locale)}</small><h3>{tx(presentation.title, locale)}</h3><p>{tx(presentation.event, locale)}</p></div>
               </article>
             ))}
           </div>
+          {earlierPresentationCount > 0 && (
+            <button
+              className="presentation-toggle"
+              type="button"
+              aria-expanded={showAllPresentations}
+              aria-controls="presentation-list"
+              onClick={() => setShowAllPresentations((open) => !open)}
+            >
+              <span>{tx(showAllPresentations ? ui.hideEarlierPresentations : ui.showEarlierPresentations, locale)}</span>
+              {!showAllPresentations && <small>{earlierPresentationCount}</small>}
+              <DisclosureArrow open={showAllPresentations} />
+            </button>
+          )}
         </section>
 
         <section className="section-block" id="projects" aria-labelledby="projects-title">
@@ -365,7 +409,7 @@ export default function Home() {
         <section className="contact-section" id="contact" aria-labelledby="contact-title">
           <div><p className="eyebrow">CONTACT / ACADEMIC EXCHANGE</p><h2 id="contact-title">{tx(ui.contact, locale)}</h2></div>
           <address>
-            <span>{tx(profile.affiliation, locale)}</span>
+            <span><strong>{tx(profile.role, locale)}</strong><br />{tx(profile.affiliation, locale)}</span>
             <a href={`mailto:${profile.email}`}>{profile.email}</a>
             <a href={profile.scholarUrl} target="_blank" rel="noreferrer">Google Scholar ↗</a>
             <a href={profile.githubUrl} target="_blank" rel="noreferrer">GitHub ↗</a>
@@ -373,6 +417,9 @@ export default function Home() {
         </section>
       </main>
 
+      <a className="floating-back-to-top" href="#top" aria-label={tx(ui.backToTop, locale)}>
+        <span>{tx(ui.backToTop, locale)}</span><UpArrow />
+      </a>
       <footer><span>© 2026 {profile.englishName}</span><span>Research · Publications · Software</span><a href="#top">{tx(ui.backToTop, locale)} ↑</a></footer>
     </>
   );
