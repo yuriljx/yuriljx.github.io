@@ -12,6 +12,7 @@ import {
   researchProjects,
   softwareProjects,
 } from "./content";
+import { startVisitorAnalytics } from "./visitor-analytics";
 
 const tx = (value: LocalizedText | string, locale: Locale) =>
   typeof value === "string" ? value : value[locale];
@@ -406,6 +407,8 @@ export default function Home() {
   const languageNames: Array<[Locale, string]> = [["en", "English"], ["zh", "中文"], ["ja", "日本語"]];
   const visiblePresentations = showAllPresentations ? presentations : recentPresentations;
   const earlierPresentationCount = presentations.length - recentPresentations.length;
+
+  useEffect(() => startVisitorAnalytics(), []);
 
   useEffect(() => {
     document.documentElement.lang = locale === "zh" ? "zh-CN" : locale === "ja" ? "ja" : "en";
