@@ -536,7 +536,7 @@ export default function Home() {
       <header className="site-header" id="top">
         <div className="nav-shell">
           <a className="wordmark" href="#top" aria-label="Jixiao Li">
-            <span className="wordmark-mark" aria-hidden="true">JL</span>
+            <span className="wordmark-mark" aria-hidden="true" />
             <span>
               <span className="wordmark-name-line"><strong>{profile.englishName}</strong><em>{tx(profile.role, locale)}</em></span>
               <small>PLANT SCIENCE · RESEARCH SOFTWARE</small>

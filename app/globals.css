@@ -68,11 +68,9 @@ h1, h2, h3, h4, p, figure, dl, dd { margin-top: 0; }
 .wordmark-mark {
   width: 38px;
   height: 38px;
-  display: grid;
-  place-items: center;
-  border: 1px solid var(--ink);
-  font-family: var(--serif);
-  font-size: 16px;
+  flex: 0 0 38px;
+  display: block;
+  background: #fff url("/brand/li-seal-c.png") center / cover no-repeat;
 }
 .wordmark > span:last-child { display: flex; flex-direction: column; }
 .wordmark-name-line { display: flex; align-items: baseline; gap: 10px; }
@@ -604,7 +602,7 @@ footer { display: flex; justify-content: center; padding: 25px 0 42px; color: va
   .site-header { width: 100%; padding-inline: 14px; background: var(--navy); border-bottom-color: #2a4455; color: white; }
   .nav-shell { min-height: 64px; grid-template-columns: 1fr auto auto; gap: 8px; }
   .wordmark { grid-column: 1; grid-row: 1; }
-  .wordmark-mark { width: 34px; height: 34px; border-color: #8aa4b4; }
+  .wordmark-mark { width: 34px; height: 34px; flex-basis: 34px; }
   .wordmark small { color: #91a9b6; }
   .wordmark-name-line em { display: none; }
   .menu-toggle { grid-column: 2; grid-row: 1; min-width: 45px; min-height: 42px; display: inline-flex; align-items: center; justify-content: center; gap: 7px; border: 1px solid #426071; background: transparent; color: white; font-size: var(--label-xs); cursor: pointer; }
