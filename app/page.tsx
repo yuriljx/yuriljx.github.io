@@ -59,7 +59,7 @@ const ui = {
     projects: localize("Research threads", "研究项目脉络", "研究テーマ"),
   },
   scholar: localize("View full record on Google Scholar", "在 Google Scholar 查看完整记录", "Google Scholarで全記録を見る"),
-  code: localize("View public code", "查看公开代码", "公開コードを見る"),
+  code: localize("View project repository", "查看项目仓库", "プロジェクトリポジトリを見る"),
   figurePicker: localize("Figure selector", "图片选择", "図の選択"),
   showFigure: localize("Show figure", "显示图", "図を表示"),
   previousFigure: localize("Previous visual", "上一张图片", "前の画像"),
@@ -88,6 +88,19 @@ const ui = {
           alt: localize("Microspore microscopy with a scale reference", "带尺度参照的小孢子显微图像", "スケール参照を含む小胞子顕微鏡像"),
           caption: localize("Microspore morphology and scale", "小孢子形态与尺度", "小胞子の形態とスケール"),
         },
+        {
+          src: "/software/callustrack/annotation-workspace.png",
+          code: "ANNOTATION / TRACKING",
+          alt: localize("CallusTrack workspace with persistent labels on callus objects across a culture sequence", "CallusTrack 工作区中跨培养时序持续标记的愈伤组织", "培養時系列を通じてカルスを継続的に標識したCallusTrack画面"),
+          caption: localize("Persistent callus labels across culture frames", "跨培养时序帧持续追踪的愈伤组织标记", "培養時系列を通じたカルスの継続追跡"),
+          imageClassName: "crop-callus-annotation",
+        },
+        {
+          src: "/research/microspore-fluorescence.webp",
+          code: "MICROSCOPY / FLUORESCENCE",
+          alt: localize("Fluorescence micrograph of isolated rice microspores", "分离水稻小孢子的荧光显微观察图", "単離イネ小胞子の蛍光顕微鏡像"),
+          caption: localize("Fluorescence observation of isolated microspores", "分离小孢子的荧光观察", "単離小胞子の蛍光観察"),
+        },
       ],
     },
     {
@@ -96,18 +109,16 @@ const ui = {
       label: localize("Rice genome software interface visuals", "水稻基因组软件界面图片", "イネゲノムソフトウェア画面"),
       slides: [
         {
-          src: "/software/genome/overview.png",
+          src: "/software/genome/interface-overview.png",
           code: "SOFTWARE",
           alt: localize("Public rice genome resource finder interface", "水稻公共基因组资源检索界面", "公開イネゲノム資源検索画面"),
           caption: localize("Public genome resource discovery", "公共基因组资源筛选", "公開ゲノム資源の探索"),
-          imageClassName: "crop-genome",
         },
         {
-          src: "/software/genome/options.png",
+          src: "/software/genome/search-options.png",
           code: "RESOURCE / SEARCH",
           alt: localize("Search options in the rice genome resource finder", "水稻基因组资源检索工具的搜索选项", "イネゲノム資源検索ツールの検索条件"),
           caption: localize("Structured resource search options", "结构化资源搜索选项", "構造化された資源検索条件"),
-          imageClassName: "crop-genome",
         },
       ],
     },
@@ -301,85 +312,7 @@ function HeroGallery({ gallery, locale }: { gallery: HeroGalleryData; locale: Lo
   );
 }
 
-function ScientificPanel({ panel }: { panel: string }) {
-  if (panel === "audit-workbook") {
-    return (
-      <div className="scientific-panel audit-panel" aria-label="Genome resource audit workbook structure">
-        <div className="panel-topline"><span>OUTPUT / AUDIT WORKBOOK</span><strong>STRUCTURE PREVIEW</strong></div>
-        <div className="audit-flow">
-          <span><b>01</b>ALIASES</span><i>→</i><span><b>02</b>CONNECTORS</span><i>→</i>
-          <span><b>03</b>IDENTITY GATE</span><i>→</i><span><b>04</b>WORKBOOK</span>
-        </div>
-        <div className="workbook-tabs" aria-hidden="true">
-          <span className="active">Summary</span><span>All_Candidates</span><span>Input_QC</span><span>Audit_Log</span>
-        </div>
-        <div className="workbook-grid" aria-hidden="true">
-          <div className="workbook-head"><span>CULTIVAR</span><span>ACCESSION</span><span>IDENTITY</span><span>DECISION</span></div>
-          <div><span>Input row</span><span>Source ID</span><span className="ok">supported</span><span>promote</span></div>
-          <div><span>Alias hit</span><span>Source ID</span><span className="warn">review</span><span>retain</span></div>
-          <div><span>Broad hit</span><span>Source ID</span><span className="warn">noisy</span><span>flag</span></div>
-        </div>
-      </div>
-    );
-  }
-
-  if (panel === "stride-inventory") {
-    return (
-      <div className="scientific-panel stride-panel" aria-label="STRIDE-DH public matrix inventory">
-        <div className="panel-topline"><span>STRIDE-DH / DATA INVENTORY</span><strong>STRUCTURALLY VERIFIED</strong></div>
-        <div className="dataset-comparison">
-          <article>
-            <span>SUN ET AL. 2023</span><strong>224</strong><small>labelled DH samples</small>
-            <div className="matrix-bars"><i style={{ width: "100%" }} /><i style={{ width: "68%" }} /></div>
-            <dl><div><dt>SNP calls</dt><dd>6,659</dd></div><div><dt>Bin map</dt><dd>470</dd></div></dl>
-          </article>
-          <article>
-            <span>NGUYEN ET AL. 2016</span><strong>196</strong><small>non-heterozygous source rows</small>
-            <div className="matrix-bars alt"><i style={{ width: "87%" }} /><i style={{ width: "22%" }} /></div>
-            <dl><div><dt>Markers</dt><dd>37</dd></div><div><dt>Article-rule rows</dt><dd>178</dd></div></dl>
-          </article>
-        </div>
-      </div>
-    );
-  }
-
-  if (panel === "stride-dependence") {
-    return (
-      <div className="scientific-panel stride-panel" aria-label="STRIDE-DH sample dependence audit">
-        <div className="panel-topline"><span>SUN 2023 / DEPENDENCE AUDIT</span><strong>INTERPRET WITH CAUTION</strong></div>
-        <div className="dependence-visual" aria-hidden="true">
-          <div className="node-field">
-            {Array.from({ length: 22 }).map((_, index) => <i className={index % 5 === 0 ? "linked" : ""} key={index} />)}
-            <span className="edge edge-a" /><span className="edge edge-b" /><span className="edge edge-c" />
-          </div>
-          <dl>
-            <div><dt>labelled samples</dt><dd>224</dd></div>
-            <div><dt>zero-conflict edges</dt><dd>78</dd></div>
-            <div><dt>path components</dt><dd>174</dd></div>
-            <div><dt>within-component violations</dt><dd>6</dd></div>
-          </dl>
-        </div>
-      </div>
-    );
-  }
-
-  return (
-    <div className="scientific-panel stride-panel smoke-panel" aria-label="STRIDE-DH synthetic fixture smoke test">
-      <div className="panel-topline"><span>QC SMOKE / SYNTHETIC FIXTURE</span><strong>NO RESEARCH DATA</strong></div>
-      <div className="code-window">
-        <span><b>fixture</b> bundled_non_publishable_matrix_smoke_v1</span>
-        <span><b>pair</b> fixture_A ↔ fixture_B</span>
-        <span><b>comparable_markers</b> 3 / required 3</span>
-        <span><b>mismatches</b> 0</span>
-        <span><b>BH adjusted</b> [0.03, 0.06, 0.50]</span>
-        <strong>PASS — deterministic QC primitives exercised</strong>
-      </div>
-    </div>
-  );
-}
-
 function SoftwareMedia({ visual, locale }: { visual: SoftwareVisual; locale: Locale }) {
-  if (visual.kind === "panel") return <ScientificPanel panel={visual.panel} />;
   const aspect = "aspect" in visual ? visual.aspect : "1.65";
   const mask = "mask" in visual ? visual.mask : undefined;
   const crop = "crop" in visual ? visual.crop : undefined;

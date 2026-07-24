@@ -246,6 +246,7 @@ h1 {
 .hero-evidence img { width: 100%; height: 100%; object-fit: cover; }
 .hero-evidence img.crop-genome { object-position: center top; transform: scale(1.14); transform-origin: center 42%; }
 .hero-evidence img.crop-grape-detection { object-position: left center; transform: scale(1.06); transform-origin: left center; }
+.hero-evidence img.crop-callus-annotation { object-position: 50% 48%; }
 .hero-evidence figcaption {
   position: absolute;
   left: 0;
@@ -626,6 +627,7 @@ footer { display: flex; justify-content: center; padding: 25px 0 42px; color: va
   .identity-lines { flex-direction: column; gap: 3px; }
   .hero-evidence { min-height: 440px; grid-template-columns: 1fr 1fr; grid-template-rows: 1.18fr .82fr; }
   .hero-gallery.hero-main { grid-column: 1 / 3; grid-row: 1; }
+  .hero-evidence img.crop-callus-annotation { object-position: 50% 46%; }
   .hero-gallery.hero-genome { grid-column: 1; grid-row: 2; }
   .hero-gallery.hero-grape { grid-column: 2; grid-row: 2; }
   .hero-evidence figcaption { height: 68px; flex-direction: column; align-items: flex-start; justify-content: center; gap: 4px; padding: 8px 10px; }

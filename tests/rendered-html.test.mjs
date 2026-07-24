@@ -41,11 +41,28 @@ test("server-renders the finished academic portfolio", async () => {
   assert.match(html, /lijixiao327@gmail\.com/);
   assert.doesNotMatch(html, /yuriljx@gmail\.com/);
   assert.match(html, /Rice DH Record System/);
+  assert.match(html, /CallusTrack/);
   assert.match(html, /Rice Genome Resource Finder/);
   assert.match(html, /Rice Trait Evidence Explorer/);
   assert.match(html, /RicePerturbNet/);
   assert.match(html, /STRIDE-DH/);
   assert.match(html, /Grape Length/);
+  assert.match(html, /View project repository/);
+  assert.doesNotMatch(html, /View public code/);
+  assert.match(html, /https:\/\/github\.com\/yuriljx\/rice-dh-record-system-showcase/);
+  assert.match(html, /https:\/\/github\.com\/yuriljx\/callustrack-showcase/);
+  assert.match(html, /https:\/\/github\.com\/yuriljx\/rice-genome-resource-finder-showcase/);
+  assert.match(html, /https:\/\/github\.com\/yuriljx\/rice-trait-evidence-explorer-showcase/);
+  assert.match(html, /https:\/\/github\.com\/yuriljx\/riceperturbnet-showcase/);
+  assert.match(html, /https:\/\/github\.com\/yuriljx\/stride-dh-showcase/);
+  assert.match(html, /https:\/\/github\.com\/yuriljx\/Grape_Length/);
+  assert.match(html, /v0\.7\.2/);
+  assert.match(html, /v7\.14\.0/);
+  assert.match(html, /v0\.8\.4/);
+  assert.match(html, /v0\.16\.0\.dev2/);
+  assert.match(html, /v0\.2\.0/);
+  assert.match(html, /v0\.5\.0/);
+  assert.doesNotMatch(html, /v0\.5\.12|v7\.9\.8|v0\.1\.1/);
   assert.match(html, /aria-label="Select language"/);
   assert.match(html, /<span>English<\/span>/);
   assert.match(html, /<span>中文<\/span>/);
@@ -75,7 +92,11 @@ test("server-renders the finished academic portfolio", async () => {
   assert.doesNotMatch(html, /class="section-code"|class="software-index"|class="talk-code"|01—03/);
   assert.doesNotMatch(html, /Research · Publications · Software/);
   assert.doesNotMatch(html, /P2 Rice DH Record System|Aphros Trait Tool/);
-  assert.equal((html.match(/class="software-case"/g) ?? []).length, 6);
+  assert.match(html, /\/software\/callustrack\/annotation-workspace\.png/);
+  assert.match(html, /\/research\/microspore-fluorescence\.webp/);
+  assert.doesNotMatch(html, /\/software\/p2\//);
+  assert.doesNotMatch(html, /Sun 2023 sample-dependence audit/);
+  assert.equal((html.match(/class="software-case"/g) ?? []).length, 7);
 });
 
 test("keeps profile scope narrow and emits canonical social metadata", async () => {
@@ -89,10 +110,23 @@ test("keeps profile scope narrow and emits canonical social metadata", async () 
 
   const requiredAssets = [
     "../public/og.png",
-    "../public/software/p2/dashboard.png",
-    "../public/software/genome/overview.png",
-    "../public/software/trait/home.png",
-    "../public/software/riceperturb/framework.png",
+    "../public/software/rice-dh/workflow-overview.png",
+    "../public/software/callustrack/annotation-workspace.png",
+    "../public/software/callustrack/review-matrix.png",
+    "../public/software/callustrack/controlled-export.png",
+    "../public/software/genome/interface-overview.png",
+    "../public/software/genome/search-options.png",
+    "../public/software/genome/audit-output.png",
+    "../public/software/trait/evidence-overview.png",
+    "../public/software/trait/comparison-panel.png",
+    "../public/software/trait/coverage-dashboard.png",
+    "../public/software/riceperturb/architecture-overview.png",
+    "../public/software/riceperturb/scope-boundaries.png",
+    "../public/software/riceperturb/pca-qc-public-data.png",
+    "../public/software/stride/validation-pipeline.png",
+    "../public/software/stride/synthetic-calibration.png",
+    "../public/software/stride/identifiability-boundary.png",
+    "../public/research/microspore-fluorescence.webp",
     "../public/software/grape/growth-curve.png",
     "../public/software/grape/detection-results.webp",
     "../public/publications/yolo-apple-framework.webp",
