@@ -67,6 +67,11 @@ test("server-renders the finished academic portfolio", async () => {
   assert.match(html, /<span>English<\/span>/);
   assert.match(html, /<span>中文<\/span>/);
   assert.match(html, /<span>日本語<\/span>/);
+  assert.match(html, /aria-label="Switch to dark theme"/);
+  assert.match(html, /EVIDENCE GRAPH/);
+  assert.match(html, /class="evidence-graph"/);
+  assert.match(html, /Peer-reviewed papers/);
+  assert.match(html, /Research software/);
   assert.match(html, /doi\.org\/10\.2503\/hortj\.SZD-110/);
   assert.match(html, /Show earlier presentations/);
   assert.match(html, /Publications<\/a>.*Software<\/a>.*Presentations<\/a>.*Patents<\/a>.*Projects<\/a>/s);
@@ -81,19 +86,21 @@ test("server-renders the finished academic portfolio", async () => {
   assert.match(html, /CN204460473U/);
   assert.match(html, /CN204420843U/);
   assert.match(html, /CN203396717U/);
-  assert.equal((html.match(/class="hero-gallery /g) ?? []).length, 3);
+  assert.equal((html.match(/class="hero-gallery /g) ?? []).length, 2);
   assert.match(html, /aria-roledescription="carousel"/);
-  assert.match(html, /Previous visual: Field and laboratory research visuals/);
-  assert.match(html, /Next visual: Grape phenotyping visuals/);
+  assert.match(html, /Previous visual: Laboratory and culture research visuals/);
+  assert.match(html, /Next visual: Field and greenhouse research visuals/);
   assert.match(html, /class="hero-title-word/);
   assert.match(html, /<button type="button" class="floating-back-to-top/);
   assert.doesNotMatch(html, /class="floating-back-to-top[^"]*" href="#top"/);
   assert.doesNotMatch(html, /<figcaption><span>1 \/ [234]<\/span>/);
   assert.doesNotMatch(html, /class="section-code"|class="software-index"|class="talk-code"|01—03/);
   assert.doesNotMatch(html, /Research · Publications · Software/);
-  assert.doesNotMatch(html, /P2 Rice DH Record System|Aphros Trait Tool/);
+  assert.doesNotMatch(html, /P2 Rice DH Record System/);
   assert.match(html, /\/software\/callustrack\/annotation-workspace\.png/);
   assert.match(html, /\/research\/microspore-fluorescence\.webp/);
+  assert.match(html, /\/research\/rice-greenhouse\.webp/);
+  assert.match(html, /\/research\/grape-field\.webp/);
   assert.doesNotMatch(html, /\/software\/p2\//);
   assert.doesNotMatch(html, /Sun 2023 sample-dependence audit/);
   assert.equal((html.match(/class="software-case"/g) ?? []).length, 7);
@@ -127,6 +134,8 @@ test("keeps profile scope narrow and emits canonical social metadata", async () 
     "../public/software/stride/synthetic-calibration.png",
     "../public/software/stride/identifiability-boundary.png",
     "../public/research/microspore-fluorescence.webp",
+    "../public/research/rice-greenhouse.webp",
+    "../public/research/grape-field.webp",
     "../public/software/grape/growth-curve.png",
     "../public/software/grape/detection-results.webp",
     "../public/publications/yolo-apple-framework.webp",

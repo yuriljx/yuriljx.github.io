@@ -58,7 +58,7 @@ test("uses the Cloudflare locale endpoint and falls back safely to English", asy
   assert.equal(await requestDetectedLocale(async () => { throw new Error("offline"); }), "en");
 });
 
-test("renders one globe dropdown and places it to the right of Menu on mobile", async () => {
+test("renders one globe dropdown and keeps language and theme tools to the right of Menu on mobile", async () => {
   const [pageSource, styles] = await Promise.all([
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
@@ -66,9 +66,11 @@ test("renders one globe dropdown and places it to the right of Menu on mobile", 
 
   assert.match(pageSource, /function GlobeIcon\(\)/);
   assert.match(pageSource, /aria-controls="language-options"/);
+  assert.match(pageSource, /className="theme-toggle"/);
+  assert.match(pageSource, /jixiao-theme/);
   assert.doesNotMatch(pageSource, /className="language-switch"/);
   assert.match(styles, /\.menu-toggle \{ grid-column: 2; grid-row: 1;/);
-  assert.match(styles, /\.language-menu \{ grid-column: 3; grid-row: 1;/);
+  assert.match(styles, /\.header-tools \{ grid-column: 3; grid-row: 1;/);
 });
 
 test("keeps CJK closing punctuation with the preceding title phrase", () => {
