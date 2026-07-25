@@ -70,6 +70,8 @@ test("server-renders the finished academic portfolio", async () => {
   assert.match(html, /aria-label="Switch to dark theme"/);
   assert.match(html, /EVIDENCE GRAPH/);
   assert.match(html, /class="evidence-graph"/);
+  assert.match(html, /class="graph-hint-desktop">Hover to trace links/);
+  assert.match(html, /class="graph-hint-mobile">Tap a project node to jump/);
   assert.match(html, /Peer-reviewed papers/);
   assert.match(html, /Research software/);
   assert.match(html, /doi\.org\/10\.2503\/hortj\.SZD-110/);

@@ -83,6 +83,25 @@ test("keeps CJK closing punctuation with the preceding title phrase", () => {
   assert.deepEqual(english.tokens, ["Aligning", "field", "observations"]);
 });
 
+test("uses the approved mobile evidence layout and touch-friendly graph behavior", async () => {
+  const [pageSource, styles] = await Promise.all([
+    readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
+    readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
+  ]);
+
+  assert.match(pageSource, /graphHintMobile: localize\(/);
+  assert.match(pageSource, /canvas\.addEventListener\("pointerdown", locatePointer\)/);
+  assert.match(pageSource, /findNodeAt\(event\.clientX, event\.clientY, narrowViewport\.matches \? 28 : 20\)/);
+  assert.match(pageSource, /const compressVertically = narrowViewport\.matches && width < 470/);
+  assert.match(pageSource, /const label = narrowViewport\.matches && width < 470 \? node\.shortLabel : node\.label/);
+  assert.match(pageSource, /width >= 380 \|\| \(narrowViewport\.matches && width >= 300\)/);
+  assert.match(styles, /\.hero-stats \{[\s\S]*?grid-template-columns: repeat\(4, minmax\(0, 1fr\)\)/);
+  assert.match(styles, /@media \(max-width: 860px\)[\s\S]*?grid-template-columns: repeat\(auto-fit, minmax\(118px, 1fr\)\)/);
+  assert.match(styles, /@media \(max-width: 860px\)[\s\S]*?\.evidence-graph \{ grid-column: 1 \/ 3; grid-row: 1; aspect-ratio: 1\.2; \}/);
+  assert.match(styles, /\.hero-gallery\.evidence-lab \{ grid-column: 1; grid-row: 2; aspect-ratio: 1\.1; \}/);
+  assert.match(styles, /\.hero-gallery\.evidence-field \{ grid-column: 2; grid-row: 2; aspect-ratio: 1\.1; \}/);
+});
+
 test("scrolls explicitly to the page origin and respects reduced motion", () => {
   const calls = [];
   const smoothView = {

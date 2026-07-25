@@ -84,6 +84,11 @@ const ui = {
     "悬停查看关联 · 点击项目节点跳转",
     "カーソルで関連表示・ノードをクリック",
   ),
+  graphHintMobile: localize(
+    "Tap a project node to jump",
+    "点按项目节点跳转对应软件",
+    "ノードをタップして移動",
+  ),
   graphJump: localize("Project links", "项目链接", "プロジェクトリンク"),
   legendField: localize("Field", "田间观测", "圃場観測"),
   legendMethod: localize("Method", "计算方法", "計算手法"),
@@ -276,21 +281,22 @@ function EvidenceGraph({ locale, theme }: { locale: Locale; theme: Theme }) {
     if (!canvas || !context) return;
 
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    const narrowViewport = window.matchMedia("(max-width: 860px)");
     const nodes = [
-      { x: .10, y: .22, label: "Haskap", group: 0 },
-      { x: .14, y: .44, label: "Grape", group: 0 },
-      { x: .10, y: .64, label: "Rice", group: 0 },
-      { x: .08, y: .84, label: "Microspore", group: 0 },
-      { x: .23, y: .34, label: "Field imaging", group: 0 },
-      { x: .45, y: .16, label: "Ploidy / DH", group: 1, href: "software-rice-dh-record" },
-      { x: .43, y: .40, label: "RGB features", group: 1 },
-      { x: .49, y: .62, label: "GC–MS", group: 1 },
-      { x: .44, y: .85, label: "YOLOv8", group: 1, href: "software-grape-length" },
-      { x: .54, y: .28, label: "Time series", group: 1 },
-      { x: .86, y: .22, label: "CallusTrack", group: 2, href: "software-callustrack" },
-      { x: .90, y: .45, label: "Genome Finder", group: 2, href: "software-genome-finder" },
-      { x: .84, y: .67, label: "Trait Explorer", group: 2, href: "software-trait-explorer" },
-      { x: .90, y: .85, label: "Provenance", group: 2 },
+      { x: .10, y: .22, label: "Haskap", shortLabel: "Haskap", group: 0 },
+      { x: .14, y: .44, label: "Grape", shortLabel: "Grape", group: 0 },
+      { x: .10, y: .64, label: "Rice", shortLabel: "Rice", group: 0 },
+      { x: .08, y: .84, label: "Microspore", shortLabel: "µspore", group: 0 },
+      { x: .23, y: .34, label: "Field imaging", shortLabel: "Imaging", group: 0 },
+      { x: .45, y: .16, label: "Ploidy / DH", shortLabel: "Ploidy", group: 1, href: "software-rice-dh-record" },
+      { x: .43, y: .40, label: "RGB features", shortLabel: "RGB", group: 1 },
+      { x: .49, y: .62, label: "GC–MS", shortLabel: "GC–MS", group: 1 },
+      { x: .44, y: .85, label: "YOLOv8", shortLabel: "YOLOv8", group: 1, href: "software-grape-length" },
+      { x: .54, y: .28, label: "Time series", shortLabel: "Series", group: 1 },
+      { x: .86, y: .22, label: "CallusTrack", shortLabel: "Callus", group: 2, href: "software-callustrack" },
+      { x: .90, y: .45, label: "Genome Finder", shortLabel: "Genome", group: 2, href: "software-genome-finder" },
+      { x: .84, y: .67, label: "Trait Explorer", shortLabel: "Trait", group: 2, href: "software-trait-explorer" },
+      { x: .90, y: .85, label: "Provenance", shortLabel: "Source", group: 2 },
     ].map((node, index) => ({
       ...node,
       phase: index * .7,
@@ -330,8 +336,27 @@ function EvidenceGraph({ locale, theme }: { locale: Locale; theme: Theme }) {
       hovered = -1;
       canvas.style.cursor = "default";
     };
-    const activateNode = () => {
-      const target = hovered >= 0 ? nodes[hovered] : null;
+    const findNodeAt = (clientX: number, clientY: number, hitRadius: number) => {
+      const rect = canvas.getBoundingClientRect();
+      const x = clientX - rect.left;
+      const y = clientY - rect.top;
+      let closest = hitRadius * hitRadius;
+      let match = -1;
+      nodes.forEach((node, index) => {
+        const dx = node.px - x;
+        const dy = node.py - y;
+        const distance = dx * dx + dy * dy;
+        if (distance < closest) {
+          closest = distance;
+          match = index;
+        }
+      });
+      return match;
+    };
+    const activateNode = (event: MouseEvent) => {
+      const directHit = findNodeAt(event.clientX, event.clientY, narrowViewport.matches ? 28 : 20);
+      const targetIndex = directHit >= 0 ? directHit : hovered;
+      const target = targetIndex >= 0 ? nodes[targetIndex] : null;
       if (!target?.href) return;
       document.getElementById(target.href)?.scrollIntoView({
         behavior: reducedMotion ? "auto" : "smooth",
@@ -340,6 +365,7 @@ function EvidenceGraph({ locale, theme }: { locale: Locale; theme: Theme }) {
     };
 
     canvas.addEventListener("pointermove", locatePointer);
+    canvas.addEventListener("pointerdown", locatePointer);
     canvas.addEventListener("pointerleave", clearPointer);
     canvas.addEventListener("click", activateNode);
 
@@ -369,9 +395,11 @@ function EvidenceGraph({ locale, theme }: { locale: Locale; theme: Theme }) {
       }
 
       const drift = reducedMotion ? 0 : 1;
+      const compressVertically = narrowViewport.matches && width < 470;
       nodes.forEach((node) => {
         node.px = (node.x + Math.sin(elapsed * .45 + node.phase) * .004 * drift) * width;
-        node.py = (node.y + Math.cos(elapsed * .4 + node.phase) * .006 * drift) * height;
+        const verticalPosition = compressVertically ? .28 + node.y * .58 : node.y;
+        node.py = (verticalPosition + Math.cos(elapsed * .4 + node.phase) * .006 * drift) * height;
       });
 
       hovered = -1;
@@ -406,7 +434,7 @@ function EvidenceGraph({ locale, theme }: { locale: Locale; theme: Theme }) {
         context.stroke();
       });
 
-      const wide = width >= 380;
+      const wide = width >= 380 || (narrowViewport.matches && width >= 300);
       context.textBaseline = "middle";
       nodes.forEach((node, index) => {
         const progress = reducedMotion ? 1 : Math.max(0, Math.min(1, (elapsed - .05 - index * .045) / .4));
@@ -438,11 +466,12 @@ function EvidenceGraph({ locale, theme }: { locale: Locale; theme: Theme }) {
 
         if (index === hovered || (wide && elapsed >= 1 && (hovered < 0 || active))) {
           const alignRight = node.group !== 2;
+          const label = narrowViewport.matches && width < 470 ? node.shortLabel : node.label;
           context.font = `${index === hovered ? 600 : 400} ${index === hovered ? 11 : 9.5}px "IBM Plex Mono", monospace`;
           context.textAlign = alignRight ? "left" : "right";
           context.globalAlpha = index === hovered ? 1 : hovered < 0 ? .72 : .95;
           context.fillStyle = index === hovered ? color : palette.text;
-          context.fillText(node.label, alignRight ? node.px + radius + 6 : node.px - radius - 6, node.py);
+          context.fillText(label, alignRight ? node.px + radius + 6 : node.px - radius - 6, node.py);
         }
       });
       context.globalAlpha = 1;
@@ -454,6 +483,7 @@ function EvidenceGraph({ locale, theme }: { locale: Locale; theme: Theme }) {
     return () => {
       window.cancelAnimationFrame(animationFrame);
       canvas.removeEventListener("pointermove", locatePointer);
+      canvas.removeEventListener("pointerdown", locatePointer);
       canvas.removeEventListener("pointerleave", clearPointer);
       canvas.removeEventListener("click", activateNode);
     };
@@ -464,7 +494,8 @@ function EvidenceGraph({ locale, theme }: { locale: Locale; theme: Theme }) {
       <canvas ref={canvasRef} aria-hidden="true" />
       <div className="evidence-graph-heading" aria-hidden="true">
         <span>EVIDENCE GRAPH</span>
-        <small>{tx(ui.graphHint, locale)}</small>
+        <small className="graph-hint-desktop">{tx(ui.graphHint, locale)}</small>
+        <small className="graph-hint-mobile">{tx(ui.graphHintMobile, locale)}</small>
       </div>
       <div className="evidence-graph-legend" aria-hidden="true">
         <span><i className="legend-field" />{tx(ui.legendField, locale)}</span>
