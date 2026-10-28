@@ -28,118 +28,116 @@ async function render() {
   );
 }
 
-test("server-renders the finished academic portfolio", async () => {
+test("server-renders the CV-aligned academic portfolio", async () => {
   const response = await render();
   assert.equal(response.status, 200);
   assert.match(response.headers.get("content-type") ?? "", /^text\/html\b/i);
 
   const html = await response.text();
   assert.match(html, /<html lang="en">/);
-  assert.match(html, /<title>Jixiao Li \| Plant Science &amp; Research Software<\/title>/);
-  assert.match(html, /Graduate School of Agriculture, Hokkaido University/);
+  assert.match(html, /<title>Jixiao Li, PhD \| Plant Breeding &amp; Non-destructive Phenotyping<\/title>/);
+  assert.match(html, /application\/ld\+json/);
+
+  // Identity is aligned with the October 2026 CV.
+  assert.match(html, /Experimental Farm, Field Science Center for Northern Biosphere, Hokkaido University/);
+  assert.doesNotMatch(html, /Graduate School of Agriculture, Hokkaido University/);
   assert.match(html, /Postdoctoral Researcher/);
-  assert.match(html, /lijixiao327@gmail\.com/);
-  assert.doesNotMatch(html, /yuriljx@gmail\.com/);
-  assert.match(html, /Rice DH Record System/);
-  assert.match(html, /CallusTrack/);
-  assert.match(html, /Rice Genome Resource Finder/);
-  assert.match(html, /Rice Trait Evidence Explorer/);
-  assert.match(html, /RicePerturbNet/);
-  assert.match(html, /STRIDE-DH/);
-  assert.match(html, /Grape Length/);
-  assert.match(html, /View project repository/);
-  assert.doesNotMatch(html, /View public code/);
-  assert.match(html, /https:\/\/github\.com\/yuriljx\/rice-dh-record-system-showcase/);
-  assert.match(html, /https:\/\/github\.com\/yuriljx\/callustrack-showcase/);
-  assert.match(html, /https:\/\/github\.com\/yuriljx\/rice-genome-resource-finder-showcase/);
-  assert.match(html, /https:\/\/github\.com\/yuriljx\/rice-trait-evidence-explorer-showcase/);
-  assert.match(html, /https:\/\/github\.com\/yuriljx\/riceperturbnet-showcase/);
-  assert.match(html, /https:\/\/github\.com\/yuriljx\/stride-dh-showcase/);
-  assert.match(html, /https:\/\/github\.com\/yuriljx\/Grape_Length/);
-  assert.match(html, /v0\.7\.2/);
-  assert.match(html, /v7\.14\.0/);
-  assert.match(html, /v0\.8\.4/);
-  assert.match(html, /v0\.16\.0\.dev2/);
-  assert.match(html, /v0\.2\.0/);
-  assert.match(html, /v0\.5\.0/);
-  assert.doesNotMatch(html, /v0\.5\.12|v7\.9\.8|v0\.1\.1/);
+  assert.match(html, /mailto:[^"\s<>]+@[^"\s<>]+/);
+  assert.match(html, /0000-0003-2377-1011/);
+  assert.doesNotMatch(html, /tel:|\+\d[\d\s().-]{7,}/i, "phone numbers must stay off the public site");
+  assert.doesNotMatch(html, /\b\d+\s+citations\b|h-index/i, "citation counts are not emphasised");
+
+  // Hero and key numbers.
+  assert.match(html, /class="hero-title-word/);
+  assert.match(html, /Peer-reviewed journal articles/);
+  assert.match(html, /First-author articles/);
+  assert.match(html, /Manuscripts submitted \/ under review/);
+  assert.match(html, /PI grant proposals under review/);
+  assert.match(html, /class="live-figure"/);
+  assert.match(html, /role="tablist"/);
+  assert.equal((html.match(/class="hero-gallery /g) ?? []).length, 2);
+  assert.match(html, /aria-roledescription="carousel"/);
+
+  // Navigation order.
+  assert.match(html, /Research<\/a>.*Publications<\/a>.*Software<\/a>.*Talks &amp; teaching<\/a>.*Background<\/a>.*Contact<\/a>/s);
+  assert.match(html, /id="research".*id="publications".*id="software".*id="teaching".*id="background".*id="contact"/s);
+
+  // Research themes.
+  assert.match(html, /Rice breeding methods/);
+  assert.match(html, /Non-destructive phenotyping in the field/);
+  assert.match(html, /Ploidy, phenotype and fruit quality/);
+  assert.match(html, /0\.931/);
+  assert.match(html, /89 detached berries/);
+
+  // Publications and manuscripts.
+  assert.equal((html.match(/class="publication-item/g) ?? []).length, 8);
+  assert.equal((html.match(/class="publication-item is-first"/g) ?? []).length, 4);
+  assert.match(html, /doi\.org\/10\.2503\/hortj\.SZD-110/);
+  assert.match(html, /95\(3\), 378–388/);
+  assert.match(html, /Plant, Cell &amp; Environment/);
+  assert.match(html, /within-family genomic prediction in rice nested association mapping families/);
+
+  // Software: two open packages, five showcase tools, STRIDE-DH retired.
+  assert.match(html, /Grape_Length/);
+  assert.match(html, /Rice genomic selection: frozen-prediction reproduction/);
+  assert.match(html, /10\.5281\/zenodo\.23438608/);
+  assert.match(html, /https:\/\/github\.com\/yuriljx\/rice-genomic-selection-validation/);
+  assert.equal((html.match(/class="open-card"/g) ?? []).length, 2);
+  assert.equal((html.match(/class="tool-card"/g) ?? []).length, 5);
+  for (const repo of ["rice-dh-record-system-showcase", "callustrack-showcase", "rice-genome-resource-finder-showcase", "rice-trait-evidence-explorer-showcase", "riceperturbnet-showcase"]) {
+    assert.match(html, new RegExp(`https://github\\.com/yuriljx/${repo}`));
+  }
+  assert.doesNotMatch(html, /STRIDE-DH|stride-dh-showcase/);
+
+  // Talks and teaching.
+  assert.match(html, /Beyond disciplinary boundaries/);
+  assert.match(html, /youtu\.be\/tVO-jczRqH4/);
+  assert.match(html, /youtu\.be\/vgzPPp1OPFU/);
+  assert.match(html, /youtu\.be\/hOwTLg4ojQg/);
+  assert.match(html, /Show earlier presentations/);
+  assert.doesNotMatch(html, /Science and Engineering Fair/);
+
+  // Background, patents, language and theme controls.
+  assert.match(html, /Hebei Tongbiao Testing Technology/);
+  assert.match(html, /1,480/);
+  assert.match(html, /class="patent-summary"[^>]*aria-expanded="false"/);
+  assert.match(html, /id="patent-list" hidden=""/);
+  for (const number of ["CN117747967A", "CN117747955A", "CN212808065U", "CN109201659A", "CN204460473U", "CN204420843U", "CN203396717U"]) {
+    assert.match(html, new RegExp(number));
+  }
   assert.match(html, /aria-label="Select language"/);
   assert.match(html, /<span>English<\/span>/);
   assert.match(html, /<span>中文<\/span>/);
   assert.match(html, /<span>日本語<\/span>/);
   assert.match(html, /aria-label="Switch to dark theme"/);
-  assert.match(html, /EVIDENCE GRAPH/);
-  assert.match(html, /class="evidence-graph"/);
-  assert.match(html, /class="graph-hint-desktop">Hover to trace links/);
-  assert.match(html, /class="graph-hint-mobile">Tap a project node to jump/);
-  assert.match(html, /Peer-reviewed papers/);
-  assert.match(html, /Research software/);
-  assert.match(html, /doi\.org\/10\.2503\/hortj\.SZD-110/);
-  assert.match(html, /Show earlier presentations/);
-  assert.match(html, /Publications<\/a>.*Software<\/a>.*Presentations<\/a>.*Patents<\/a>.*Projects<\/a>/s);
-  assert.match(html, /id="presentations".*id="patents".*id="projects"/s);
-  assert.match(html, /class="patent-summary"[^>]*aria-expanded="false"/);
-  assert.match(html, /id="patent-list" hidden=""/);
-  assert.match(html, /7 patent records/);
-  assert.match(html, /CN117747967A/);
-  assert.match(html, /CN117747955A/);
-  assert.match(html, /CN212808065U/);
-  assert.match(html, /CN109201659A/);
-  assert.match(html, /CN204460473U/);
-  assert.match(html, /CN204420843U/);
-  assert.match(html, /CN203396717U/);
-  assert.equal((html.match(/class="hero-gallery /g) ?? []).length, 2);
-  assert.match(html, /aria-roledescription="carousel"/);
-  assert.match(html, /Previous visual: Laboratory and culture research visuals/);
-  assert.match(html, /Next visual: Field and greenhouse research visuals/);
-  assert.match(html, /class="hero-title-word/);
   assert.match(html, /<button type="button" class="floating-back-to-top/);
-  assert.doesNotMatch(html, /class="floating-back-to-top[^"]*" href="#top"/);
-  assert.doesNotMatch(html, /<figcaption><span>1 \/ [234]<\/span>/);
-  assert.doesNotMatch(html, /class="section-code"|class="software-index"|class="talk-code"|01—03/);
-  assert.doesNotMatch(html, /Research · Publications · Software/);
-  assert.doesNotMatch(html, /P2 Rice DH Record System/);
-  assert.match(html, /\/software\/callustrack\/annotation-workspace\.png/);
-  assert.match(html, /\/research\/microspore-fluorescence\.webp/);
-  assert.match(html, /\/research\/rice-greenhouse\.webp/);
-  assert.match(html, /\/research\/grape-field\.webp/);
-  assert.doesNotMatch(html, /\/software\/p2\//);
-  assert.doesNotMatch(html, /Sun 2023 sample-dependence audit/);
-  assert.equal((html.match(/class="software-case"/g) ?? []).length, 7);
 });
 
-test("keeps profile scope narrow and emits canonical social metadata", async () => {
+test("emits canonical social metadata and ships required assets", async () => {
   const response = await render();
   const html = await response.text();
 
-  assert.doesNotMatch(html, /教育背景|工作经历|employment history|curriculum vitae/i);
   assert.doesNotMatch(html, /codex-preview|Starter Project|Your site is taking shape/i);
   assert.match(html, /property="og:image" content="https:\/\/yuriljx\.github\.io\/og\.png"/);
   assert.match(html, /name="twitter:card" content="summary_large_image"/);
 
   const requiredAssets = [
     "../public/og.png",
-    "../public/software/rice-dh/workflow-overview.png",
-    "../public/software/callustrack/annotation-workspace.png",
-    "../public/software/callustrack/review-matrix.png",
-    "../public/software/callustrack/controlled-export.png",
-    "../public/software/genome/interface-overview.png",
-    "../public/software/genome/search-options.png",
-    "../public/software/genome/audit-output.png",
-    "../public/software/trait/evidence-overview.png",
-    "../public/software/trait/comparison-panel.png",
-    "../public/software/trait/coverage-dashboard.png",
-    "../public/software/riceperturb/architecture-overview.png",
-    "../public/software/riceperturb/scope-boundaries.png",
-    "../public/software/riceperturb/pca-qc-public-data.png",
-    "../public/software/stride/validation-pipeline.png",
-    "../public/software/stride/synthetic-calibration.png",
-    "../public/software/stride/identifiability-boundary.png",
+    "../public/brand/li-calligraphy-seal.png",
+    "../public/research/anther-culture.webp",
     "../public/research/microspore-fluorescence.webp",
     "../public/research/rice-greenhouse.webp",
     "../public/research/grape-field.webp",
-    "../public/software/grape/growth-curve.png",
+    "../public/research/haskap-field.webp",
+    "../public/research/haskap-fruit.webp",
+    "../public/software/grape/growth-curve.webp",
     "../public/software/grape/detection-results.webp",
+    "../public/software/grape/mature-stage.webp",
+    "../public/software/rice-dh/workflow-overview.webp",
+    "../public/software/callustrack/annotation-workspace.webp",
+    "../public/software/genome/interface-overview.webp",
+    "../public/software/trait/evidence-overview.webp",
+    "../public/software/riceperturb/architecture-overview.webp",
     "../public/publications/yolo-apple-framework.webp",
     "../public/publications/ice-nuclei-microscopy.webp",
   ];
@@ -147,4 +145,6 @@ test("keeps profile scope narrow and emits canonical social metadata", async () 
 
   const og = await readFile(new URL("../public/og.png", import.meta.url));
   assert.deepEqual([...og.subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10]);
+  assert.equal(og.readUInt32BE(16), 1200);
+  assert.equal(og.readUInt32BE(20), 630);
 });

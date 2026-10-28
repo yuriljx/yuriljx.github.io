@@ -3,456 +3,820 @@ export type LocalizedText = Record<Locale, string>;
 
 export const localize = (en: string, zh: string, ja: string): LocalizedText => ({ en, zh, ja });
 
+/* ------------------------------------------------------------------ */
+/* Identity — every fact below is aligned with the October 2026 CV.     */
+/* ------------------------------------------------------------------ */
+
 export const profile = {
   englishName: "Jixiao Li",
-  role: localize("Postdoctoral Researcher", "博士后研究员", "博士研究員"),
+  nativeName: localize("Jixiao Li, PhD", "李继潇", "李 継瀟"),
+  role: localize("Postdoctoral Researcher", "博士后研究员", "学術研究員"),
+  roleDetail: localize("Postdoctoral Researcher (学術研究員)", "博士后研究员（学術研究員）", "学術研究員（博士研究員）"),
   affiliation: localize(
-    "Graduate School of Agriculture, Hokkaido University",
-    "北海道大学农学院",
-    "北海道大学大学院農学院",
+    "Experimental Farm, Field Science Center for Northern Biosphere, Hokkaido University",
+    "北海道大学北方生物圈领域科学中心 生物生产研究农场",
+    "北海道大学 北方生物圏フィールド科学センター 生物生産研究農場",
   ),
+  affiliationShort: localize(
+    "Field Science Center for Northern Biosphere, Hokkaido University",
+    "北海道大学北方生物圈领域科学中心",
+    "北海道大学 北方生物圏フィールド科学センター",
+  ),
+  location: localize("Sapporo, Japan", "日本札幌", "札幌"),
   email: "lijixiao327@gmail.com",
+  orcid: "0000-0003-2377-1011",
+  orcidUrl: "https://orcid.org/0000-0003-2377-1011",
   scholarUrl: "https://scholar.google.com/citations?user=m2FLOrUAAAAJ&hl=en",
   githubUrl: "https://github.com/yuriljx",
+  updated: localize("Updated October 2026", "更新于 2026 年 10 月", "2026年10月更新"),
 };
 
-export const researchFocus = [
+export const keyNumbers = [
+  { value: 8, label: localize("Peer-reviewed journal articles", "篇同行评审期刊论文", "査読付き原著論文") },
+  { value: 4, label: localize("First-author articles", "篇第一作者论文", "筆頭著者論文") },
+  { value: 3, label: localize("Manuscripts submitted / under review", "篇稿件已投稿 / 在审", "投稿中・審査中の原稿") },
+  { value: 2, label: localize("PI grant proposals under review", "项主持基金申请在审", "研究代表者として審査中の助成申請") },
+] as const;
+
+/* ------------------------------------------------------------------ */
+/* Latest activity                                                      */
+/* ------------------------------------------------------------------ */
+
+export const latest = [
   {
-    code: "01",
-    title: localize("Crop phenotyping & quality", "作物表型与品质", "作物表現型と品質"),
-    description: localize(
-      "Extracting interpretable crop traits from field images, experimental measurements and time series.",
-      "从田间影像、实验测量与时间序列中提取可解释的作物性状。",
-      "圃場画像、実験計測、時系列から解釈可能な作物形質を抽出します。",
+    date: "2026-10",
+    label: localize("Oct 2026", "2026.10", "2026年10月"),
+    kind: localize("Appointment", "任职", "着任"),
+    text: localize(
+      "Joined the Experimental Farm of the Field Science Center for Northern Biosphere as a Postdoctoral Researcher.",
+      "转入北方生物圈领域科学中心 生物生产研究农场，任博士后研究员。",
+      "北方生物圏フィールド科学センター 生物生産研究農場の学術研究員に着任。",
     ),
   },
   {
-    code: "02",
-    title: localize("Breeding & culture systems", "育种与培养体系", "育種と培養系"),
-    description: localize(
-      "Investigating ploidy, anther culture and non-Mendelian recovery bias in crop breeding.",
-      "关注倍性变化、花药培养与非孟德尔恢复偏倚等育种问题。",
-      "倍数性、葯培養、非メンデル型回収バイアスなどの育種課題を研究します。",
+    date: "2026-10",
+    label: localize("Oct 2026", "2026.10", "2026年10月"),
+    kind: localize("Manuscript", "稿件", "論文"),
+    text: localize(
+      "Sole-author study on within-family genomic prediction in rice NAM families submitted to Rice; reproduction package archived on Zenodo.",
+      "水稻 NAM 家系内基因组预测的唯一作者研究已投稿 Rice；配套复现软件包已在 Zenodo 存档。",
+      "イネNAM家系内のゲノム予測に関する単著論文を Rice に投稿。再現用パッケージを Zenodo に公開。",
     ),
+    href: "#publications",
   },
   {
-    code: "03",
-    title: localize("Research software & evidence", "研究软件与证据", "研究ソフトウェアとエビデンス"),
-    description: localize(
-      "Supporting research decisions with traceable data structures, audit boundaries and reproducible workflows.",
-      "以可追溯数据结构、审计边界和可复现流程支撑研究判断。",
-      "追跡可能なデータ構造、監査境界、再現可能なワークフローで研究判断を支えます。",
+    date: "2026-09",
+    label: localize("Sep 2026", "2026.09", "2026年9月"),
+    kind: localize("Proposal", "基金申请", "研究費申請"),
+    text: localize(
+      "Submitted a JSPS KAKENHI Early-Career Scientists proposal as PI: time-series imaging to predict shoot formation in rice culture tissue.",
+      "以主持人身份提交 JSPS 科研费若手研究申请：以时间序列图像早期判定水稻培养组织的成苗可能性。",
+      "研究代表者として科研費・若手研究に応募：時系列画像によるイネ培養組織のシュート形成可能性の早期判定。",
     ),
+    href: "#research",
+  },
+  {
+    date: "2026",
+    label: localize("2026", "2026", "2026年"),
+    kind: localize("Teaching", "教学", "教育"),
+    text: localize(
+      "Three Japanese-language video lectures on AI in agriculture, produced for Hokkaido University's Smart Agriculture Education Hub (MAFF-commissioned).",
+      "为北海道大学智能农业教育基地制作的 3 部日语 AI 农业教学视频（农林水产省委托项目）。",
+      "北海道大学スマート農業教育拠点向けに、農業AIに関する日本語講義動画3本を制作（農林水産省委託事業）。",
+    ),
+    href: "#teaching",
   },
 ] as const;
 
+/* ------------------------------------------------------------------ */
+/* Research                                                             */
+/* ------------------------------------------------------------------ */
+
+export const researchThread = localize(
+  "Across crops the question stays the same: what can be measured earlier, more cheaply and without destroying the material — and where do limited measurements change a selection decision?",
+  "无论哪种作物，问题都是同一个：哪些性状能更早、更省、且不破坏材料地被测量？有限的测量应该投在哪里，才能真正改变选择决策？",
+  "作物が変わっても問いは同じです。何を、より早く、より安価に、材料を壊さずに測れるか。そして限られた測定をどこに配分すれば選抜の判断が変わるか。",
+);
+
+export const researchThemes = [
+  {
+    id: "rice",
+    index: "01",
+    status: localize("Current", "当前", "現在"),
+    title: localize("Rice breeding methods", "水稻育种方法", "イネ育種法"),
+    question: localize(
+      "Which anther-culture calli will form green shoots — and can that be called early, from images, without disturbing the culture?",
+      "哪些花药培养愈伤组织会长出绿色苗？能否在早期仅凭图像、不干扰培养就做出判断？",
+      "どの葯培養カルスが緑色シュートを形成するのか。培養を乱さず、画像だけで早期に判定できるか。",
+    ),
+    body: localize(
+      "Rice anther-culture and microspore-isolation experiments for doubled-haploid production, with individual calli tracked by time-series imaging and every step kept in traceable experiment records. In parallel, a sole-author computational study (submitted to Rice) reports that phenotyping part of a target family improves within-family genomic prediction in rice NAM families.",
+      "开展面向双单倍体（DH）生产的水稻花药培养与小孢子分离实验，以时间序列图像追踪单个愈伤组织，并保留完整可追溯的实验记录。同时独立完成的计算研究（已投稿 Rice）显示：对目标家系部分个体进行表型测定，可提升水稻 NAM 家系内的基因组预测。",
+      "倍加半数体（DH）作出のためのイネ葯培養・小胞子単離実験を行い、個々のカルスを時系列画像で追跡し、全工程を追跡可能な実験記録として残しています。並行して、標的家系の一部を表現型評価するとイネNAM家系内のゲノム予測が向上することを、単著の計算研究として報告しました（Rice 投稿中）。",
+    ),
+    evidence: [
+      { value: "PI", label: localize("JSPS KAKENHI proposal, under review", "JSPS 科研费申请（主持，在审）", "科研費・若手研究（代表、審査中）") },
+      { value: "1", label: localize("Sole-author manuscript submitted to Rice", "篇唯一作者稿件已投 Rice", "Rice 投稿中の単著論文") },
+      { value: "DOI", label: localize("Open reproduction package (Zenodo)", "开放复现软件包（Zenodo）", "再現用パッケージ（Zenodo）") },
+    ],
+    links: [
+      { label: localize("Reproduction package", "复现软件包", "再現パッケージ"), href: "#software-rice-gs" },
+      { label: "CallusTrack", href: "#tool-callustrack" },
+      { label: "Rice DH Record System", href: "#tool-rice-dh-record" },
+    ],
+    tags: ["Anther culture", "Doubled haploids", "Time-series imaging", "Genomic prediction"],
+    images: [
+      { src: "/research/anther-culture.webp", width: 1600, height: 1067, alt: localize("Rice anther-culture material in a Petri dish with a scale reference", "培养皿中带尺度参照的水稻花药培养材料", "スケール参照を含むシャーレ内のイネ葯培養材料"), caption: localize("Anther-culture material", "花药培养材料", "葯培養材料") },
+      { src: "/research/microspore-fluorescence.webp", width: 640, height: 480, alt: localize("Fluorescence micrograph of isolated rice microspores", "分离水稻小孢子的荧光显微图", "単離イネ小胞子の蛍光顕微鏡像"), caption: localize("Isolated microspores, fluorescence", "分离小孢子荧光观察", "単離小胞子の蛍光観察") },
+      { src: "/research/rice-greenhouse.webp", width: 1400, height: 1000, alt: localize("Rice plants growing in a greenhouse", "温室中的水稻植株", "温室で栽培中のイネ"), caption: localize("Donor plants in the greenhouse", "温室中的供体植株", "温室の供試植物") },
+    ],
+  },
+  {
+    id: "field",
+    index: "02",
+    status: localize("Published", "已发表", "発表済み"),
+    title: localize("Non-destructive phenotyping in the field", "田间无损表型", "圃場における非破壊表現型評価"),
+    question: localize(
+      "Can ordinary field photographs replace calipers for following fruit growth through a season?",
+      "普通的田间照片，能否替代卡尺，追踪果实整个季节的生长？",
+      "普通の圃場写真で、ノギスに代わって果実の一季節の成長を追えるか。",
+    ),
+    body: localize(
+      "An end-to-end pipeline recovers grape-berry growth curves from field photographs: object detection (YOLOv8), scale conversion, biology-informed smoothing and double-sigmoid fitting. As co-author, I contributed to related image-based studies on RGB estimation of haskap fruit quality, apple cultivar recognition and foundation-model-assisted leaf and stomatal phenotyping of blueberry (under review).",
+      "建立从普通田间照片恢复葡萄果粒生长曲线的完整流程：目标检测（YOLOv8）、尺度换算、生物学约束平滑与双 S 型拟合。作为合作作者，参与蓝靛果 RGB 品质估算、苹果品种识别，以及基础模型辅助的蓝莓叶片与气孔表型品种分类（在审）等相关图像研究。",
+      "圃場写真からブドウ果粒の成長曲線を復元する一貫したパイプラインを構築しました：物体検出（YOLOv8）、スケール換算、生物学的制約付き平滑化、二重シグモイド曲線の当てはめ。共著者として、ハスカップのRGB品質推定、リンゴ品種識別、基盤モデルを用いたブルーベリーの葉・気孔表現型（審査中）など、関連する画像研究にも参加しています。",
+    ),
+    evidence: [
+      { value: "0.931", label: localize("Detection mAP50 (validation set)", "检测 mAP50（验证集）", "検出 mAP50（検証用データ）") },
+      { value: "0.97", label: localize("R² vs calipers, 89 detached berries", "与卡尺对比 R²（89 个离体果）", "ノギス実測との R²（離脱果 89 個）") },
+      { value: "0.8 mm", label: localize("Mean absolute error", "平均绝对误差", "平均絶対誤差") },
+    ],
+    links: [
+      { label: localize("Hortic. J. 2026 (first author)", "Hortic. J. 2026（第一作者）", "Hortic. J. 2026（筆頭）"), href: "https://doi.org/10.2503/hortj.SZD-110" },
+      { label: "Grape_Length", href: "#software-grape-length" },
+    ],
+    tags: ["YOLOv8", "Scale calibration", "Time series", "Double-sigmoid growth"],
+    images: [
+      { src: "/research/grape-field.webp", width: 1400, height: 1000, alt: localize("Grape berries photographed in the field with a scale reference", "带尺度参照拍摄的田间葡萄果粒", "スケール参照とともに撮影した圃場のブドウ果粒"), caption: localize("Field photograph with scale reference", "带尺度参照的田间照片", "スケール参照付きの圃場写真") },
+      { src: "/software/grape/detection-results.webp", width: 1600, height: 720, alt: localize("YOLO detections of individual grape berries", "逐颗葡萄果粒的 YOLO 检测框", "ブドウ果粒ごとのYOLO検出枠"), caption: localize("Berry-level detections", "逐果粒检测", "果粒単位の検出") },
+      { src: "/software/grape/growth-curve.webp", width: 1334, height: 780, alt: localize("Time series of mean grape berry diameter with smoothing", "葡萄平均果粒直径时间序列与平滑曲线", "ブドウ平均果粒径の時系列と平滑化曲線"), caption: localize("Growth curve after smoothing", "平滑后的生长曲线", "平滑化後の成長曲線") , fit: "contain" },
+    ],
+  },
+  {
+    id: "ploidy",
+    index: "03",
+    status: localize("PhD series", "博士系列研究", "博士論文研究"),
+    title: localize("Ploidy, phenotype and fruit quality", "倍性、表型与果实品质", "倍数性・表現型・果実品質"),
+    question: localize(
+      "How does ploidy level shape morphology, reproduction and fruit chemistry in haskap — and what does that mean for breeding?",
+      "倍性水平如何塑造蓝靛果的形态、繁殖与果实化学组成？这对育种意味着什么？",
+      "倍数性はハスカップの形態・繁殖・果実成分をどう形づくるのか。それは育種に何を意味するのか。",
+    ),
+    body: localize(
+      "Polyploid and aneuploid haskap (Lonicera caerulea subsp. edulis) plants and their progeny were characterized and ploidy level was linked to morphology, reproductive traits, biochemical composition and integrated fruit quality — a three-paper first-author series that forms my PhD thesis.",
+      "系统表征蓝靛果忍冬（Lonicera caerulea subsp. edulis）多倍体、非整倍体植株及其后代，将倍性水平与形态、繁殖性状、生化组成及综合果实品质相关联，形成 3 篇第一作者系列论文，构成博士学位论文主体。",
+      "ハスカップ（Lonicera caerulea subsp. edulis）の倍数体・異数体とその後代を特性評価し、倍数性を形態、繁殖形質、生化学成分、総合的な果実品質と結び付けました。筆頭著者論文3報のシリーズで、博士論文の中核です。",
+    ),
+    evidence: [
+      { value: "3", label: localize("First-author papers in the series", "篇第一作者系列论文", "筆頭著者論文（シリーズ）") },
+      { value: "GC–MS", label: localize("Sugars, organic acids and phenolics", "糖、有机酸与酚类", "糖・有機酸・フェノール類") },
+      { value: "FCM", label: localize("Ploidy by flow cytometry", "流式细胞术测定倍性", "フローサイトメトリーによる倍数性判定") },
+    ],
+    links: [
+      { label: "Euphytica 2023", href: "https://doi.org/10.1007/s10681-023-03181-6" },
+      { label: "Sci. Hortic. 2024", href: "https://doi.org/10.1016/j.scienta.2023.112831" },
+      { label: "Euphytica 2025", href: "https://doi.org/10.1007/s10681-025-03532-5" },
+    ],
+    tags: ["Polyploidy", "Aneuploidy", "Fruit quality", "GC–MS"],
+    images: [
+      { src: "/research/haskap-field.webp", width: 1600, height: 1200, alt: localize("Haskap fruit on the plant in the field", "田间植株上的蓝靛果果实", "圃場で結実したハスカップ"), caption: localize("Haskap in the field", "田间蓝靛果", "圃場のハスカップ") },
+      { src: "/research/haskap-fruit.webp", width: 1600, height: 1200, alt: localize("Harvested haskap fruit", "采收的蓝靛果果实", "収穫したハスカップ果実"), caption: localize("Fruit for quality assessment", "用于品质评价的果实", "品質評価用の果実") },
+      { src: "/publications/haskap-flow-cytometry.webp", width: 1000, height: 800, alt: localize("Flow cytometry histograms of haskap plants", "蓝靛果植株的流式细胞直方图", "ハスカップのフローサイトメトリー・ヒストグラム"), caption: localize("Flow cytometry of plants and progeny", "植株及后代流式细胞分析", "植物と後代のフローサイトメトリー") , fit: "contain" },
+    ],
+  },
+] as const;
+
+/* ------------------------------------------------------------------ */
+/* Publications                                                         */
+/* ------------------------------------------------------------------ */
+
+export type PublicationTopic = "phenotyping" | "ploidy" | "atmospheric";
+
+export const publicationTopics: Array<{ id: PublicationTopic; label: LocalizedText }> = [
+  { id: "phenotyping", label: localize("Phenotyping & vision", "表型与视觉", "表現型・画像") },
+  { id: "ploidy", label: localize("Ploidy & fruit quality", "倍性与果实品质", "倍数性・果実品質") },
+  { id: "atmospheric", label: localize("Atmospheric chemistry", "大气化学", "大気化学") },
+];
+
 export const publications = [
   {
+    id: "pbt-2026",
     year: "2026",
+    authors: ["Zhang, J.", "Li, J.", "Meng, X.", "Yang, Y.", "Lyu, Y.", "Hoshino, Y."],
+    self: 1,
     title: "Feature extraction based on RGB images for rapid and non-destructive estimation of haskap fruit quality attributes",
-    authors: "J. Zhang, J. Li, X. Meng, Y. Yang, Y. Lyu, Y. Hoshino",
-    venue: "Postharvest Biology and Technology, 240, 114416",
-    doi: "https://doi.org/10.1016/j.postharvbio.2026.114416",
-    label: "Computer Vision",
+    journal: "Postharvest Biology and Technology",
+    details: "240, 114416",
+    doi: "10.1016/j.postharvbio.2026.114416",
+    topic: "phenotyping",
     thumb: "/publications/rgb-haskap.webp",
     thumbAlt: localize("RGB feature extraction and haskap quality modelling figure", "蓝靛果 RGB 特征提取与品质建模图", "ハスカップのRGB特徴抽出と品質モデル図"),
   },
   {
+    id: "hortj-grape-2026",
     year: "2026",
-    title: "Monitoring Relative Grape Berry Growth in the Field with YOLOv8 and Biology-informed Smoothing",
-    authors: "J. Li, T. Sone, X. Meng, K. Hirayama, M. Ikuta, Y. Inose, Y. Hoshino",
-    venue: "The Horticulture Journal, SZD-110",
-    doi: "https://doi.org/10.2503/hortj.SZD-110",
-    label: "Field Phenotyping",
+    authors: ["Li, J.", "Sone, T.", "Meng, X.", "Hirayama, K.", "Ikuta, M.", "Inose, Y.", "Hoshino, Y."],
+    self: 0,
+    title: "Monitoring relative grape berry growth in the field with YOLOv8 and biology-informed smoothing",
+    journal: "The Horticulture Journal",
+    details: "95(3), 378–388",
+    doi: "10.2503/hortj.SZD-110",
+    topic: "phenotyping",
+    code: "https://github.com/yuriljx/Grape_Length",
     thumb: "/publications/grape-detection.webp",
     thumbAlt: localize("YOLOv8 detections on field grape images", "葡萄田间图像的 YOLOv8 检测结果", "圃場ブドウ画像のYOLOv8検出結果"),
   },
   {
+    id: "hortj-apple-2026",
     year: "2026",
-    title: "YOLO-APPLE: Accurate Identification of Apple Cultivars Using an Improved YOLOv7 Framework",
-    authors: "J. Zhang, X. Meng, J. Li, Y. Hoshino",
-    venue: "The Horticulture Journal, SZD-115",
-    doi: "https://doi.org/10.2503/hortj.SZD-115",
-    label: "Cultivar Detection",
+    authors: ["Zhang, J.", "Meng, X.", "Li, J.", "Hoshino, Y."],
+    self: 2,
+    title: "YOLO-APPLE: Accurate identification of apple cultivars using an improved YOLOv7 framework",
+    journal: "The Horticulture Journal",
+    details: "95(3), 407–418",
+    doi: "10.2503/hortj.SZD-115",
+    topic: "phenotyping",
     thumb: "/publications/yolo-apple-framework.webp",
     thumbAlt: localize("YOLO-APPLE model framework figure", "YOLO-APPLE 模型框架图", "YOLO-APPLEモデルの構成図"),
   },
   {
+    id: "euphytica-2025",
     year: "2025",
-    title: "Exploring the impact of ploidy levels on fruit attributes of haskap",
-    authors: "J. Li, Y. Hoshino",
-    venue: "Euphytica, 221(6), 74",
-    doi: "https://doi.org/10.1007/s10681-025-03532-5",
-    label: "Polyploid Breeding",
+    authors: ["Li, J.", "Hoshino, Y."],
+    self: 0,
+    title: "Exploring the impact of ploidy levels on fruit attributes of haskap (*Lonicera caerulea* L. subsp. *edulis* (Turcz. ex Herder) Hultén)",
+    journal: "Euphytica",
+    details: "221, 74",
+    doi: "10.1007/s10681-025-03532-5",
+    topic: "ploidy",
     thumb: "/publications/haskap-pca.webp",
     thumbAlt: localize("Principal component analysis of haskap fruit attributes", "蓝靛果果实性状主成分分析图", "ハスカップ果実形質の主成分分析図"),
   },
   {
+    id: "scihortic-2024",
     year: "2024",
-    title: "Elucidating the impact of ploidy level on biochemical content accumulation in haskap fruits: A comprehensive approach for fruit assessment",
-    authors: "J. Li, Y. Hoshino",
-    venue: "Scientia Horticulturae, 327, 112831",
-    doi: "https://doi.org/10.1016/j.scienta.2023.112831",
-    label: "Fruit Biochemistry",
+    authors: ["Li, J.", "Hoshino, Y."],
+    self: 0,
+    title: "Elucidating the impact of ploidy level on biochemical content accumulation in haskap (*Lonicera caerulea* L. subsp. *edulis* (Turcz. ex Herder) Hultén) fruits: A comprehensive approach for fruit assessment",
+    journal: "Scientia Horticulturae",
+    details: "327, 112831",
+    doi: "10.1016/j.scienta.2023.112831",
+    topic: "ploidy",
     thumb: "/publications/haskap-biochemistry.webp",
     thumbAlt: localize("Biochemical profiles of haskap fruit by ploidy", "不同倍性蓝靛果的生化谱图", "倍数性別ハスカップ果実の生化学プロファイル"),
   },
   {
+    id: "euphytica-2023",
     year: "2023",
-    title: "Phenotypic analysis of polyploid and aneuploid haskap plants and their progeny production",
-    authors: "J. Li, Y. Suzuki, Y. Hoshino",
-    venue: "Euphytica, 219(5), 52",
-    doi: "https://doi.org/10.1007/s10681-023-03181-6",
-    label: "Plant Phenotyping",
+    authors: ["Li, J.", "Suzuki, Y.", "Hoshino, Y."],
+    self: 0,
+    title: "Phenotypic analysis of polyploid and aneuploid haskap (*Lonicera caerulea* L. subsp. *edulis* (Turcz. ex Herder) Hultén) plants and their progeny production",
+    journal: "Euphytica",
+    details: "219, 52",
+    doi: "10.1007/s10681-023-03181-6",
+    topic: "ploidy",
     thumb: "/publications/haskap-flow-cytometry.webp",
     thumbAlt: localize("Flow cytometry profiles of haskap plants and progeny", "蓝靛果植株及后代的流式细胞分析图", "ハスカップ植物と後代のフローサイトメトリー図"),
   },
   {
+    id: "atmosenv-2016",
     year: "2016",
+    authors: ["Ladino, L. A.", "Yakobi-Hancock, J. D.", "Kilthau, W. P.", "Mason, R. H.", "Si, M.", "Li, J.", "et al."],
+    self: 5,
     title: "Addressing the ice nucleating abilities of marine aerosol: A combination of deposition mode laboratory and field measurements",
-    authors: "L. A. Ladino, J. D. Yakobi-Hancock, W. P. Kilthau, R. H. Mason, M. Si, J. Li, et al.",
-    venue: "Atmospheric Environment, 132, 1–10",
-    doi: "https://doi.org/10.1016/j.atmosenv.2016.02.028",
-    label: "Atmospheric Chemistry",
+    journal: "Atmospheric Environment",
+    details: "132, 1–10",
+    doi: "10.1016/j.atmosenv.2016.02.028",
+    topic: "atmospheric",
     thumb: "/publications/marine-aerosol-map.webp",
     thumbAlt: localize("Marine aerosol sampling and measurement locations", "海洋气溶胶采样与测量位置图", "海洋エアロゾルの採取・測定地点図"),
   },
   {
+    id: "acp-2015",
     year: "2015",
-    title: "Ice nucleating particles at a coastal marine boundary layer site: correlations with aerosol type and meteorological conditions",
-    authors: "R. H. Mason, M. Si, J. Li, C. Chou, R. Dickie, D. Toom-Sauntry, et al.",
-    venue: "Atmospheric Chemistry and Physics, 15(21), 12547–12566",
-    doi: "https://doi.org/10.5194/acp-15-12547-2015",
-    label: "Bioaerosol",
+    authors: ["Mason, R. H.", "Si, M.", "Li, J.", "Chou, C.", "Dickie, R.", "Toom-Sauntry, D.", "et al."],
+    self: 2,
+    title: "Ice nucleating particles at a coastal marine boundary layer site: Correlations with aerosol type and meteorological conditions",
+    journal: "Atmospheric Chemistry and Physics",
+    details: "15(21), 12547–12566",
+    doi: "10.5194/acp-15-12547-2015",
+    topic: "atmospheric",
     thumb: "/publications/ice-nuclei-microscopy.webp",
     thumbAlt: localize("Microscopy figure of ice-nucleating aerosol particles", "冰核气溶胶颗粒显微图", "氷核エアロゾル粒子の顕微鏡図"),
   },
 ] as const;
 
-export const presentations = [
+export const manuscripts = [
   {
-    year: "2025",
-    event: localize("10th China International AI Summit and Computing Power & Algorithms Conference (CIAI)", "第十届中国国际人工智能峰会暨算力算法大会（CIAI）", "第10回中国国際AIサミット・計算力アルゴリズム大会（CIAI）"),
-    title: localize("An end-to-end AI pipeline for computational metabolomics in food quality assessment", "用于食品质量评估的计算代谢组学端到端 AI 管线", "食品品質評価のための計算メタボロミクス・エンドツーエンドAIパイプライン"),
-    format: localize("Oral presentation", "口头报告", "口頭発表"),
+    id: "M3",
+    authors: ["Li, J."],
+    self: 0,
+    title: "Phenotyping part of the target family improves within-family genomic prediction in rice nested association mapping families",
+    journal: "Rice",
+    status: localize("Submitted · Oct 2026 · sole author", "已投稿 · 2026 年 10 月 · 唯一作者", "投稿中・2026年10月・単著"),
+    extra: { label: localize("Reproduction package", "复现软件包", "再現パッケージ"), href: "https://doi.org/10.5281/zenodo.23438608" },
   },
   {
-    year: "2024",
-    event: localize("15th International Conference on Systems Biology (ISB)", "第十五届国际计算系统生物学会议（ISB）", "第15回国際システム生物学会議（ISB）"),
-    title: localize("Multimodal machine learning of fruit soluble solids and organic acids from field images and time series", "基于田间图像和时间序列的多模态机器学习预测果实糖度与有机酸", "圃場画像と時系列を用いた果実糖度・有機酸のマルチモーダル機械学習"),
-    format: localize("Oral presentation", "口头报告", "口頭発表"),
+    id: "M1",
+    authors: ["Liu, Z.", "Wei, X.", "Zhang, B.", "Li, J.", "Hao, C.", "Guo, H.", "Zhu, S.", "Wang, X.", "Dong, T.", "Zheng, S.", "Bai, J.", "Li, B."],
+    self: 3,
+    title: "*Arabidopsis* TTM3 facilitates PIN cycling by modulating clathrin-mediated trafficking",
+    journal: "Plant, Cell & Environment",
+    status: localize("Revised manuscript under review · Oct 2026", "修改稿在审 · 2026 年 10 月", "修正稿審査中・2026年10月"),
   },
   {
-    year: "2023",
-    event: localize("103rd Annual Meeting of the Chemical Society of Japan (CSJ)", "第 103 届日本化学会（CSJ）年会", "日本化学会第103春季年会（CSJ）"),
-    title: localize("Activated MSTFA silylation for enhanced GC–MS quantification of phenols and organic acids in plant matrices", "活化 MSTFA 硅烷化反应增强植物基质中酚类和有机酸的 GC–MS 定量分析", "活性化MSTFAシリル化による植物マトリックス中フェノール類・有機酸のGC–MS定量強化"),
-    format: localize("Oral presentation", "口头报告", "口頭発表"),
-  },
-  {
-    year: "2022",
-    event: localize("Autumn Meeting of the Japanese Society for Horticultural Science (JSHS)", "日本园艺学会（JSHS）秋季会议", "園芸学会（JSHS）秋季大会"),
-    title: localize("GC–MS analysis of sugars and organic acids in polyploid haskap fruit", "多倍体蓝靛果果实中糖类和有机酸的 GC–MS 分析", "倍数性ハスカップ果実における糖・有機酸のGC–MS分析"),
-    format: localize("Oral presentation", "口头报告", "口頭発表"),
-  },
-  {
-    year: "2020",
-    event: localize("3rd International Conference on Agriculture, Food and Biotechnology (ICAFB)", "第三届农业、食品与生物技术国际会议（ICAFB）", "第3回農業・食品・バイオテクノロジー国際会議（ICAFB）"),
-    title: localize("Coupled effects of soil trace-element transfer on flavor-metabolite fingerprints and co-accumulation of toxic elements in specialty crops", "土壤微量元素转移对特种作物风味代谢指纹图谱及有毒元素共积累的耦合效应", "土壌微量元素移行が特殊作物の風味代謝フィンガープリントと有害元素共蓄積に及ぼす連関効果"),
-    format: localize("Oral presentation", "口头报告", "口頭発表"),
-  },
-  {
-    year: "2018",
-    event: localize("31st Chinese Chemical Society Congress (CCS)", "第31届中国化学会（CCS）年会", "第31回中国化学会年会（CCS）"),
-    title: localize("Rapid HPLC–MS quantification of free amino acids in tea infusions: method optimization and validation", "茶汤中游离氨基酸的快速 HPLC–MS 定量：方法优化与验证", "茶抽出液中遊離アミノ酸の迅速HPLC–MS定量：分析法の最適化と妥当性確認"),
-    format: localize("Oral presentation", "口头报告", "口頭発表"),
-  },
-  {
-    year: "2017",
-    event: localize("3rd International Conference on Chemical Materials and Process (ICCMP)", "第三届化学材料与工艺国际会议（ICCMP）", "第3回化学材料・プロセス国際会議（ICCMP）"),
-    title: localize("Headspace gas chromatographic determination of benzene-series VOCs released from cigarette filters: equilibrium kinetics and sensitivity analysis", "顶空气相色谱法测定卷烟滤嘴释放的苯系挥发性有机物：平衡动力学与灵敏度分析", "たばこフィルターから放出されるベンゼン系VOCのヘッドスペースGC定量：平衡動力学と感度解析"),
-    format: localize("Oral presentation", "口头报告", "口頭発表"),
-  },
-  {
-    year: "2015",
-    event: localize("249th ACS National Meeting", "第249届美国化学会（ACS）全国会议", "第249回米国化学会（ACS）全国大会"),
-    title: localize("Multi-instrument characterization of marine bioaerosols and their links to cloud and precipitation processes", "多仪器表征海洋生物气溶胶及其与云和降水过程的联系", "複数機器による海洋バイオエアロゾルの特性評価と雲・降水過程との関連"),
-    format: localize("Oral presentation", "口头报告", "口頭発表"),
-  },
-  {
-    year: "2014",
-    event: localize("247th ACS National Meeting", "第247届美国化学会（ACS）全国会议", "第247回米国化学会（ACS）全国大会"),
-    title: localize("A controlled pollen aerosolization apparatus for laboratory ice nucleation and optical measurements", "用于实验室冰成核与光学测量的可控花粉气溶胶发生装置", "実験室での氷核生成・光学測定に用いる制御型花粉エアロゾル発生装置"),
-    format: localize("Poster presentation", "海报发表", "ポスター発表"),
-  },
-  {
-    year: "2012",
-    event: localize("Minnesota State Science and Engineering Fair", "明尼苏达州科学与工程博览会", "ミネソタ州科学工学フェア"),
-    title: localize("Differential effects and mechanisms of regional soil microbial communities on the degradation of plasticized polylactic acid (PLA)", "不同地区土壤微生物群落对增塑聚乳酸（PLA）降解的差异性影响与机制", "地域別土壌微生物群集が可塑化ポリ乳酸（PLA）の分解に及ぼす差異と機構"),
-    format: localize("Oral presentation", "口头报告", "口頭発表"),
-  },
-  {
-    year: "2011",
-    event: localize("Minnesota State Science and Engineering Fair", "明尼苏达州科学与工程博览会", "ミネソタ州科学工学フェア"),
-    title: localize("Effects of plasticizer type on degradation behavior and efficiency of polylactic acid (PLA) films in simulated soil environments", "增塑剂类型对模拟土壤环境中聚乳酸（PLA）薄膜降解行为与效率的影响", "可塑剤の種類が模擬土壌環境におけるポリ乳酸（PLA）フィルムの分解挙動と効率に及ぼす影響"),
-    format: localize("Poster presentation", "海报发表", "ポスター発表"),
+    id: "M2",
+    authors: ["Meng, X.", "Nakano, A.", "Zhang, J.", "Li, J.", "Guo, W.", "Li, J.", "Hoshino, Y."],
+    self: 3,
+    title: "Foundation-model-assisted leaf and stomatal phenotyping for cultivar classification in field-grown young blueberries",
+    journal: "The Horticulture Journal",
+    status: localize("Revised manuscript under review · Oct 2026", "修改稿在审 · 2026 年 10 月", "修正稿審査中・2026年10月"),
   },
 ] as const;
 
-export const patents = [
+/* ------------------------------------------------------------------ */
+/* Software                                                             */
+/* ------------------------------------------------------------------ */
+
+export type Visual = {
+  src: string;
+  width: number;
+  height: number;
+  alt: LocalizedText;
+  caption: LocalizedText;
+};
+
+const v = (src: string, width: number, height: number, alt: LocalizedText, caption: LocalizedText): Visual => ({ src, width, height, alt, caption });
+
+export const openSoftware = [
   {
-    year: "2024",
-    title: localize(
-      "Preparation method for a high-specific-energy battery and the resulting battery",
-      "一种高比能电池制备方法及高比能电池",
-      "高比エネルギー電池の製造方法および高比エネルギー電池",
+    slug: "grape-length",
+    title: "Grape_Length",
+    meta: localize("Companion code · Hortic. J. 2026", "论文配套代码 · Hortic. J. 2026", "論文付属コード・Hortic. J. 2026"),
+    summary: localize(
+      "Grape-berry detection, scale conversion, time-series processing and biology-informed smoothing — the companion code to the published field growth study.",
+      "葡萄果粒检测、尺度换算、时间序列整理与生物学约束平滑——已发表田间生长研究的配套代码。",
+      "ブドウ果粒の検出、スケール換算、時系列整理、生物学的制約付き平滑化。圃場成長研究（既発表）の付属コードです。",
     ),
-    type: localize("Patent publication", "发明专利公开", "発明特許公開"),
-    publicationNumber: "CN117747967A",
-    inventors: localize(
-      "Xiaokun Zhang; Chunyue Li; Zhangling Li; Jixiao Li; Guo Wang; Fei Li; Yong Xiang",
-      "张晓琨；李春月；李彰凌；李继潇；王果；李飞；向勇",
-      "Xiaokun Zhang; Chunyue Li; Zhangling Li; Jixiao Li; Guo Wang; Fei Li; Yong Xiang",
-    ),
-    link: "https://patents.google.com/patent/CN117747967A",
+    points: [
+      localize("Detection on ordinary field photographs with a scale reference", "基于带尺度参照的普通田间照片进行检测", "スケール参照付きの普通の圃場写真で検出"),
+      localize("Per-sample time series across dates", "跨日期的逐样本时间序列", "日付をまたぐ個体別の時系列"),
+      localize("Smoothing that respects how berries actually grow", "遵循果粒真实生长规律的平滑", "果粒の実際の成長様式に沿った平滑化"),
+    ],
+    stack: ["Python", "YOLOv8", "Time series"],
+    links: [
+      { label: "GitHub", href: "https://github.com/yuriljx/Grape_Length" },
+      { label: localize("Paper", "论文", "論文"), href: "https://doi.org/10.2503/hortj.SZD-110" },
+    ],
+    visuals: [
+      v("/software/grape/detection-results.webp", 1600, 720, localize("YOLO detections of individual grape berries", "逐颗葡萄果粒的 YOLO 检测框", "ブドウ果粒ごとのYOLO検出枠"), localize("Berry-level detections with confidence labels", "带置信度标签的逐果粒检测", "信頼度ラベル付きの果粒単位検出")),
+      v("/software/grape/growth-curve.webp", 1334, 780, localize("Time series of mean grape berry diameter", "葡萄平均果粒直径时间序列", "ブドウ平均果粒径の時系列"), localize("Mean diameter and biology-informed smoothing", "平均直径与生物学约束平滑", "平均果粒径と生物学的制約付き平滑化")),
+      v("/software/grape/mature-stage.webp", 1600, 1067, localize("Mature-stage field image of a grape sample", "葡萄样本成熟期田间图像", "ブドウ試料の成熟期圃場画像"), localize("Mature-stage image with scale and colour references", "带尺度与色彩参照的成熟期图像", "スケール・色参照を含む成熟期画像")),
+    ],
   },
   {
-    year: "2024",
-    title: localize(
-      "Integrated assembly method for a flexible battery, flexible battery and wearable device",
-      "柔性电池的一体化集成方法、柔性电池及可穿戴设备",
-      "フレキシブル電池の一体製造方法、フレキシブル電池およびウェアラブル機器",
+    slug: "rice-gs",
+    title: "Rice genomic selection: frozen-prediction reproduction",
+    meta: localize("v1.0.0 · Zenodo DOI · MIT", "v1.0.0 · Zenodo DOI · MIT", "v1.0.0・Zenodo DOI・MIT"),
+    summary: localize(
+      "A Python/NumPy package that re-scores archived genomic-prediction outputs from rice NAM, MAGIC and IRRI analyses and reproduces the reported accuracy metrics for the target-family phenotyping study.",
+      "Python/NumPy 软件包：对水稻 NAM、MAGIC、IRRI 分析中存档的基因组预测结果重新评分，复现目标家系表型研究所报告的预测精度指标。",
+      "イネNAM・MAGIC・IRRI解析で保存したゲノム予測結果を再採点し、標的家系表現型研究で報告した予測精度を再現する Python/NumPy パッケージです。",
     ),
-    type: localize("Patent publication", "发明专利公开", "発明特許公開"),
-    publicationNumber: "CN117747955A",
-    inventors: localize(
-      "Xiaokun Zhang; Jixiao Li; Xinyan Luo; Zhangling Li; Weili Liao; Fei Li; Yong Xiang",
-      "张晓琨；李继潇；骆鑫妍；李彰凌；廖微莉；李飞；向勇",
-      "Xiaokun Zhang; Jixiao Li; Xinyan Luo; Zhangling Li; Weili Liao; Fei Li; Yong Xiang",
-    ),
-    link: "https://patents.google.com/patent/CN117747955A",
-  },
-  {
-    year: "2021",
-    title: localize(
-      "Rapid detection device for histamine in food",
-      "一种食品中组胺成分的快速检测装置",
-      "食品中ヒスタミン成分の迅速検出装置",
-    ),
-    type: localize("Utility model", "实用新型", "実用新案"),
-    publicationNumber: "CN212808065U",
-    inventors: localize(
-      "Jixiao Li; Hui Gao; Zhihong Fan; Yakun Hao",
-      "李继潇；高慧；樊志宏；郝雅坤",
-      "Jixiao Li; Hui Gao; Zhihong Fan; Yakun Hao",
-    ),
-    link: "https://patents.google.com/patent/CN212808065U",
-  },
-  {
-    year: "2019",
-    title: localize(
-      "Tool and process for removing scale from the inner wall of a circular pipe",
-      "一种圆管内壁除垢工具及除垢工艺",
-      "円管内壁のスケール除去工具および除去方法",
-    ),
-    type: localize("Patent publication", "发明专利公开", "発明特許公開"),
-    publicationNumber: "CN109201659A",
-    inventors: localize(
-      "Ying Li; Tiegang Hu; Jingyi Wei; Baochun Yao; Xiaofeng Jiang; Baoqing Xue; Kaifeng Li; Shuchang Hua; Qibao Guo; Jian Li; Xiaojun Zhong; Jixiao Li",
-      "李颖；胡铁刚；魏靖依；姚保春；姜晓峰；薛宝庆；李凯锋；桦树常；郭启宝；李见；钟晓军；李继潇",
-      "Ying Li; Tiegang Hu; Jingyi Wei; Baochun Yao; Xiaofeng Jiang; Baoqing Xue; Kaifeng Li; Shuchang Hua; Qibao Guo; Jian Li; Xiaojun Zhong; Jixiao Li",
-    ),
-    link: "https://patents.google.com/patent/CN109201659A",
-  },
-  {
-    year: "2015",
-    title: localize("Indoor air purifier", "室内空气净化器", "室内空気清浄機"),
-    type: localize("Utility model", "实用新型", "実用新案"),
-    publicationNumber: "CN204460473U",
-    inventors: localize(
-      "Jie Xiao; Jixiao Li; Chengjun You; Jianghua Chen",
-      "肖杰；李继潇；游成军；陈江华",
-      "Jie Xiao; Jixiao Li; Chengjun You; Jianghua Chen",
-    ),
-    link: "https://patents.google.com/patent/CN204460473U",
-  },
-  {
-    year: "2015",
-    title: localize("Solar street light with camera", "带摄像头的太阳能路灯", "カメラ付き太陽光街路灯"),
-    type: localize("Utility model", "实用新型", "実用新案"),
-    publicationNumber: "CN204420843U",
-    inventors: localize(
-      "Jixiao Li; Qing Lin; Wenbo Si; Jianghua Chen",
-      "李继潇；林庆；司文博；陈江华",
-      "Jixiao Li; Qing Lin; Wenbo Si; Jianghua Chen",
-    ),
-    link: "https://patents.google.com/patent/CN204420843U",
-  },
-  {
-    year: "2014",
-    title: localize(
-      "Fully automatic pharmaceutical bottle inspection instrument",
-      "全自动药瓶检测仪器",
-      "全自動薬瓶検査装置",
-    ),
-    type: localize("Utility model", "实用新型", "実用新案"),
-    publicationNumber: "CN203396717U",
-    inventors: localize("Jixiao Li", "李继潇", "Jixiao Li"),
-    link: "https://patents.google.com/patent/CN203396717U",
+    points: [
+      localize("Scores 4,940 frozen prediction cells into 9,240 metric rows", "对 4,940 个冻结预测单元评分，生成 9,240 行指标", "保存済み予測 4,940 セルを採点し、9,240 行の指標を出力"),
+      localize("No downloads, model fitting or tuning — prediction-to-result only", "不下载、不拟合、不调参——只做从预测到结果的复算", "ダウンロード・モデル推定・調整は行わず、予測から結果までのみを再計算"),
+      localize("Missing or mismatched inputs fail explicitly", "输入缺失或不匹配时明确报错", "入力の欠落・不一致は明示的にエラー"),
+    ],
+    stack: ["Python 3.12", "NumPy", "Reproducibility"],
+    links: [
+      { label: "GitHub", href: "https://github.com/yuriljx/rice-genomic-selection-validation" },
+      { label: "doi.org/10.5281/zenodo.23438608", href: "https://doi.org/10.5281/zenodo.23438608" },
+    ],
+    visuals: [] as Visual[],
   },
 ] as const;
 
-export const softwareProjects = [
+export const researchTools = [
   {
     slug: "rice-dh-record",
     title: "Rice DH Record System",
-    subtitle: localize("Anther-culture records and lineage tracking", "花药培养实验记录与谱系追踪", "葯培養記録と系譜追跡"),
-    status: "LOCAL RESEARCH SYSTEM · v0.7.2",
-    description: localize(
-      "A local-first record system that threads sowing, panicle collection, cold treatment, anther culture, regeneration and ploidy determination into one continuous, auditable chain. Each step keeps planned values beside observed ones and links every material back to its source batch, so lineage, inventory and QC alerts stay traceable end to end. Built on local SQLite, it gives offline, reproducible bookkeeping with no cloud dependency.",
-      "本地优先的实验记录系统，把播种、采穗、低温处理、花药培养、再生与倍性判定串成一条连续、可审计的链路。每一步都并置计划值与实际值，并将每份材料追溯回来源批次，使谱系、库存与质控提醒端到端可追踪。基于本地 SQLite，无需云端即可离线、可复现地记录。",
-      "播種・穂採取・低温処理・葯培養・再分化・倍数性判定を、一本の連続した監査可能な流れに束ねるローカルファーストの記録システム。各段階で計画値と実測値を並置し、各材料を由来ロットまで遡れるため、系譜・在庫・QC通知が端から端まで追跡可能です。ローカルSQLiteを基盤に、クラウド非依存でオフライン・再現可能な記録を実現します。",
+    version: "v0.7.2",
+    summary: localize(
+      "Threads sowing, panicle collection, cold treatment, anther culture, regeneration and ploidy determination into one auditable record chain, with planned values beside observed ones.",
+      "把播种、采穗、低温处理、花药培养、再生与倍性判定串成一条可审计的记录链，每一步并置计划值与实际值。",
+      "播種・穂採取・低温処理・葯培養・再分化・倍数性判定を一本の監査可能な記録に束ね、各段階で計画値と実測値を並置します。",
     ),
-    features: ["Plan vs actual", "Lineage", "Inventory", "Local SQLite"],
+    features: ["Plan vs actual", "Lineage", "Local SQLite"],
     link: "https://github.com/yuriljx/rice-dh-record-system-showcase",
     visuals: [
-      { kind: "image", src: "/software/rice-dh/workflow-overview.png", alt: localize("Synthetic overview of the traceable rice DH workflow", "可追溯水稻 DH 工作流的合成概览", "追跡可能なイネDHワークフローの合成概要"), caption: localize("Workflow stages, checkpoints and handoffs", "工作流阶段、检查点与交接", "ワークフロー段階、チェックポイント、引き継ぎ"), aspect: "1.667", position: "center" },
-      { kind: "image", src: "/software/rice-dh/research-dashboard.png", alt: localize("Synthetic operating dashboard for rice DH records", "水稻 DH 记录系统的合成操作面板", "イネDH記録システムの合成運用ダッシュボード"), caption: localize("Plans, material status and QC alerts in one operational view", "在同一操作视图中汇总计划、材料状态与质控提醒", "計画、材料状態、QC通知を一つの運用画面に集約"), aspect: "1.667", position: "center" },
-      { kind: "image", src: "/software/rice-dh/lineage-evidence.png", alt: localize("Synthetic lineage and evidence view for rice DH materials", "水稻 DH 材料的合成谱系与证据视图", "イネDH材料の合成系譜・証拠画面"), caption: localize("Source-to-outcome lineage with recorded evidence", "从来源到结果的谱系及其记录证据", "由来源から結果までの系譜と記録証拠"), aspect: "1.667", position: "center" },
+      v("/software/rice-dh/workflow-overview.webp", 1800, 1080, localize("Synthetic overview of the traceable rice DH workflow", "可追溯水稻 DH 工作流的合成概览", "追跡可能なイネDHワークフローの合成概要"), localize("Workflow stages, checkpoints and handoffs", "工作流阶段、检查点与交接", "ワークフロー段階、チェックポイント、引き継ぎ")),
+      v("/software/rice-dh/research-dashboard.webp", 1800, 1080, localize("Synthetic operating dashboard for rice DH records", "水稻 DH 记录系统的合成操作面板", "イネDH記録システムの合成運用ダッシュボード"), localize("Plans, material status and QC alerts in one view", "计划、材料状态与质控提醒集中呈现", "計画・材料状態・QC通知を一画面に集約")),
+      v("/software/rice-dh/lineage-evidence.webp", 1800, 1080, localize("Synthetic lineage and evidence view for rice DH materials", "水稻 DH 材料的合成谱系与证据视图", "イネDH材料の合成系譜・証拠画面"), localize("Source-to-outcome lineage with recorded evidence", "从来源到结果的谱系与记录证据", "由来から結果までの系譜と記録証拠")),
     ],
   },
   {
     slug: "callustrack",
     title: "CallusTrack",
-    subtitle: localize("Longitudinal callus annotation and quality review", "愈伤组织时序标注与质量复核", "カルスの時系列アノテーションと品質レビュー"),
-    status: "LOCAL ANNOTATION SYSTEM · v0.5.0",
-    description: localize(
-      "A local annotation system that keeps every callus's identity stable across a whole culture-image sequence, so the same object can be followed frame by frame. Instance masks stay fully editable, review states are explicit, and each change is traceable. Controlled export emits masks, tables, manifests and QC overlays, turning longitudinal phenotyping into reproducible, review-ready evidence.",
-      "本地标注系统，在整个培养图像序列中保持每个愈伤组织的身份稳定，使同一对象可逐帧追踪。实例掩膜完全可编辑，审查状态明确，每次修改都可追溯。受控导出可生成掩膜、表格、清单与质控叠加图，把纵向表型分析变成可复现、可复核的证据。",
-      "培養画像系列の全体を通して各カルスの同一性を保持し、同じ対象をフレームごとに追跡できるローカル注釈システム。インスタンスマスクは完全に編集可能で、レビュー状態は明示的、各変更が追跡可能です。管理付きエクスポートでマスク・表・マニフェスト・QCオーバーレイを出力し、縦断的な表現型解析を再現可能で査読可能なエビデンスに変えます。",
+    version: "v0.5.0",
+    summary: localize(
+      "Keeps each callus's identity stable across a culture-image sequence, with editable instance masks, explicit review states and controlled export of masks, tables and QC overlays.",
+      "在整段培养图像序列中保持每个愈伤组织身份稳定；实例掩膜可编辑、审查状态明确，并可受控导出掩膜、表格与质控叠加图。",
+      "培養画像の系列全体で各カルスの同一性を保ち、編集可能なインスタンスマスク、明示的なレビュー状態、マスク・表・QCオーバーレイの管理付き出力を備えます。",
     ),
-    features: ["Persistent IDs", "Editable masks", "Review states", "Controlled export"],
+    features: ["Persistent IDs", "Editable masks", "Review states"],
     link: "https://github.com/yuriljx/callustrack-showcase",
     visuals: [
-      { kind: "image", src: "/software/callustrack/annotation-workspace.png", alt: localize("Synthetic CallusTrack workspace with persistent callus labels", "带持续愈伤组织标签的合成 CallusTrack 工作区", "カルス継続ラベルを備えた合成CallusTrack画面"), caption: localize("Persistent labels, mask review and frame-by-frame state", "持续追踪标签、掩膜复核与逐帧状态", "継続追跡ラベル、マスク確認、フレーム別状態"), aspect: "1.667", position: "center" },
-      { kind: "image", src: "/software/callustrack/review-matrix.png", alt: localize("Synthetic CallusTrack human review matrix", "合成 CallusTrack 人工复核矩阵", "合成CallusTrack人手レビュー行列"), caption: localize("Human review matrix and explicit QC states", "人工复核矩阵与明确的质控状态", "人手レビュー行列と明示的なQC状態"), aspect: "1.667", position: "center" },
-      { kind: "image", src: "/software/callustrack/controlled-export.png", alt: localize("Synthetic CallusTrack controlled export view", "合成 CallusTrack 受控导出视图", "合成CallusTrack管理付き出力画面"), caption: localize("Controlled export of masks, tables, manifests and QC overlays", "掩膜、表格、清单与质控叠加图的受控导出", "マスク、表、マニフェスト、QCオーバーレイの管理付き出力"), aspect: "1.667", position: "center" },
+      v("/software/callustrack/annotation-workspace.webp", 1800, 1080, localize("Synthetic CallusTrack workspace with persistent callus labels", "带持续愈伤组织标签的合成 CallusTrack 工作区", "カルス継続ラベルを備えた合成CallusTrack画面"), localize("Persistent labels and frame-by-frame review", "持续追踪标签与逐帧复核", "継続追跡ラベルとフレーム別レビュー")),
+      v("/software/callustrack/review-matrix.webp", 1800, 1080, localize("Synthetic CallusTrack human review matrix", "合成 CallusTrack 人工复核矩阵", "合成CallusTrack人手レビュー行列"), localize("Human review matrix and explicit QC states", "人工复核矩阵与明确的质控状态", "人手レビュー行列と明示的なQC状態")),
+      v("/software/callustrack/controlled-export.webp", 1800, 1080, localize("Synthetic CallusTrack controlled export view", "合成 CallusTrack 受控导出视图", "合成CallusTrack管理付き出力画面"), localize("Controlled export of masks, tables and overlays", "掩膜、表格与叠加图的受控导出", "マスク・表・オーバーレイの管理付き出力")),
     ],
   },
   {
     slug: "genome-finder",
     title: "Rice Genome Resource Finder",
-    subtitle: localize("Public rice genome discovery and audit", "水稻公共基因组资源筛选与审计", "イネ公開ゲノム資源の探索と監査"),
-    status: "LOCAL RESEARCH UTILITY · v7.14.0",
-    description: localize(
-      "From cultivar names and their aliases, it searches NCBI Assembly, SRA, BioSample, ENA and DDBJ in a single pass, then merges duplicate accessions across sources. Alias-aware connectors and identity evidence keep every match conservative and explainable, with provenance attached to each candidate. Results export as an audit workbook that retains supporting evidence and warnings for later review.",
-      "从品种名及其别名出发，一次性检索 NCBI Assembly、SRA、BioSample、ENA 与 DDBJ，并跨来源合并重复 accession。别名感知连接器与身份证据让每次匹配保守、可解释，每个候选都附带来源。结果导出为审计工作簿，保留支撑证据与警告以备后续复核。",
-      "品種名とその別名を起点に、NCBI Assembly・SRA・BioSample・ENA・DDBJを一括検索し、情報源をまたいで重複アクセッションを統合します。別名対応コネクタと同一性の根拠により各マッチングは保守的で説明可能に保たれ、候補ごとに来歴が付与されます。結果は根拠と警告を保持した監査ワークブックとして出力され、後の検証に備えます。",
+    version: "v7.14.0",
+    summary: localize(
+      "Searches NCBI Assembly, SRA, BioSample, ENA and DDBJ from cultivar names and aliases, merges duplicate accessions and exports an audit workbook with provenance and warnings.",
+      "以品种名及别名一次检索 NCBI Assembly、SRA、BioSample、ENA 与 DDBJ，合并重复 accession，并导出带来源与警告的审计工作簿。",
+      "品種名と別名から NCBI Assembly・SRA・BioSample・ENA・DDBJ を一括検索し、重複アクセッションを統合、来歴と警告を保持した監査ワークブックを出力します。",
     ),
-    features: ["Alias expansion", "Multi-source search", "Identity evidence", "Audit workbook"],
+    features: ["Alias expansion", "Multi-source search", "Audit workbook"],
     link: "https://github.com/yuriljx/rice-genome-resource-finder-showcase",
     visuals: [
-      { kind: "image", src: "/software/genome/interface-overview.png", alt: localize("Synthetic interface overview for rice genome resource discovery", "水稻基因组资源检索的合成界面概览", "イネゲノム資源探索の合成画面概要"), caption: localize("Input scope, source coverage and conservative screening", "输入范围、来源覆盖与保守筛选", "入力範囲、情報源カバレッジ、保守的スクリーニング"), aspect: "1.778", position: "center" },
-      { kind: "image", src: "/software/genome/search-options.png", alt: localize("Synthetic search options for public rice genome resources", "公共水稻基因组资源的合成搜索选项", "公開イネゲノム資源の合成検索条件"), caption: localize("Alias-aware connectors and explicit search controls", "别名感知连接器与明确的搜索控制", "別名対応コネクタと明示的な検索制御"), aspect: "1.778", position: "center" },
-      { kind: "image", src: "/software/genome/audit-output.png", alt: localize("Synthetic audit output from the rice genome resource finder", "水稻基因组资源检索工具的合成审计输出", "イネゲノム資源検索ツールの合成監査出力"), caption: localize("Candidates, input QC, provenance and retained warnings", "候选结果、输入质控、来源与保留警告", "候補、入力QC、来歴、保持された警告"), aspect: "1.778", position: "center" },
+      v("/software/genome/interface-overview.webp", 1800, 1012, localize("Synthetic interface overview for rice genome resource discovery", "水稻基因组资源检索的合成界面概览", "イネゲノム資源探索の合成画面概要"), localize("Input scope and source coverage", "输入范围与来源覆盖", "入力範囲と情報源カバレッジ")),
+      v("/software/genome/search-options.webp", 1800, 1012, localize("Synthetic search options for public rice genome resources", "公共水稻基因组资源的合成搜索选项", "公開イネゲノム資源の合成検索条件"), localize("Alias-aware connectors and search controls", "别名感知连接器与搜索控制", "別名対応コネクタと検索制御")),
+      v("/software/genome/audit-output.webp", 1800, 1012, localize("Synthetic audit output from the rice genome resource finder", "水稻基因组资源检索工具的合成审计输出", "イネゲノム資源検索ツールの合成監査出力"), localize("Candidates, provenance and retained warnings", "候选结果、来源与保留警告", "候補・来歴・保持された警告")),
     ],
   },
   {
     slug: "trait-explorer",
     title: "Rice Trait Evidence Explorer",
-    subtitle: localize("Evidence-indexed rice cultivar traits", "水稻品种性状证据库", "根拠に紐づくイネ品種形質データベース"),
-    status: "LOCAL EVIDENCE TOOL · v0.8.4",
-    description: localize(
-      "One local interface unifying cultivar cards, trait search, pairwise comparison, source tracking, coverage metrics and curation queues. Every trait value is indexed to its evidence and source, so comparisons expose not just differences but the strength and gaps behind them. Coverage dashboards and curation priorities make weak or missing evidence visible instead of hidden.",
-      "一个本地界面统一了品种卡、性状检索、双品种对比、来源追踪、覆盖率指标与校订队列。每个性状值都索引到其证据与来源，因此对比不仅呈现差异，还揭示背后的强度与缺口。覆盖率面板与校订优先级让薄弱或缺失的证据显性化，而非被隐藏。",
-      "品種カード・形質検索・二品種比較・出典追跡・カバレッジ指標・キュレーションキューを一つのローカル画面に統合します。各形質値は根拠と出典に索引付けされるため、比較は差異だけでなく背後の強さと欠落も明らかにします。カバレッジ・ダッシュボードとキュレーション優先度により、弱い/欠落した根拠が隠れず可視化されます。",
+    version: "v0.8.4",
+    summary: localize(
+      "Cultivar cards, trait search and pairwise comparison in which every value is indexed to its source, so comparisons show the strength of — and gaps in — the evidence.",
+      "品种卡、性状检索与双品种对比；每个性状值都索引到来源，对比时同时呈现证据强度与缺口。",
+      "品種カード・形質検索・二品種比較。各値を出典に索引付けし、比較の際に根拠の強さと欠落も示します。",
     ),
-    features: ["Cultivar cards", "Evidence comparison", "Source tracking", "Curation queue"],
+    features: ["Cultivar cards", "Evidence comparison", "Curation queue"],
     link: "https://github.com/yuriljx/rice-trait-evidence-explorer-showcase",
     visuals: [
-      { kind: "image", src: "/software/trait/evidence-overview.png", alt: localize("Synthetic rice trait evidence overview", "合成水稻性状证据概览", "合成イネ形質エビデンス概要"), caption: localize("Cultivar records, evidence status and source provenance", "品种记录、证据状态与来源追踪", "品種記録、エビデンス状態、出典来歴"), aspect: "1.778", position: "center" },
-      { kind: "image", src: "/software/trait/comparison-panel.png", alt: localize("Synthetic comparison of rice trait evidence", "合成水稻性状证据对比", "合成イネ形質エビデンス比較"), caption: localize("Trait-level comparison with explicit evidence states", "带明确证据状态的逐性状对比", "明示的なエビデンス状態を伴う形質別比較"), aspect: "1.778", position: "center" },
-      { kind: "image", src: "/software/trait/coverage-dashboard.png", alt: localize("Synthetic rice trait evidence coverage dashboard", "合成水稻性状证据覆盖面板", "合成イネ形質エビデンス・カバレッジ画面"), caption: localize("Coverage, gaps and curation priorities", "覆盖范围、证据缺口与校订优先级", "カバレッジ、欠落、キュレーション優先順位"), aspect: "1.778", position: "center" },
+      v("/software/trait/evidence-overview.webp", 1800, 1012, localize("Synthetic rice trait evidence overview", "合成水稻性状证据概览", "合成イネ形質エビデンス概要"), localize("Cultivar records and evidence status", "品种记录与证据状态", "品種記録とエビデンス状態")),
+      v("/software/trait/comparison-panel.webp", 1800, 1012, localize("Synthetic comparison of rice trait evidence", "合成水稻性状证据对比", "合成イネ形質エビデンス比較"), localize("Trait-level comparison with evidence states", "带证据状态的逐性状对比", "エビデンス状態付きの形質別比較")),
+      v("/software/trait/coverage-dashboard.webp", 1800, 1012, localize("Synthetic rice trait evidence coverage dashboard", "合成水稻性状证据覆盖面板", "合成イネ形質エビデンス・カバレッジ画面"), localize("Coverage, gaps and curation priorities", "覆盖范围、缺口与校订优先级", "カバレッジ・欠落・キュレーション優先度")),
     ],
   },
   {
     slug: "riceperturbnet",
     title: "RicePerturbNet",
-    subtitle: localize("Claim-calibrated evidence integration", "声明边界校准的证据整合", "主張境界を校正したエビデンス統合"),
-    status: "PRIVATE DEVELOPMENT · v0.16.0.dev2",
-    description: localize(
-      "A private-development framework that organizes public and synthetic evidence by provenance, source identity, biological context and analysis unit. Its distinctive move is an explicit claim-boundary layer that separates what the data can document from what would be a scientific claim, keeping source QC in the loop throughout. The public showcase is deliberately limited to architecture and quality-control examples.",
-      "处于私有开发阶段的框架，按来源追踪、数据源身份、生物学语境与分析单元组织公共与合成证据。其独特之处是显式的“声明边界”层：区分数据能记录的内容与构成科学声明的内容，并全程保留数据源质控。公共展示刻意限定于架构与质量控制示例。",
-      "公開・合成エビデンスを来歴・情報源同一性・生物学的文脈・解析単位で整理する非公開開発中のフレームワーク。特徴は明示的な「主張境界」層で、データが文書化できる範囲と科学的主張になる範囲を分離し、情報源QCを全工程で組み込みます。公開展示はアーキテクチャと品質管理の例に意図的に限定しています。",
+    version: "v0.16.0.dev2",
+    summary: localize(
+      "Organizes public and synthetic evidence by provenance, biological context and analysis unit, with an explicit layer separating what data document from what would be a scientific claim.",
+      "按来源、生物学语境与分析单元组织公共与合成证据，并以显式层区分“数据所记录的内容”与“构成科学声明的内容”。",
+      "公開・合成エビデンスを来歴・生物学的文脈・解析単位で整理し、データが記録する内容と科学的主張を明示的な層で区別します。",
     ),
-    features: ["Evidence registry", "Context resolution", "Source QC", "Claim boundaries"],
+    features: ["Evidence registry", "Source QC", "Claim boundaries"],
     link: "https://github.com/yuriljx/riceperturbnet-showcase",
     visuals: [
-      { kind: "image", src: "/software/riceperturb/architecture-overview.png", alt: localize("Synthetic RicePerturbNet architecture overview", "合成 RicePerturbNet 架构概览", "合成RicePerturbNetアーキテクチャ概要"), caption: localize("Evidence registry, context resolution and bounded outputs", "证据登记、语境解析与有边界的输出", "エビデンス登録、文脈解決、境界付き出力"), aspect: "1.778", position: "center" },
-      { kind: "image", src: "/software/riceperturb/scope-boundaries.png", alt: localize("Synthetic RicePerturbNet scope and claim boundaries", "合成 RicePerturbNet 范围与声明边界", "合成RicePerturbNetの範囲・主張境界"), caption: localize("Explicit boundary between documentation and scientific claims", "明确区分文档输出与科学声明", "文書化と科学的主張の境界を明示"), aspect: "1.778", position: "center" },
-      { kind: "image", src: "/software/riceperturb/pca-qc-public-data.png", alt: localize("PCA quality-control example using public data", "使用公共数据的 PCA 质量控制示例", "公開データを用いたPCA品質管理例"), caption: localize("Public-data PCA used only as a quality-control example", "仅作为质量控制示例的公共数据 PCA", "品質管理例に限定した公開データPCA"), aspect: "1.273", position: "center" },
-    ],
-  },
-  {
-    slug: "stride-dh",
-    title: "STRIDE-DH",
-    subtitle: localize("Recovery-bias framework for rice anther-culture DH populations", "水稻花药培养 DH 群体恢复偏倚框架", "イネ葯培養DH集団の回収バイアス・フレームワーク"),
-    status: "SYNTHETIC VALIDATION · v0.2.0",
-    description: localize(
-      "A linkage-aware methodological framework for studying recovery distortion in doubled-haploid populations from rice anther culture. Instead of assuming clean Mendelian recovery, it models linkage structure and tests which recovery biases can and cannot be identified. The public showcase runs entirely on synthetic fixtures with versioned contracts, keeping validation and identifiability boundaries reproducible and honest.",
-      "面向水稻花药培养加倍单倍体群体恢复偏倚研究的连锁感知方法框架。它不假设干净的孟德尔恢复，而是对连锁结构建模，并检验哪些恢复偏倚可被识别、哪些不能。公共展示完全运行在带版本化契约的合成夹具上，使验证与可识别性边界保持可复现且诚实。",
-      "イネ葯培養由来の倍加半数体集団における回収歪みを研究する、連鎖を考慮した方法論フレームワーク。きれいなメンデル型回収を仮定せず、連鎖構造をモデル化して、どの回収バイアスが識別でき／できないかを検証します。公開展示はバージョン化契約付きの合成フィクスチャ上で完結し、検証と識別可能性の境界を再現可能かつ誠実に保ちます。",
-    ),
-    features: ["Synthetic fixtures", "Linkage-aware tests", "Identifiability", "Reproducible audits"],
-    link: "https://github.com/yuriljx/stride-dh-showcase",
-    visuals: [
-      { kind: "image", src: "/software/stride/validation-pipeline.png", alt: localize("Synthetic STRIDE-DH validation pipeline", "合成 STRIDE-DH 验证流程", "合成STRIDE-DH検証パイプライン"), caption: localize("Versioned contracts and a synthetic validation pipeline", "版本化契约与合成验证流程", "バージョン化契約と合成検証パイプライン"), aspect: "1.667", position: "center" },
-      { kind: "image", src: "/software/stride/synthetic-calibration.png", alt: localize("Synthetic calibration view for STRIDE-DH", "STRIDE-DH 合成校准视图", "STRIDE-DH合成キャリブレーション画面"), caption: localize("Recovery-bias behavior on fully synthetic fixtures", "完全合成夹具上的恢复偏倚行为", "完全合成フィクスチャ上の回収歪み挙動"), aspect: "1.667", position: "center" },
-      { kind: "image", src: "/software/stride/identifiability-boundary.png", alt: localize("Synthetic STRIDE-DH identifiability boundary", "STRIDE-DH 合成可识别性边界", "STRIDE-DH合成識別可能性境界"), caption: localize("What the current framework can and cannot identify", "当前框架能够与不能识别的边界", "現行フレームワークが識別できる範囲と限界"), aspect: "1.667", position: "center" },
-    ],
-  },
-  {
-    slug: "grape-length",
-    title: "Grape Length",
-    subtitle: localize("Field monitoring of grape berry growth", "田间葡萄果粒生长监测", "圃場におけるブドウ果粒成長モニタリング"),
-    status: "PUBLIC REPOSITORY",
-    description: localize(
-      "Estimates relative grape-berry size from field images that include a scale reference, then builds per-sample time series across dates. A biology-informed smoothing step suppresses detection noise while respecting how berries actually grow, so the resulting growth curves stay physically plausible. It combines object detection, scale calibration and time-series reasoning into one reproducible field-monitoring pipeline.",
-      "从带尺度参照的田间影像估计葡萄果粒相对尺寸，再构建跨日期的逐样本时间序列。生物学约束的平滑步骤在尊重果粒真实生长规律的同时抑制检测噪声，使生长曲线保持物理上合理。它将目标检测、尺度标定与时间序列推理整合为一条可复现的田间监测流程。",
-      "スケール参照を含む圃場画像からブドウ果粒の相対サイズを推定し、日付をまたいだ個体別時系列を構築します。生物学的制約に基づく平滑化が果粒の実際の成長様式を尊重しつつ検出ノイズを抑えるため、得られる成長曲線は物理的に妥当に保たれます。物体検出・スケール校正・時系列推論を一つの再現可能な圃場モニタリング流れに統合します。",
-    ),
-    features: ["Object detection", "Scale reference", "Time series", "Biological smoothing"],
-    link: "https://github.com/yuriljx/Grape_Length",
-    visuals: [
-      { kind: "image", src: "/software/grape/detection-results.webp", alt: localize("YOLO detections of individual grape berries", "逐颗葡萄果粒的 YOLO 检测框", "個々のブドウ果粒に対するYOLO検出枠"), caption: localize("Individual berry detections with confidence-labelled bounding boxes", "逐颗果粒的检测框与置信度标签", "各果粒のバウンディングボックスと信頼度ラベル"), aspect: "2.22", crop: "detection", position: "center 52%" },
-      { kind: "image", src: "/software/grape/mature-stage.webp", alt: localize("Mature-stage field image of grape sample Z5", "葡萄 Z5 样本成熟期田间图像", "ブドウZ5サンプルの成熟期圃場画像"), caption: localize("Mature-stage field image with scale and colour references", "成熟期田间影像，保留尺度与色彩参照", "スケール・色参照を含む成熟期圃場画像"), aspect: "1.65", position: "center" },
-      { kind: "image", src: "/software/grape/growth-curve.png", alt: localize("Time series of mean grape berry diameter", "葡萄平均果粒直径时间序列", "ブドウ平均果粒径の時系列"), caption: localize("Mean berry diameter and biology-informed smoothing", "平均果粒直径与生物学约束平滑", "平均果粒径と生物学的制約による平滑化"), aspect: "1.55", position: "center" },
+      v("/software/riceperturb/architecture-overview.webp", 1800, 1012, localize("Synthetic RicePerturbNet architecture overview", "合成 RicePerturbNet 架构概览", "合成RicePerturbNetアーキテクチャ概要"), localize("Evidence registry and bounded outputs", "证据登记与有边界的输出", "エビデンス登録と境界付き出力")),
+      v("/software/riceperturb/scope-boundaries.webp", 1800, 1012, localize("Synthetic RicePerturbNet scope and claim boundaries", "合成 RicePerturbNet 范围与声明边界", "合成RicePerturbNetの範囲・主張境界"), localize("Boundary between documentation and claims", "文档输出与科学声明的边界", "文書化と主張の境界")),
+      v("/software/riceperturb/pca-qc-public-data.webp", 1800, 1414, localize("PCA quality-control example using public data", "使用公共数据的 PCA 质量控制示例", "公開データを用いたPCA品質管理例"), localize("Public-data PCA as a QC example only", "仅作质量控制示例的公共数据 PCA", "QC例に限定した公開データPCA")),
     ],
   },
 ] as const;
 
-export const researchProjects = [
+/* ------------------------------------------------------------------ */
+/* Talks & teaching                                                     */
+/* ------------------------------------------------------------------ */
+
+export const invitedTalk = {
+  date: localize("26 Sep 2025", "2025-09-26", "2025年9月26日"),
+  title: "Beyond disciplinary boundaries: Learning in a changing world",
+  event: localize(
+    "Invited alumni talk · Homecoming Day 2025, Graduate School of Environmental Science, Hokkaido University",
+    "受邀校友报告 · 北海道大学环境科学院 Homecoming Day 2025",
+    "招待講演（卒業生）・北海道大学大学院環境科学院 Homecoming Day 2025",
+  ),
+  quote: localize(
+    "A degree is a toolbox, not a wall.",
+    "专业是工具箱，而不是围墙。",
+    "専攻は道具箱であって、壁ではない。",
+  ),
+};
+
+export const presentations = [
   {
-    code: "A",
-    title: localize("Ploidy, fruit phenotype and biochemical quality", "倍性、果实表型与生化品质", "倍数性、果実表現型、生化学的品質"),
-    description: localize("Connecting ploidy variation in haskap with fruit morphology, sugars, organic acids and related quality traits.", "围绕蓝靛果倍性变化，连接果实形态、糖与有机酸等品质信息。", "ハスカップの倍数性変異を、果実形態、糖、有機酸などの品質形質と結び付けます。"),
-    tags: ["Ploidy", "Fruit quality", "GC–MS"],
+    year: "2025",
+    title: localize("An end-to-end AI pipeline for computational metabolomics in food-quality assessment", "食品品质评价的端到端 AI 计算代谢组学流程", "食品品質評価のためのエンドツーエンドAI計算メタボロミクス"),
+    event: localize("10th China International Artificial Intelligence Summit (CIAI)", "第十届中国国际人工智能峰会暨算力算法大会（CIAI）", "第10回中国国際人工知能サミット（CIAI）"),
   },
   {
-    code: "B",
-    title: localize("Field vision and non-destructive estimation", "田间视觉与非破坏估计", "圃場ビジョンと非破壊推定"),
-    description: localize("Applying object detection, RGB features and time series to phenotyping in grapes, apples and haskap.", "将目标检测、RGB 特征和时间序列用于葡萄、苹果及蓝靛果的表型研究。", "物体検出、RGB特徴、時系列をブドウ、リンゴ、ハスカップの表現型研究に応用します。"),
-    tags: ["Computer vision", "Time series", "Field imaging"],
+    year: "2024",
+    title: localize("Multimodal machine learning of fruit soluble solids and organic acids from field images and time series", "基于田间图像与时间序列的果实可溶性固形物及有机酸多模态机器学习预测", "圃場画像と時系列による果実可溶性固形物・有機酸のマルチモーダル機械学習"),
+    event: localize("15th International Conference on Computational Systems Biology (ISB)", "第十五届国际计算系统生物学会议（ISB）", "第15回国際計算システム生物学会議（ISB）"),
   },
   {
-    code: "C",
-    title: localize("Rice culture systems and experimental provenance", "水稻培养体系与实验数据链", "イネ培養系と実験プロヴェナンス"),
-    description: localize("Structuring anther culture, source batches, treatment arms and ploidy determination as traceable experimental records.", "把花药培养、批次来源、处理臂和倍性判定组织为可追溯的实验记录。", "葯培養、由来ロット、処理群、倍数性判定を追跡可能な実験記録として構造化します。"),
-    tags: ["Anther culture", "DH", "Provenance"],
+    year: "2023",
+    title: localize("Activated MSTFA silylation for GC–MS quantification of phenols and organic acids in plant matrices", "活化 MSTFA 硅烷化提升植物基质中酚类与有机酸的 GC–MS 定量", "活性化MSTFAシリル化による植物マトリックス中フェノール類・有機酸のGC–MS定量"),
+    event: localize("103rd Annual Meeting of the Chemical Society of Japan", "日本化学会第 103 届春季年会", "日本化学会 第103春季年会"),
   },
   {
-    code: "D",
-    title: localize("Public omics data and claim control", "公共组学数据与声明控制", "公開オミクスデータと主張制御"),
-    description: localize("Defining what public-data integration, candidate evidence tiers and sample-dependence audits can and cannot support.", "在水稻公共数据整合、候选证据分层和样本依赖审计中明确可支持与不可支持的结论。", "公開データ統合、候補エビデンス階層、サンプル依存性監査が支持できる主張とできない主張を明確にします。"),
-    tags: ["Public data", "Evidence audit", "Reproducibility"],
+    year: "2022",
+    title: localize("GC–MS analysis of sugars and organic acids in polyploid haskap fruit", "多倍体蓝靛果果实糖类与有机酸的 GC–MS 分析", "倍数体ハスカップ果実の糖・有機酸のGC–MS分析"),
+    event: localize("Japanese Society for Horticultural Science, Autumn Meeting", "日本园艺学会秋季大会", "園芸学会 秋季大会"),
   },
 ] as const;
+
+export const earlierPresentations = [
+  {
+    year: "2020",
+    title: localize("Coupled effects of soil trace-element transfer on flavour-metabolite fingerprints and co-accumulation of toxic elements in specialty crops", "土壤微量元素转移对特种作物风味代谢指纹图谱及有毒元素共积累的耦合效应", "土壌微量元素移行が特産作物の風味代謝フィンガープリントと有害元素共蓄積に及ぼす連関効果"),
+    event: localize("3rd International Conference on Agriculture, Food and Biotechnology (ICAFB)", "第三届农业、食品与生物技术国际会议（ICAFB）", "第3回農業・食品・バイオテクノロジー国際会議（ICAFB）"),
+  },
+  {
+    year: "2018",
+    title: localize("Rapid HPLC–MS quantification of free amino acids in tea infusions: method optimization and validation", "茶汤中游离氨基酸的快速 HPLC–MS 定量：方法优化与验证", "茶抽出液中遊離アミノ酸の迅速HPLC–MS定量：分析法の最適化と妥当性確認"),
+    event: localize("31st Chinese Chemical Society Congress (CCS)", "第 31 届中国化学会年会（CCS）", "第31回中国化学会年会（CCS）"),
+  },
+  {
+    year: "2017",
+    title: localize("Headspace GC determination of benzene-series VOCs released from cigarette filters: equilibrium kinetics and sensitivity", "顶空气相色谱法测定卷烟滤嘴释放的苯系挥发性有机物：平衡动力学与灵敏度", "たばこフィルターから放出されるベンゼン系VOCのヘッドスペースGC定量：平衡動力学と感度"),
+    event: localize("3rd International Conference on Chemical Materials and Process (ICCMP)", "第三届化学材料与工艺国际会议（ICCMP）", "第3回化学材料・プロセス国際会議（ICCMP）"),
+  },
+  {
+    year: "2015",
+    title: localize("Multi-instrument characterization of marine bioaerosols and their links to cloud and precipitation processes", "多仪器表征海洋生物气溶胶及其与云和降水过程的联系", "複数機器による海洋バイオエアロゾルの特性評価と雲・降水過程との関連"),
+    event: localize("249th ACS National Meeting", "第 249 届美国化学会全国会议", "第249回米国化学会全国大会"),
+  },
+  {
+    year: "2014",
+    title: localize("A controlled pollen aerosolization apparatus for laboratory ice nucleation and optical measurements (poster)", "用于实验室冰成核与光学测量的可控花粉气溶胶发生装置（海报）", "実験室での氷核形成・光学測定のための制御型花粉エアロゾル発生装置（ポスター）"),
+    event: localize("247th ACS National Meeting", "第 247 届美国化学会全国会议", "第247回米国化学会全国大会"),
+  },
+] as const;
+
+export const lectureVideos = [
+  {
+    id: "tVO-jczRqH4",
+    index: "01",
+    title: "AIから深層学習へ、その進化の軌跡",
+    topic: localize("AI foundations", "AI 基础", "AIの基礎"),
+    motif: "network",
+  },
+  {
+    id: "vgzPPp1OPFU",
+    index: "02",
+    title: "農場現場における深層学習とコンピュータビジョンの実装",
+    topic: localize("Computer vision on the farm", "农业图像与计算机视觉", "農業現場のコンピュータビジョン"),
+    motif: "vision",
+  },
+  {
+    id: "hOwTLg4ojQg",
+    index: "03",
+    title: "深層学習の実践授業：Teachable Machine操作徹底ガイド",
+    topic: localize("Hands-on tutorial", "实践教学", "実践チュートリアル"),
+    motif: "hands-on",
+  },
+] as const;
+
+export const teaching = [
+  {
+    period: "2025–2026",
+    title: localize("Open educational resources (MAFF-commissioned)", "开放教学资源（农林水产省委托）", "オープン教材（農林水産省委託事業）"),
+    text: localize(
+      "Developed, recorded and produced three Japanese-language video lectures on AI in agriculture (49 min 51 s in total) for Hokkaido University's Smart Agriculture Education Hub; included in MAFF's smart-agriculture online materials.",
+      "为北海道大学智能农业教育基地独立策划、录制并制作 3 部日语 AI 农业教学视频（共 49 分 51 秒），已列入农林水产省智能农业在线教材。",
+      "北海道大学スマート農業教育拠点のため、農業AIに関する日本語講義動画3本（計49分51秒）を企画・収録・制作。農林水産省のスマート農業オンライン教材に収録。",
+    ),
+  },
+  {
+    period: "2024–",
+    title: localize("Research co-mentor", "协助指导研究生", "研究指導補助"),
+    text: localize(
+      "Co-mentoring one master's student under the faculty supervisor: research planning, field and laboratory work, image analysis and presentations.",
+      "在导师框架下协助指导硕士研究生 1 名：研究计划、田间与实验工作、图像分析及学术汇报。",
+      "指導教員のもとで修士課程学生1名の研究を補助：研究計画、圃場・実験作業、画像解析、発表。",
+    ),
+  },
+  {
+    period: "2023",
+    title: localize("JSPS “Hirameki☆Tokimeki Science” co-instructor", "JSPS「ひらめき☆ときめきサイエンス」联合讲师", "JSPS「ひらめき☆ときめきサイエンス」共同講師"),
+    text: localize(
+      "Hands-on plant and agricultural science activities for secondary-school students at the Field Science Center for Northern Biosphere.",
+      "在北方生物圈领域科学中心面向中学生开展植物与农业科学动手实验。",
+      "北方生物圏フィールド科学センターで、中高生向けに植物・農業科学の体験活動を担当。",
+    ),
+  },
+  {
+    period: "2020–2024",
+    title: localize("Teaching assistant, graduate seminars", "研究生研讨课助教", "大学院セミナーTA"),
+    text: localize("Hokkaido University, about 10–20 students per class.", "北海道大学，每班约 10–20 人。", "北海道大学（1クラス約10–20名）。"),
+  },
+  {
+    period: "2012–2015",
+    title: localize("Graduate teaching assistant, University of Denver", "研究生教学助理，丹佛大学", "大学院TA（デンバー大学）"),
+    text: localize(
+      "Independently taught undergraduate laboratory sections in English for three academic years — general, organic, analytical and inorganic chemistry and biochemistry (~30 students per section).",
+      "连续 3 学年以英语独立承担本科化学实验课，涵盖普通、有机、分析、无机化学及生物化学（每班约 30 人）。",
+      "3学年にわたり学部の化学実験（一般・有機・分析・無機化学、生化学）を英語で単独担当（1クラス約30名）。",
+    ),
+  },
+] as const;
+
+/* ------------------------------------------------------------------ */
+/* Background                                                           */
+/* ------------------------------------------------------------------ */
+
+export type Track = "plant" | "industry" | "chemistry";
+
+export const pathway = [
+  { start: 2009, end: 2012, track: "chemistry", label: localize("BS, Chemistry", "化学理学学士", "学士（化学）"), place: localize("Winona State University", "Winona State University", "ウィノナ州立大学") },
+  { start: 2012, end: 2015, track: "chemistry", label: localize("MS, Chemistry · bioaerosols", "化学硕士 · 生物气溶胶", "修士（化学）・バイオエアロゾル"), place: localize("University of Denver", "丹佛大学", "デンバー大学") },
+  { start: 2016, end: 2017.25, track: "industry", label: localize("Quality-control manager", "质量控制经理", "品質管理マネージャー"), place: localize("YIBO Inc., USA", "YIBO Inc.（美国）", "YIBO Inc.（米国）") },
+  { start: 2017.25, end: 2020.55, track: "industry", label: localize("Co-founder · technical manager", "共同创始人 · 技术负责人", "共同創業者・技術責任者"), place: localize("Food-testing laboratory, China", "食品检测实验室（中国）", "食品検査ラボ（中国）") },
+  { start: 2020.6, end: 2024.72, track: "plant", label: localize("PhD · ploidy & fruit quality", "博士 · 倍性与果实品质", "博士課程・倍数性と果実品質"), place: localize("Hokkaido University", "北海道大学", "北海道大学") },
+  { start: 2024.75, end: 2026.83, track: "plant", label: localize("Postdoc · phenotyping & rice", "博士后 · 表型与水稻", "学術研究員・表現型とイネ"), place: localize("Hokkaido University", "北海道大学", "北海道大学"), current: true },
+] as const;
+
+export const pathwayRange = { start: 2009, end: 2027 };
+
+export const trackLabels: Record<Track, LocalizedText> = {
+  chemistry: localize("Chemistry & analysis", "化学与分析", "化学・分析"),
+  industry: localize("Testing industry", "检测行业", "検査業界"),
+  plant: localize("Plant science & breeding", "植物科学与育种", "植物科学・育種"),
+};
+
+export const appointments = [
+  {
+    period: localize("Oct 2026 – present", "2026.10 – 至今", "2026年10月 – 現在"),
+    title: localize("Postdoctoral Researcher (学術研究員)", "博士后研究员（学術研究員）", "学術研究員"),
+    place: localize("Experimental Farm, Field Science Center for Northern Biosphere, Hokkaido University", "北海道大学北方生物圈领域科学中心 生物生产研究农场", "北海道大学 北方生物圏フィールド科学センター 生物生産研究農場"),
+  },
+  {
+    period: localize("Apr – Sep 2026", "2026.04 – 2026.09", "2026年4月 – 9月"),
+    title: localize("Postdoctoral Researcher (学術研究員)", "博士后研究员（学術研究員）", "学術研究員"),
+    place: localize("Research Faculty of Agriculture, Hokkaido University", "北海道大学农学研究院", "北海道大学大学院農学研究院"),
+  },
+  {
+    period: localize("Oct 2024 – Mar 2026", "2024.10 – 2026.03", "2024年10月 – 2026年3月"),
+    title: localize("Postdoctoral Researcher (専門研究員, 学術研究員)", "博士后研究员（専門研究員、学術研究員）", "専門研究員・学術研究員"),
+    place: localize("Field Science Center for Northern Biosphere, Hokkaido University", "北海道大学北方生物圈领域科学中心", "北海道大学 北方生物圏フィールド科学センター"),
+  },
+] as const;
+
+export const education = [
+  {
+    year: "2024",
+    degree: localize("PhD, Environmental Science", "环境科学博士", "博士（環境科学）"),
+    place: localize("Graduate School of Environmental Science, Hokkaido University", "北海道大学大学院环境科学院", "北海道大学大学院環境科学院"),
+    note: localize(
+      "Thesis: Study on the impact of ploidy levels in shaping morphological and biochemical traits in haskap (Lonicera caerulea L. subsp. edulis). Supervisor: Prof. Yoichiro Hoshino",
+      "学位论文：Study on the impact of ploidy levels in shaping morphological and biochemical traits in haskap (Lonicera caerulea L. subsp. edulis)；导师：星野洋一郎 教授",
+      "博士論文：Study on the impact of ploidy levels in shaping morphological and biochemical traits in haskap (Lonicera caerulea L. subsp. edulis)（指導教員：星野洋一郎 教授）",
+    ),
+  },
+  {
+    year: "2015",
+    degree: localize("MS, Chemistry", "化学硕士", "修士（化学）"),
+    place: localize("University of Denver, USA", "丹佛大学（美国）", "デンバー大学（米国）"),
+    note: localize(
+      "Thesis: Fluorescent Biological Aerosol Particles in Coastal Canada and the Link to Atmospheric Ice Nuclei",
+      "学位论文：加拿大沿海荧光生物气溶胶颗粒及其与大气冰核的关联",
+      "修士論文：カナダ沿岸における蛍光性生物エアロゾル粒子と大気氷晶核との関連",
+    ),
+  },
+  {
+    year: "2012",
+    degree: localize("BS, Chemistry", "化学理学学士", "学士（化学）"),
+    place: localize("Winona State University, USA", "Winona State University（美国）", "ウィノナ州立大学（米国）"),
+  },
+  {
+    year: "2011",
+    degree: localize("BEng, Chemical Engineering and Technology", "化学工程与工艺工学学士", "学士（化学工学）"),
+    place: localize("City College of Hebei University of Technology, China", "河北工业大学城市学院（中国）", "河北工業大学城市学院（中国）"),
+  },
+] as const;
+
+export const industry = [
+  {
+    period: localize("Apr 2017 – Jul 2020", "2017.04 – 2020.07", "2017年4月 – 2020年7月"),
+    title: localize("Co-founder, Laboratory Technical Manager and Authorized Report Signatory", "共同创始人、实验室技术负责人、检测报告授权签字人", "共同創業者・試験所技術責任者・報告書授権署名者"),
+    place: localize("Hebei Tongbiao Testing Technology Co., Ltd., China", "河北通标检测技术有限公司", "河北通標検測技術有限公司（中国）"),
+    text: localize(
+      "Led capability building for approximately 1,480 food and related chemical test items/parameters — method verification and validation, personnel authorization and preparation for technical assessment under a quality system referencing ISO/IEC 17025; final technical review and sign-off of test reports.",
+      "主导约 1,480 项食品及相关化学检测项目/参数的能力建设，包括方法验证与确认、人员授权及技术评审准备（质量体系参照 ISO/IEC 17025）；承担检测报告的最终技术复核与签发。",
+      "食品および関連化学分析の約1,480項目・パラメータについて試験能力の構築を主導（方法の検証・妥当性確認、要員の認定、ISO/IEC 17025を参照した品質システムのもとでの技術審査準備）。試験報告書の最終技術審査と署名を担当。",
+    ),
+  },
+  {
+    period: localize("2016 – 2017", "2016 – 2017", "2016 – 2017"),
+    title: localize("Quality Control Manager", "质量控制经理", "品質管理マネージャー"),
+    place: localize("YIBO Inc., USA", "YIBO Inc.（美国）", "YIBO Inc.（米国）"),
+    text: localize("Food-chemistry testing and quality-assurance work.", "食品化学检验及质量保证工作。", "食品化学分析と品質保証業務。"),
+  },
+] as const;
+
+export const funding = {
+  underReview: [
+    {
+      year: "2026",
+      title: localize(
+        "JSPS KAKENHI, Grant-in-Aid for Early-Career Scientists (FY2027)",
+        "日本学术振兴会（JSPS）科研费 若手研究（2027 年度）",
+        "科学研究費助成事業 若手研究（2027年度）",
+      ),
+      project: "イネ培養組織の時系列画像によるシュート形成可能性の非破壊的早期判定",
+      gloss: localize(
+        "Non-destructive early prediction of shoot-formation potential in rice culture tissues from time-series images",
+        "基于时间序列图像的水稻培养组织成苗可能性无损早期判定",
+        "",
+      ),
+    },
+    {
+      year: "2026",
+      title: localize(
+        "Amway Japan Foundation, research grant for sustainable agriculture (FY2027)",
+        "日本安利财团 可持续农业研究资助（2027 年度）",
+        "日本アムウェイ財団 持続可能な農業の未来づくり研究助成金（2027年度）",
+      ),
+      project: "水稲の品質選抜を支える収穫後の追加測定配分法の開発",
+      gloss: localize(
+        "Allocating additional post-harvest measurements to support quality selection in rice",
+        "支撑水稻品质选择的收获后追加测定分配方法",
+        "",
+      ),
+    },
+  ],
+  received: [
+    { period: localize("Oct 2021 – Mar 2022", "2021.10 – 2022.03", "2021年10月 – 2022年3月"), title: localize("Hokkaido University DX Doctoral Fellowship", "北海道大学 DX 博士人才 Fellowship", "北海道大学 DX博士人材フェローシップ") },
+    { period: localize("2020", "2020", "2020"), title: localize("JASSO Scholarship", "日本学生支援机构（JASSO）奖学金", "日本学生支援機構（JASSO）奨学金") },
+    { period: localize("2012", "2012", "2012"), title: localize("University of Denver Dean's Independent Special Research Fund", "丹佛大学 Dean's Independent Special Research Fund", "デンバー大学 Dean's Independent Special Research Fund") },
+  ],
+};
+
+export const service = [
+  { label: localize("Peer review", "同行评审", "査読"), text: localize("BMC Plant Biology and other plant-science journals (2026 – present)", "BMC Plant Biology 及其他植物科学期刊（2026 – 至今）", "BMC Plant Biology ほか植物科学誌（2026年 – 現在）") },
+  { label: localize("Memberships", "学会", "所属学会"), text: localize("Japanese Society for Horticultural Science; International Society for Horticultural Science", "日本园艺学会（JSHS）；国际园艺学会（ISHS）", "園芸学会（JSHS）、国際園芸学会（ISHS）") },
+  { label: localize("Languages", "语言", "言語"), text: localize("Chinese (native); English (fluent); Japanese (professional working proficiency)", "中文（母语）；英语（流利）；日语（工作熟练）", "中国語（母語）、英語（流暢）、日本語（業務上支障なし）") },
+] as const;
+
+export const patents = [
+  {
+    year: "2024",
+    title: localize("Preparation method for a high-specific-energy battery and the resulting battery", "一种高比能电池制备方法及高比能电池", "高比エネルギー電池の製造方法および高比エネルギー電池"),
+    kind: "application",
+    number: "CN117747967A",
+  },
+  {
+    year: "2024",
+    title: localize("Integrated assembly method for a flexible battery, flexible battery and wearable device", "柔性电池的一体化集成方法、柔性电池及可穿戴设备", "フレキシブル電池の一体製造方法、フレキシブル電池およびウェアラブル機器"),
+    kind: "application",
+    number: "CN117747955A",
+  },
+  {
+    year: "2021",
+    title: localize("Rapid detection device for histamine in food", "一种食品中组胺成分的快速检测装置", "食品中ヒスタミン成分の迅速検出装置"),
+    kind: "utility",
+    number: "CN212808065U",
+    highlight: true,
+  },
+  {
+    year: "2019",
+    title: localize("Tool and process for removing scale from the inner wall of a circular pipe", "一种圆管内壁除垢工具及除垢工艺", "円管内壁のスケール除去工具および除去方法"),
+    kind: "application",
+    number: "CN109201659A",
+  },
+  {
+    year: "2015",
+    title: localize("Indoor air purifier", "室内空气净化器", "室内空気清浄機"),
+    kind: "utility",
+    number: "CN204460473U",
+  },
+  {
+    year: "2015",
+    title: localize("Solar street light with camera", "带摄像头的太阳能路灯", "カメラ付き太陽光街路灯"),
+    kind: "utility",
+    number: "CN204420843U",
+  },
+  {
+    year: "2014",
+    title: localize("Fully automatic pharmaceutical bottle inspection instrument", "全自动药瓶检测仪器", "全自動薬瓶検査装置"),
+    kind: "utility",
+    number: "CN203396717U",
+  },
+] as const;
+
+export const patentKinds = {
+  utility: localize("Granted utility model", "授权实用新型", "実用新案（登録）"),
+  application: localize("Published invention-patent application", "已公开发明专利申请", "特許出願（公開）"),
+};

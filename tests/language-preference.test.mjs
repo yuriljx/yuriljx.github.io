@@ -58,19 +58,22 @@ test("uses the Cloudflare locale endpoint and falls back safely to English", asy
   assert.equal(await requestDetectedLocale(async () => { throw new Error("offline"); }), "en");
 });
 
-test("renders one globe dropdown and keeps language and theme tools to the right of Menu on mobile", async () => {
-  const [pageSource, styles] = await Promise.all([
+test("renders one globe dropdown with theme and menu controls grouped on the right", async () => {
+  const [headerSource, pageSource, styles] = await Promise.all([
+    readFile(new URL("../app/_components/Header.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
   ]);
 
-  assert.match(pageSource, /function GlobeIcon\(\)/);
-  assert.match(pageSource, /aria-controls="language-options"/);
-  assert.match(pageSource, /className="theme-toggle"/);
+  assert.match(headerSource, /<Globe \/>/);
+  assert.match(headerSource, /aria-controls="language-options"/);
+  assert.match(headerSource, /className="theme-toggle"/);
+  assert.match(headerSource, /className="menu-toggle"/);
+  assert.match(headerSource, /className="scroll-progress"/);
   assert.match(pageSource, /jixiao-theme/);
-  assert.doesNotMatch(pageSource, /className="language-switch"/);
-  assert.match(styles, /\.menu-toggle \{ grid-column: 2; grid-row: 1;/);
-  assert.match(styles, /\.header-tools \{ grid-column: 3; grid-row: 1;/);
+  assert.match(pageSource, /searchParams\.get\("lang"\)|get\("lang"\)/);
+  assert.doesNotMatch(headerSource, /className="language-switch"/);
+  assert.match(styles, /@media \(max-width: 980px\)[\s\S]*?\.menu-toggle \{ display: inline-flex;/);
 });
 
 test("keeps CJK closing punctuation with the preceding title phrase", () => {
@@ -83,23 +86,20 @@ test("keeps CJK closing punctuation with the preceding title phrase", () => {
   assert.deepEqual(english.tokens, ["Aligning", "field", "observations"]);
 });
 
-test("uses the approved mobile evidence layout and touch-friendly graph behavior", async () => {
-  const [pageSource, styles] = await Promise.all([
-    readFile(new URL("../app/page.tsx", import.meta.url), "utf8"),
+test("keeps the hero figure full-width above two gallery tiles on phones", async () => {
+  const [figureSource, styles] = await Promise.all([
+    readFile(new URL("../app/_components/LiveFigure.tsx", import.meta.url), "utf8"),
     readFile(new URL("../app/globals.css", import.meta.url), "utf8"),
   ]);
 
-  assert.match(pageSource, /graphHintMobile: localize\(/);
-  assert.match(pageSource, /canvas\.addEventListener\("pointerdown", locatePointer\)/);
-  assert.match(pageSource, /findNodeAt\(event\.clientX, event\.clientY, narrowViewport\.matches \? 28 : 20\)/);
-  assert.match(pageSource, /const compressVertically = narrowViewport\.matches && width < 470/);
-  assert.match(pageSource, /const label = narrowViewport\.matches && width < 470 \? node\.shortLabel : node\.label/);
-  assert.match(pageSource, /width >= 380 \|\| \(narrowViewport\.matches && width >= 300\)/);
+  assert.match(figureSource, /role="tablist"/);
+  assert.match(figureSource, /useReducedMotion\(\)/);
+  assert.match(figureSource, /Schematic illustration/);
   assert.match(styles, /\.hero-stats \{[\s\S]*?grid-template-columns: repeat\(4, minmax\(0, 1fr\)\)/);
-  assert.match(styles, /@media \(max-width: 860px\)[\s\S]*?grid-template-columns: repeat\(auto-fit, minmax\(118px, 1fr\)\)/);
-  assert.match(styles, /@media \(max-width: 860px\)[\s\S]*?\.evidence-graph \{ grid-column: 1 \/ 3; grid-row: 1; aspect-ratio: 1\.2; \}/);
-  assert.match(styles, /\.hero-gallery\.evidence-lab \{ grid-column: 1; grid-row: 2; aspect-ratio: 1\.1; \}/);
-  assert.match(styles, /\.hero-gallery\.evidence-field \{ grid-column: 2; grid-row: 2; aspect-ratio: 1\.1; \}/);
+  assert.match(styles, /@media \(max-width: 640px\)[\s\S]*?\.live-figure \{ grid-column: 1 \/ 3; grid-row: 1; \}/);
+  assert.match(styles, /@media \(max-width: 640px\)[\s\S]*?\.gallery-lab \{ grid-column: 1; grid-row: 2; aspect-ratio: 1; \}/);
+  assert.match(styles, /@media \(max-width: 640px\)[\s\S]*?\.gallery-field \{ grid-column: 2; grid-row: 2; aspect-ratio: 1; \}/);
+  assert.match(styles, /@media \(prefers-reduced-motion: reduce\)/);
 });
 
 test("scrolls explicitly to the page origin and respects reduced motion", () => {
