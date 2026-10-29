@@ -610,7 +610,11 @@ export const teaching = [
   },
   {
     period: "2023",
-    title: localize("JSPS “Hirameki☆Tokimeki Science” co-instructor", "JSPS「ひらめき☆ときめきサイエンス」联合讲师", "JSPS「ひらめき☆ときめきサイエンス」共同講師"),
+    title: localize(
+      "JSPS \"Hirameki☆Tokimeki Science\" co-instructor (teaching materials; hands-on guidance)",
+      "日本学术振兴会「ひらめき☆ときめきサイエンス」联合讲师（准备教材、实习指导）",
+      "日本学術振興会「ひらめき☆ときめきサイエンス」共同講師（教材準備・実習指導）",
+    ),
     text: localize(
       "Hands-on plant and agricultural science activities for secondary-school students at the Field Science Center for Northern Biosphere.",
       "在北方生物圈领域科学中心面向中学生开展植物与农业科学动手实验。",
