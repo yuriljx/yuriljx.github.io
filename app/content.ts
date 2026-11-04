@@ -44,6 +44,17 @@ export const keyNumbers = [
 
 export const latest = [
   {
+    date: "2026-10-08",
+    label: localize("8 Oct 2026", "2026.10.08", "2026年10月8日"),
+    kind: localize("News", "报道", "研究紹介"),
+    text: localize(
+      "Hokkaido University featured our study on monitoring grape berry growth with YOLOv8 and biology-informed smoothing.",
+      "北海道大学报道了我们利用 YOLOv8 与生物学约束平滑监测葡萄果粒生长的研究。",
+      "YOLOv8と生物学的制約付き平滑化によるブドウ果粒の成長モニタリング研究が、北海道大学のニュースで紹介されました。",
+    ),
+    href: "https://www.hokudai.ac.jp/news/2026/10/ai-13.html",
+  },
+  {
     date: "2026-10",
     label: localize("Oct 2026", "2026.10", "2026年10月"),
     kind: localize("Appointment", "任职", "着任"),
