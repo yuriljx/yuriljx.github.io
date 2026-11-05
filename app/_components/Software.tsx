@@ -9,9 +9,9 @@ import { tx } from "./hooks";
 const ui = {
   title: localize("Software", "研究软件", "ソフトウェア"),
   intro: localize(
-    "Two open packages accompany my first-author studies: the grape growth code for the published Hortic. J. paper, and a DOI-archived reproduction package for the submitted Rice manuscript. Tools that support day-to-day experiments are shown separately as showcases.",
-    "两个开放软件包分别配套我的第一作者研究：已发表 Hortic. J. 论文的葡萄生长代码，以及已投稿 Rice 稿件的复现软件包（带 DOI）。支撑日常实验的研究工具以展示仓库形式单独列出。",
-    "筆頭著者研究には2つの公開パッケージがあります。既発表の Hortic. J. 論文のブドウ成長解析コードと、Rice 投稿論文の再現用パッケージ（DOI付き）です。日々の実験を支える研究ツールは、ショーケースとして別に紹介します。",
+    "Open software includes the grape-growth code, the rice genomic-prediction reproduction package and CallusTrack v0.7.0. Earlier synthetic illustrations remain available as showcases.",
+    "开放软件包括葡萄生长代码、水稻基因组预测结果复算软件包和 CallusTrack v0.7.0。早期合成示意图仍作为展示仓库提供。",
+    "公開ソフトウェアとしてブドウ成長解析コード、イネのゲノム予測結果再計算パッケージ、CallusTrack v0.7.0を紹介します。旧版の合成例はショーケースとして引き続き公開しています。",
   ),
   open: localize("Open software", "开放软件", "公開ソフトウェア"),
   tools: localize("Research tools in development", "开发中的研究工具", "開発中の研究ツール"),
@@ -53,7 +53,7 @@ function OpenSoftwareCard({ project, locale }: { project: (typeof openSoftware)[
   const visual = project.visuals[active];
 
   return (
-    <article className="open-card" id={`software-${project.slug}`} data-reveal>
+    <article className="open-card" id={project.slug === "callustrack" ? "tool-callustrack" : `software-${project.slug}`} data-reveal>
       <div className="open-media">
         {project.visuals.length ? (
           <>

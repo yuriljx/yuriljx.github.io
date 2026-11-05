@@ -28,7 +28,7 @@ export const profile = {
   orcidUrl: "https://orcid.org/0000-0003-2377-1011",
   scholarUrl: "https://scholar.google.com/citations?user=m2FLOrUAAAAJ&hl=en",
   githubUrl: "https://github.com/yuriljx",
-  updated: localize("Updated October 2026", "更新于 2026 年 10 月", "2026年10月更新"),
+  updated: localize("Updated November 2026", "更新于 2026 年 11 月", "2026年11月更新"),
 };
 
 export const keyNumbers = [
@@ -416,6 +416,32 @@ export const openSoftware = [
     ],
     visuals: [] as Visual[],
   },
+  {
+    slug: "callustrack",
+    title: "CallusTrack",
+    meta: localize("v0.7.0 · Zenodo DOI", "v0.7.0 · Zenodo DOI", "v0.7.0・Zenodo DOI"),
+    summary: localize(
+      "Keeps each callus's identity stable across a culture-image sequence, with editable instance masks, explicit review states and controlled export of masks, tables and QC overlays.",
+      "在整段培养图像序列中保持每个愈伤组织身份稳定；实例掩膜可编辑、审查状态明确，并可受控导出掩膜、表格与质控叠加图。",
+      "培養画像の系列全体で各カルスの同一性を保ち、編集可能なインスタンスマスク、明示的なレビュー状態、マスク・表・QCオーバーレイの管理付き出力を備えます。",
+    ),
+    points: [
+      localize("Persistent callus identities across images", "跨图像保持愈伤组织身份", "画像間でカルスの同一性を保持"),
+      localize("Editable masks and explicit review states", "可编辑掩膜与明确的复核状态", "編集可能なマスクと明示的なレビュー状態"),
+      localize("Checked exports of annotations and tables", "注释与表格的整合性检查及导出", "注釈・表の整合性を確認して出力"),
+    ],
+    stack: ["Browser-based", "Annotation", "Quality control"],
+    links: [
+      { label: "DOI · v0.7.0", href: "https://doi.org/10.5281/zenodo.23949162" },
+      { label: localize("Earlier showcase (v0.5.0)", "早期展示仓库（v0.5.0）", "旧ショーケース（v0.5.0）"), href: "https://github.com/yuriljx/callustrack-showcase" },
+    ],
+    visuals: [
+      v("/software/callustrack/annotation-workspace.webp", 1800, 1080, localize("Synthetic CallusTrack workspace with persistent callus labels", "带持续愈伤组织标签的合成 CallusTrack 工作区", "カルス継続ラベルを備えた合成CallusTrack画面"), localize("Persistent labels and frame-by-frame review", "持续追踪标签与逐帧复核", "継続追跡ラベルとフレーム別レビュー")),
+      v("/software/callustrack/review-matrix.webp", 1800, 1080, localize("Synthetic CallusTrack human review matrix", "合成 CallusTrack 人工复核矩阵", "合成CallusTrack人手レビュー行列"), localize("Human review matrix and explicit QC states", "人工复核矩阵与明确的质控状态", "人手レビュー行列と明示的なQC状態")),
+      v("/software/callustrack/controlled-export.webp", 1800, 1080, localize("Synthetic CallusTrack controlled export view", "合成 CallusTrack 受控导出视图", "合成CallusTrack管理付き出力画面"), localize("Controlled export of masks, tables and overlays", "掩膜、表格与叠加图的受控导出", "マスク・表・オーバーレイの管理付き出力")),
+    ],
+  },
+
 ] as const;
 
 export const researchTools = [
@@ -434,23 +460,6 @@ export const researchTools = [
       v("/software/rice-dh/workflow-overview.webp", 1800, 1080, localize("Synthetic overview of the traceable rice DH workflow", "可追溯水稻 DH 工作流的合成概览", "追跡可能なイネDHワークフローの合成概要"), localize("Workflow stages, checkpoints and handoffs", "工作流阶段、检查点与交接", "ワークフロー段階、チェックポイント、引き継ぎ")),
       v("/software/rice-dh/research-dashboard.webp", 1800, 1080, localize("Synthetic operating dashboard for rice DH records", "水稻 DH 记录系统的合成操作面板", "イネDH記録システムの合成運用ダッシュボード"), localize("Plans, material status and QC alerts in one view", "计划、材料状态与质控提醒集中呈现", "計画・材料状態・QC通知を一画面に集約")),
       v("/software/rice-dh/lineage-evidence.webp", 1800, 1080, localize("Synthetic lineage and evidence view for rice DH materials", "水稻 DH 材料的合成谱系与证据视图", "イネDH材料の合成系譜・証拠画面"), localize("Source-to-outcome lineage with recorded evidence", "从来源到结果的谱系与记录证据", "由来から結果までの系譜と記録証拠")),
-    ],
-  },
-  {
-    slug: "callustrack",
-    title: "CallusTrack",
-    version: "v0.5.0",
-    summary: localize(
-      "Keeps each callus's identity stable across a culture-image sequence, with editable instance masks, explicit review states and controlled export of masks, tables and QC overlays.",
-      "在整段培养图像序列中保持每个愈伤组织身份稳定；实例掩膜可编辑、审查状态明确，并可受控导出掩膜、表格与质控叠加图。",
-      "培養画像の系列全体で各カルスの同一性を保ち、編集可能なインスタンスマスク、明示的なレビュー状態、マスク・表・QCオーバーレイの管理付き出力を備えます。",
-    ),
-    features: ["Persistent IDs", "Editable masks", "Review states"],
-    link: "https://github.com/yuriljx/callustrack-showcase",
-    visuals: [
-      v("/software/callustrack/annotation-workspace.webp", 1800, 1080, localize("Synthetic CallusTrack workspace with persistent callus labels", "带持续愈伤组织标签的合成 CallusTrack 工作区", "カルス継続ラベルを備えた合成CallusTrack画面"), localize("Persistent labels and frame-by-frame review", "持续追踪标签与逐帧复核", "継続追跡ラベルとフレーム別レビュー")),
-      v("/software/callustrack/review-matrix.webp", 1800, 1080, localize("Synthetic CallusTrack human review matrix", "合成 CallusTrack 人工复核矩阵", "合成CallusTrack人手レビュー行列"), localize("Human review matrix and explicit QC states", "人工复核矩阵与明确的质控状态", "人手レビュー行列と明示的なQC状態")),
-      v("/software/callustrack/controlled-export.webp", 1800, 1080, localize("Synthetic CallusTrack controlled export view", "合成 CallusTrack 受控导出视图", "合成CallusTrack管理付き出力画面"), localize("Controlled export of masks, tables and overlays", "掩膜、表格与叠加图的受控导出", "マスク・表・オーバーレイの管理付き出力")),
     ],
   },
   {
@@ -537,23 +546,13 @@ export const presentations = [
     event: localize("15th International Conference on Computational Systems Biology (ISB)", "第十五届国际计算系统生物学会议（ISB）", "第15回国際計算システム生物学会議（ISB）"),
   },
   {
-    year: "2023",
-    title: localize("Activated MSTFA silylation for GC–MS quantification of phenols and organic acids in plant matrices", "活化 MSTFA 硅烷化提升植物基质中酚类与有机酸的 GC–MS 定量", "活性化MSTFAシリル化による植物マトリックス中フェノール類・有機酸のGC–MS定量"),
-    event: localize("103rd Annual Meeting of the Chemical Society of Japan", "日本化学会第 103 届春季年会", "日本化学会 第103春季年会"),
-  },
-  {
     year: "2022",
-    title: localize("GC–MS analysis of sugars and organic acids in polyploid haskap fruit", "多倍体蓝靛果果实糖类与有机酸的 GC–MS 分析", "倍数体ハスカップ果実の糖・有機酸のGC–MS分析"),
+    title: localize("Analysis of sugar and organic acid contents in polyploid haskap (Lonicera caerulea L. subsp. edulis (Turcz. ex Herder) Hultén) fruits by GC-MS", "Analysis of sugar and organic acid contents in polyploid haskap (Lonicera caerulea L. subsp. edulis (Turcz. ex Herder) Hultén) fruits by GC-MS", "Analysis of sugar and organic acid contents in polyploid haskap (Lonicera caerulea L. subsp. edulis (Turcz. ex Herder) Hultén) fruits by GC-MS"),
     event: localize("Japanese Society for Horticultural Science, Autumn Meeting", "日本园艺学会秋季大会", "園芸学会 秋季大会"),
   },
 ] as const;
 
 export const earlierPresentations = [
-  {
-    year: "2020",
-    title: localize("Coupled effects of soil trace-element transfer on flavour-metabolite fingerprints and co-accumulation of toxic elements in specialty crops", "土壤微量元素转移对特种作物风味代谢指纹图谱及有毒元素共积累的耦合效应", "土壌微量元素移行が特産作物の風味代謝フィンガープリントと有害元素共蓄積に及ぼす連関効果"),
-    event: localize("3rd International Conference on Agriculture, Food and Biotechnology (ICAFB)", "第三届农业、食品与生物技术国际会议（ICAFB）", "第3回農業・食品・バイオテクノロジー国際会議（ICAFB）"),
-  },
   {
     year: "2018",
     title: localize("Rapid HPLC–MS quantification of free amino acids in tea infusions: method optimization and validation", "茶汤中游离氨基酸的快速 HPLC–MS 定量：方法优化与验证", "茶抽出液中遊離アミノ酸の迅速HPLC–MS定量：分析法の最適化と妥当性確認"),
@@ -602,21 +601,30 @@ export const lectureVideos = [
 
 export const teaching = [
   {
-    period: "2025–2026",
-    title: localize("Open educational resources (MAFF-commissioned)", "开放教学资源（农林水产省委托）", "オープン教材（農林水産省委託事業）"),
+    period: "2026.11–",
+    title: localize("From images to testable questions: online image-analysis series", "从图像到可检验问题：在线图像分析系列课程", "画像データから検証可能な問いを立てる：画像解析オンライン連続講座"),
     text: localize(
-      "Developed, recorded and produced three Japanese-language video lectures on AI in agriculture (49 min 51 s in total) for Hokkaido University's Smart Agriculture Education Hub; included in MAFF's smart-agriculture online materials.",
-      "为北海道大学智能农业教育基地独立策划、录制并制作 3 部日语 AI 农业教学视频（共 49 分 51 秒），已列入农林水产省智能农业在线教材。",
-      "北海道大学スマート農業教育拠点のため、農業AIに関する日本語講義動画3本（計49分51秒）を企画・収録・制作。農林水産省のスマート農業オンライン教材に収録。",
+      "An independently organized three-session series for graduate students outside computer science is in progress. Sessions 1 and 2 were held on 2 and 3 November with 8 and 9 participants, respectively. Session 3 is scheduled for 6 November, with 14 registrations.",
+      "面向非信息专业研究生独立策划的三回系列正在实施：11 月 2 日第一回 8 人参加，11 月 3 日第二回 9 人参加；第三回计划于 11 月 6 日举行，已有 14 人报名。",
+      "非情報系大学院生に向けて個人企画した全3回の講座を実施中。11月2日の第1回は8名、3日の第2回は9名が参加。第3回は11月6日に開催予定で、14名が申込み。",
     ),
   },
   {
-    period: "2024–",
-    title: localize("Research co-mentor", "协助指导研究生", "研究指導補助"),
+    period: "2025–2026",
+    title: localize("Open educational resources (MAFF-commissioned)", "开放教学资源（农林水产省委托）", "オープン教材（農林水産省委託事業）"),
     text: localize(
-      "Co-mentoring one master's student under the faculty supervisor: research planning, field and laboratory work, image analysis and presentations.",
-      "在导师框架下协助指导硕士研究生 1 名：研究计划、田间与实验工作、图像分析及学术汇报。",
-      "指導教員のもとで修士課程学生1名の研究を補助：研究計画、圃場・実験作業、画像解析、発表。",
+      "Independently planned, scripted, produced and edited three Japanese-language educational videos on agricultural AI (49 min 51 s in total) for Hokkaido University's Smart Agriculture Education Hub; included in MAFF's smart-agriculture online materials.",
+      "为北海道大学智能农业教育基地独立承担 3 部日语农业 AI 教学视频的策划、撰稿、制作与编辑（共 49 分 51 秒），已列入农林水产省智能农业在线教材。",
+      "北海道大学スマート農業教育拠点のため、農業AIに関する日本語教育動画3本（計49分51秒）の企画・構成、原稿執筆、制作・編集を単独で担当。農林水産省のスマート農業オンライン教材に収録。",
+    ),
+  },
+  {
+    period: "2021–",
+    title: localize("Research advice and support, Hoshino Laboratory", "星野研究室研究建议与协助", "星野研究室の修士課程学生への研究支援"),
+    text: localize(
+      "Since 2021, I have provided research advice and assistance to master's students in the Hoshino laboratory. I also designed a grape-imaging project and am carrying it out with a master's student under the faculty supervisor.",
+      "自 2021 年起为星野研究室硕士生提供研究建议与协助；另设计葡萄图像测量项目，在导师框架下与一名硕士生共同推进。",
+      "2021年から星野研究室の修士課程学生に研究上の助言・協力を行っている。ブドウ果実の画像計測プロジェクトを設計し、指導教員のもとで修士課程学生と共同で進めている。",
     ),
   },
   {
@@ -633,17 +641,17 @@ export const teaching = [
     ),
   },
   {
-    period: "2020–2024",
+    period: "2021–2024",
     title: localize("Teaching assistant, graduate seminars", "研究生研讨课助教", "大学院セミナーTA"),
     text: localize("Hokkaido University, about 10–20 students per class.", "北海道大学，每班约 10–20 人。", "北海道大学（1クラス約10–20名）。"),
   },
   {
-    period: "2012–2015",
+    period: "2013–2015",
     title: localize("Graduate teaching assistant, University of Denver", "研究生教学助理，丹佛大学", "大学院TA（デンバー大学）"),
     text: localize(
       "Independently taught undergraduate laboratory sections in English for three academic years — general, organic, analytical and inorganic chemistry and biochemistry (~30 students per section).",
       "连续 3 学年以英语独立承担本科化学实验课，涵盖普通、有机、分析、无机化学及生物化学（每班约 30 人）。",
-      "3学年にわたり学部の化学実験（一般・有機・分析・無機化学、生化学）を英語で単独担当（1クラス約30名）。",
+      "3年度にわたり学部の化学実験（一般・有機・分析・無機化学、生化学）を英語で単独担当（1クラス約30名）。",
     ),
   },
 ] as const;
@@ -775,7 +783,7 @@ export const funding = {
   received: [
     { period: localize("Oct 2021 – Mar 2022", "2021.10 – 2022.03", "2021年10月 – 2022年3月"), title: localize("Hokkaido University DX Doctoral Fellowship", "北海道大学 DX 博士人才 Fellowship", "北海道大学 DX博士人材フェローシップ") },
     { period: localize("2020", "2020", "2020"), title: localize("JASSO Scholarship", "日本学生支援机构（JASSO）奖学金", "日本学生支援機構（JASSO）奨学金") },
-    { period: localize("2012", "2012", "2012"), title: localize("University of Denver Dean's Independent Special Research Fund", "丹佛大学 Dean's Independent Special Research Fund", "デンバー大学 Dean's Independent Special Research Fund") },
+    { period: localize("2012", "2012", "2012"), title: localize("University of Denver Dean's Doctoral Fellowship (autumn quarter 2012)", "丹佛大学 Dean's Doctoral Fellowship（2012 年秋季学季）", "デンバー大学 Dean's Doctoral Fellowship（2012年秋学期）") },
   ],
 };
 
