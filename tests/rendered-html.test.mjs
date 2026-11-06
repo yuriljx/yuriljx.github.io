@@ -94,6 +94,17 @@ test("server-renders the CV-aligned academic portfolio", async () => {
   assert.match(html, /youtu\.be\/tVO-jczRqH4/);
   assert.match(html, /youtu\.be\/vgzPPp1OPFU/);
   assert.match(html, /youtu\.be\/hOwTLg4ojQg/);
+  for (const id of ["XSqU3dVJU50", "WTwphNsX9ks", "EXxXOhhZKSE"]) {
+    assert.match(html, new RegExp(`youtube\\.com/watch\\?v=${id}`));
+  }
+  assert.equal((html.match(/class="course-band\b/g) ?? []).length, 2);
+  assert.equal((html.match(/class="video-card\b/g) ?? []).length, 6);
+  assert.match(html, /youtube\.com\/playlist\?list=PLSVeszjLI4ZQ/);
+  assert.match(html, /doi\.org\/10\.5281\/zenodo\.24011041/);
+  assert.match(html, /Independently organized and taught a three-session online series/);
+  assert.match(html, /Independently planned, scripted, produced and edited three Japanese-language/);
+  assert.match(html, /Research advice and support, Hoshino Laboratory/);
+  assert.match(html, /Graduate teaching assistant, University of Denver/);
   assert.match(html, /Show earlier presentations/);
   assert.doesNotMatch(html, /Science and Engineering Fair/);
 

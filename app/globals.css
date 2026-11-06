@@ -721,29 +721,48 @@ h1:lang(zh-CN), h1:lang(ja) { line-height: 1.22; letter-spacing: -.02em; font-si
 .invited h3 { grid-area: title; margin: 6px 0; font-family: var(--serif); font-size: clamp(24px, 2.4vw, 34px); font-weight: 500; line-height: 1.2; }
 .invited p { grid-area: event; margin: 0; color: var(--text-2); font-size: 14.5px; }
 .invited blockquote { grid-area: quote; align-self: center; margin: 0; padding-left: 24px; border-left: 3px solid var(--signal); color: var(--text); font-family: var(--serif); font-size: clamp(22px, 2.2vw, 30px); font-style: italic; line-height: 1.35; }
-.videos { margin-bottom: clamp(48px, 6vw, 72px); }
-.videos-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 24px; margin-bottom: 18px; }
-.videos-head .sub-heading { margin: 0; }
-.videos-head p { margin: 0; color: var(--text-3); font-size: 13px; }
-.videos ul { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; margin: 0; }
+.teaching-heading { margin: 0 0 28px; padding-left: 16px; border-left: 3px solid var(--signal); font-family: var(--serif); font-size: clamp(22px, 2.3vw, 30px); font-weight: 600; line-height: 1.25; letter-spacing: -.015em; }
+.course-series { margin-bottom: clamp(28px, 3vw, 44px); }
+.course-band { display: grid; grid-template-columns: minmax(0, 29fr) minmax(0, 71fr); gap: 20px; padding: clamp(20px, 2vw, 28px); border: 1px solid var(--line-strong); }
+.course-band + .course-band { margin-top: 26px; }
+.course-intro { min-width: 0; padding-right: 20px; border-right: 1px solid var(--line-strong); }
+.course-meta { margin: 0 0 16px; color: var(--accent-ink); font-family: var(--mono); font-size: 12px; line-height: 1.6; }
+.course-intro h4 { margin: 0 0 18px; font-family: var(--serif); font-size: clamp(22px, 2vw, 28px); font-weight: 600; line-height: 1.35; letter-spacing: -.02em; }
+.course-description { margin: 0; color: var(--text-2); font-size: 14px; line-height: 1.7; }
+.course-links { display: flex; flex-direction: column; align-items: flex-start; gap: 8px; margin-top: 22px; }
+.course-links a { display: inline-flex; align-items: center; gap: 6px; color: var(--accent-ink); font-size: 14px; line-height: 1.5; border-bottom: 1px solid transparent; }
+.course-links a:hover, .course-links a:focus-visible { border-bottom-color: currentColor; }
+.course-links svg { width: 12px; height: 12px; flex: 0 0 12px; }
+.course-lessons { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin: 0; }
+.course-lessons > li { min-width: 0; }
 .video-card { height: 100%; display: flex; flex-direction: column; border: 1px solid var(--line-strong); background: var(--bg); transition: border-color 200ms ease, transform 260ms var(--ease), box-shadow 260ms ease; }
 .video-card:hover, .video-card:focus-visible { border-color: var(--accent); transform: translateY(-3px); box-shadow: var(--shadow); }
-.video-art { position: relative; display: grid; place-items: center; aspect-ratio: 16 / 9; overflow: hidden; background: var(--panel); }
-.video-art svg { width: 62%; height: auto; stroke: #5d8ba3; stroke-width: 1.2; fill: none; }
+.video-art { position: relative; display: grid; place-items: center; aspect-ratio: 4 / 3; flex: 0 0 auto; overflow: hidden; background: var(--panel); }
+.video-art > svg { width: 88%; height: auto; stroke: #86c3d6; stroke-width: 1.2; fill: none; }
 .video-art circle { fill: var(--panel); stroke: #8fd2ea; }
+.motif-images .video-art rect { fill: var(--panel); }
+.motif-images .image-leaf { fill: #7caabc; stroke: none; }
+.motif-images .leaf-stem { stroke: #a6c9d7; }
+.motif-segmentation .source-leaf { fill: #a6b9c5; stroke: #c3d5de; }
+.motif-segmentation .segmented-leaf { fill: #745388; stroke: #a8d4e5; stroke-width: 1.6; }
+.motif-segmentation .segment-arrow { stroke: #b8dfeb; }
+.motif-curves .curve-axis { stroke: #a8d4e5; stroke-dasharray: 4 3; }
+.motif-curves .curve-line { stroke: #8fba8c; stroke-width: 2; }
+.motif-curves .video-art circle { fill: #80b9cf; }
 .motif-vision .video-art circle { fill: #4b3d68; stroke: none; }
 .motif-vision .video-art rect { stroke: #8fd2ea; stroke-dasharray: 3 2; }
 .motif-vision .video-art .stem { stroke: #6d9d7d; stroke-width: 2; }
 .motif-hands-on .video-art rect { stroke: #8fd2ea; }
 .motif-hands-on .video-art rect.fill { fill: rgb(143 210 234 / 18%); }
-.video-play { position: absolute; width: 52px; height: 52px; display: grid; place-items: center; border-radius: 50%; background: rgb(255 255 255 / 92%); color: var(--panel); box-shadow: 0 6px 22px rgb(0 0 0 / 30%); transition: transform 260ms var(--ease); }
-.video-play svg { width: 20px; height: 20px; margin-left: 3px; }
+.video-play { position: absolute; width: 38px; height: 38px; display: grid; place-items: center; border-radius: 50%; background: rgb(255 255 255 / 94%); color: #05131f; box-shadow: 0 4px 16px rgb(0 0 0 / 20%); transition: transform 260ms var(--ease); }
+.video-play svg { width: 16px; height: 16px; margin-left: 2px; }
 .video-card:hover .video-play { transform: scale(1.1); }
 .video-index { position: absolute; left: 12px; top: 10px; color: #8fd2ea; font-family: var(--mono); font-size: 11px; letter-spacing: .1em; }
-.video-copy { flex: 1; display: flex; flex-direction: column; gap: 6px; padding: 14px 16px 16px; }
-.video-copy small { color: var(--signal); font-family: var(--mono); font-size: var(--label-xs); letter-spacing: .06em; text-transform: uppercase; }
-.video-copy strong { font-size: 16px; font-weight: 600; line-height: 1.5; }
-.video-copy em { display: inline-flex; align-items: center; gap: 4px; margin-top: auto; color: var(--accent-ink); font-size: 13px; font-style: normal; }
+.video-copy { min-width: 0; flex: 1; display: flex; flex-direction: column; gap: 8px; padding: 14px 14px 16px; }
+.video-copy small { color: var(--accent-ink); font-family: var(--mono); font-size: var(--label-xs); line-height: 1.5; }
+.video-copy h5 { margin: 0; font-size: 16px; font-weight: 600; line-height: 1.5; overflow-wrap: break-word; }
+.course-band-image-analysis .video-copy h5 { font-family: var(--serif); font-size: clamp(19px, 1.6vw, 23px); line-height: 1.2; }
+.video-watch { display: inline-flex; align-items: center; gap: 4px; margin-top: auto; padding-top: 18px; color: var(--accent-ink); font-size: 13px; line-height: 1.5; }
 .talks-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(32px, 5vw, 72px); }
 .talk-list, .teach-list { margin: 0; border-top: 1px solid var(--line-strong); }
 .talk-list li, .teach-list li { display: grid; grid-template-columns: 92px minmax(0, 1fr); gap: 16px; padding: 18px 0; border-bottom: 1px solid var(--line); }
@@ -941,10 +960,9 @@ footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8p
   .tool-card:last-child { grid-column: span 6; }
   .invited { grid-template-columns: 1fr; grid-template-areas: "label" "title" "event" "quote"; }
   .invited blockquote { margin-top: 18px; }
-  .videos ul { grid-template-columns: 1fr; }
-  .video-card { flex-direction: row; }
-  .video-art { width: 42%; flex: 0 0 42%; aspect-ratio: auto; min-height: 120px; }
-  .video-play { width: 42px; height: 42px; }
+  .course-band { grid-template-columns: 1fr; }
+  .course-intro { padding: 0 0 22px; border-right: 0; border-bottom: 1px solid var(--line-strong); }
+  .course-links { flex-direction: row; flex-wrap: wrap; gap: 8px 20px; margin-top: 16px; }
   .pathway-track { grid-template-columns: 130px minmax(0, 1fr); }
   .pathway-axis { margin-left: 130px; }
   .pathway-now { display: none; }
@@ -1022,8 +1040,24 @@ footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8p
   .pathway-years { display: block; color: var(--accent-ink); font-family: var(--mono); font-size: 11px; font-style: normal; }
   .tool-grid { grid-template-columns: 1fr; }
   .tool-card, .tool-card:nth-child(n + 4), .tool-card:last-child { grid-column: auto; }
-  .video-card { flex-direction: column; }
-  .video-art { width: 100%; flex: none; aspect-ratio: 16 / 7; min-height: 0; }
+  .teaching-heading { margin-bottom: 20px; padding-left: 12px; font-size: 24px; }
+  .course-band { gap: 18px; padding: 16px 12px; }
+  .course-band + .course-band { margin-top: 20px; }
+  .course-meta { margin-bottom: 12px; font-size: 11px; }
+  .course-intro h4 { margin-bottom: 14px; font-size: 23px; }
+  .course-description { font-size: 14px; }
+  .course-lessons { grid-template-columns: 1fr; gap: 12px; }
+  .video-card { flex-direction: row; }
+  .video-art { width: 32%; flex: 0 0 32%; aspect-ratio: auto; min-height: 132px; }
+  .video-art > svg { width: 100%; }
+  .video-index { top: 8px; left: 8px; font-size: 10px; }
+  .video-play { width: 30px; height: 30px; }
+  .video-play svg { width: 13px; height: 13px; }
+  .video-copy { gap: 6px; padding: 12px 10px; }
+  .video-copy h5 { font-size: 14px; line-height: 1.45; }
+  .course-band-image-analysis .video-copy h5 { font-size: 18px; line-height: 1.25; }
+  .video-copy small { font-size: 10px; }
+  .video-watch { padding-top: 10px; font-size: 12px; }
   .talk-list li, .teach-list li { grid-template-columns: 1fr; gap: 2px; }
   .cv-list li, .service-list > div { grid-template-columns: 1fr; gap: 2px; }
   .patent-summary { grid-template-columns: 1fr; gap: 14px; }
@@ -1076,13 +1110,29 @@ footer { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8p
   .theme, .theme:nth-child(even) { display: block; padding: 8pt 0; break-inside: auto; }
   .theme-head h3 { font-size: 15pt; }
   .theme-question { font-size: 11.5pt; margin-bottom: 6pt; }
-  .tag-row, .theme-links, .tool-grid, .tools-head, .videos, .open-copy ul, .section-links, .lf-foot, .manuscripts .ms-venue a { display: none !important; }
+  .tag-row, .theme-links, .tool-grid, .tools-head, .open-copy ul, .section-links, .lf-foot, .manuscripts .ms-venue a { display: none !important; }
   .section-block, .theme { border: 0; }
   .publication-item { display: block; padding: 6pt 0; break-inside: avoid; animation: none; }
   .publication-item.is-first::before { display: none; }
   .open-card { display: block; padding: 8pt; break-inside: avoid; }
-  .tool-grid, .videos ul, .talks-grid, .cv-grid { display: block; }
+  .tool-grid, .talks-grid, .cv-grid { display: block; }
   .tool-card, .video-card { margin-bottom: 6pt; border: 0; transform: none !important; box-shadow: none !important; }
+  #teaching .teaching-heading { margin-bottom: 8pt; padding-left: 6pt; font-size: 13pt; }
+  #teaching .course-series { margin-bottom: 12pt; }
+  #teaching .course-band { display: block; padding: 8pt 0; border: 0; break-inside: auto; }
+  #teaching .course-band + .course-band { margin-top: 6pt; }
+  #teaching .course-intro { padding: 0; border: 0; }
+  #teaching .course-meta { margin-bottom: 4pt; font-size: 9pt; }
+  #teaching .course-intro h4 { margin-bottom: 4pt; font-size: 12pt; }
+  #teaching .course-description { font-size: 10pt; line-height: 1.45; }
+  #teaching .course-links { flex-direction: row; gap: 12pt; margin: 5pt 0; }
+  #teaching .course-links a { font-size: 9pt; }
+  #teaching .course-lessons { display: block; margin-top: 6pt; }
+  #teaching .video-card { display: block; break-inside: avoid; background: none; }
+  #teaching .video-copy { display: block; padding: 0; }
+  #teaching .video-copy small { font-size: 8pt; }
+  #teaching .video-copy h5 { font-family: var(--sans); font-size: 10pt; line-height: 1.35; }
+  #teaching .video-watch { display: none; }
   .patent-list[hidden] { display: block !important; }
   .contact-section { margin-top: 12pt; padding: 10pt 0; border-top: 1px solid #999; background: #fff; color: #000; }
   .contact-section address a, .contact-section .eyebrow { color: #000; }

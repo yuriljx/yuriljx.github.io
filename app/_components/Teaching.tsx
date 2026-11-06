@@ -1,28 +1,62 @@
 "use client";
 
-import { useState } from "react";
-import { earlierPresentations, invitedTalk, lectureVideos, localize, presentations, teaching, type Locale } from "../content";
+import { useState, type ReactNode } from "react";
+import { earlierPresentations, imageAnalysisSessions, invitedTalk, lectureVideos, localize, presentations, teaching, type Locale, type TeachingItem } from "../content";
 import { ArrowOut, Chevron, Play } from "./icons";
 import { tx } from "./hooks";
 
 const ui = {
   title: localize("Talks & teaching", "报告与教学", "発表・教育"),
   intro: localize(
-    "Teaching in English and Japanese — from university chemistry labs to open video lectures on AI in agriculture.",
-    "以英语和日语授课——从大学化学实验课到面向公众的农业 AI 开放视频课程。",
-    "英語と日本語で教えてきました。大学の化学実験から、農業AIのオープン講義動画まで。",
+    "Teaching in English and Japanese, connecting research questions, hands-on practice and open teaching materials.",
+    "英语与日语授课，连接研究问题、动手实践与公开教材。",
+    "英語と日本語で、研究の問い、実践、公開教材をつなぐ教育。",
   ),
+  courses: localize("Courses & open teaching materials", "课程与公开教材", "講座・公開教材"),
+  imageSeriesMeta: localize("English · 3 sessions", "英语 · 全3回", "英語・全3回"),
+  maffMeta: localize("Japanese · 3 lecture videos", "日语 · 3部讲义视频", "日本語・講義動画3本"),
   invited: localize("Invited talk", "受邀报告", "招待講演"),
-  videos: localize("Video lectures · Hokkaido University Smart Agriculture Education Hub", "视频课程 · 北海道大学智能农业教育基地", "講義動画・北海道大学スマート農業教育拠点"),
-  videosNote: localize("Japanese · 49 min 51 s in total · MAFF smart-agriculture online materials", "日语 · 共 49 分 51 秒 · 收录于农林水产省智能农业在线教材", "日本語・計49分51秒・農林水産省スマート農業オンライン教材に収録"),
+  watchLecture: localize("Watch lecture video", "观看讲义视频", "講義動画を見る"),
   watch: localize("Watch on YouTube", "在 YouTube 观看", "YouTubeで見る"),
   selected: localize("Selected presentations", "代表性报告", "主な発表"),
   earlierShow: localize("Show earlier presentations", "查看更早的报告", "それ以前の発表を見る"),
   earlierHide: localize("Hide earlier presentations", "收起更早的报告", "それ以前の発表を閉じる"),
-  teaching: localize("Teaching, mentoring and outreach", "教学、指导与科普", "教育・指導・アウトリーチ"),
+  teaching: localize("Other teaching, mentoring and outreach", "其他教学、指导与科普", "その他の教育・指導・アウトリーチ"),
 };
 
 function VideoMotif({ kind }: { kind: string }) {
+  if (kind === "images") {
+    return (
+      <svg viewBox="0 0 160 120" aria-hidden="true">
+        <rect x="55" y="12" width="69" height="65" />
+        <rect x="39" y="27" width="69" height="65" />
+        <rect x="23" y="42" width="69" height="65" />
+        <path className="image-leaf" d="M61 95 C61 77 44 80 40 63 C53 62 60 72 61 79 C60 63 65 49 79 48 C79 62 71 69 63 73 C70 65 80 67 85 63 C86 78 73 85 63 84" />
+        <path className="leaf-stem" d="M61 95 C60 80 61 65 71 56" />
+      </svg>
+    );
+  }
+  if (kind === "segmentation") {
+    const leaf = "M40 92 C40 76 27 78 21 63 C31 62 37 68 40 74 C33 58 34 47 40 37 C49 40 52 53 48 65 C55 54 61 52 67 51 C67 67 54 78 44 80 L44 92";
+    return (
+      <svg viewBox="0 0 160 120" aria-hidden="true">
+        <rect x="10" y="25" width="60" height="74" />
+        <rect x="98" y="25" width="52" height="74" />
+        <path className="source-leaf" d={leaf} />
+        <path className="segmented-leaf" d={leaf} transform="translate(85 0) scale(.86 1)" />
+        <path className="segment-arrow" d="M77 53h13m-4-4 4 4-4 4" />
+      </svg>
+    );
+  }
+  if (kind === "curves") {
+    return (
+      <svg viewBox="0 0 160 120" aria-hidden="true">
+        <path className="curve-axis" d="M18 12v94h132" />
+        <path className="curve-line" d="M18 97C40 96 48 94 59 83S77 47 92 36 120 23 149 22" />
+        {[[34, 90], [53, 84], [72, 60], [88, 37], [108, 28], [124, 19], [138, 30]].map(([x, y], i) => <circle key={i} cx={x} cy={y} r="3.6" />)}
+      </svg>
+    );
+  }
   if (kind === "network") {
     const layers = [[30, 60, 90], [20, 45, 70, 95], [40, 75]];
     return (
@@ -54,6 +88,50 @@ function VideoMotif({ kind }: { kind: string }) {
   );
 }
 
+function CourseIntro({ item, meta, id, locale }: { item: TeachingItem; meta: string; id: string; locale: Locale }) {
+  return (
+    <div className="course-intro">
+      <p className="course-meta">{item.period} · {meta}</p>
+      <h4 id={id}>{tx(item.title, locale)}</h4>
+      <p className="course-description">{tx(item.text, locale)}</p>
+      {item.links && (
+        <div className="course-links">
+          {item.links.map((link) => (
+            <a key={link.href} href={link.href} target="_blank" rel="noreferrer">
+              {typeof link.label === "string" ? link.label : tx(link.label, locale)} <ArrowOut />
+            </a>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function CourseVideo({ href, title, language, motif, index, meta, watch }: {
+  href: string;
+  title: string;
+  language: "en" | "ja";
+  motif: string;
+  index: string;
+  meta?: ReactNode;
+  watch: string;
+}) {
+  return (
+    <a href={href} target="_blank" rel="noreferrer" className={`video-card motif-${motif}`}>
+      <span className="video-art" aria-hidden="true">
+        <VideoMotif kind={motif} />
+        <span className="video-play"><Play /></span>
+        <span className="video-index">{index}</span>
+      </span>
+      <div className="video-copy">
+        {meta && <small>{meta}</small>}
+        <h5 lang={language}>{title}</h5>
+        <span className="video-watch">{watch} <ArrowOut /></span>
+      </div>
+    </a>
+  );
+}
+
 export default function Teaching({ locale }: { locale: Locale }) {
   const [showEarlier, setShowEarlier] = useState(false);
 
@@ -64,6 +142,46 @@ export default function Teaching({ locale }: { locale: Locale }) {
         <p>{tx(ui.intro, locale)}</p>
       </div>
 
+      <div className="course-series">
+        <h3 className="teaching-heading" data-reveal>{tx(ui.courses, locale)}</h3>
+        <article className="course-band course-band-image-analysis" aria-labelledby="image-series-title" data-reveal>
+          <CourseIntro item={teaching[0]} meta={tx(ui.imageSeriesMeta, locale)} id="image-series-title" locale={locale} />
+          <ul className="course-lessons">
+            {imageAnalysisSessions.map((session) => (
+              <li key={session.id}>
+                <CourseVideo
+                  href={`https://www.youtube.com/watch?v=${session.id}`}
+                  title={session.title}
+                  language="en"
+                  motif={session.motif}
+                  index={session.index}
+                  meta={<><time dateTime={session.date}>{tx(session.dateLabel, locale)}</time> · {tx(localize(`${session.participants} participants`, `${session.participants} 人参加`, `${session.participants}名参加`), locale)}</>}
+                  watch={tx(ui.watchLecture, locale)}
+                />
+              </li>
+            ))}
+          </ul>
+        </article>
+        <article className="course-band course-band-maff" aria-labelledby="maff-course-title" data-reveal>
+          <CourseIntro item={teaching[1]} meta={tx(ui.maffMeta, locale)} id="maff-course-title" locale={locale} />
+          <ul className="course-lessons">
+            {lectureVideos.map((video) => (
+              <li key={video.id}>
+                <CourseVideo
+                  href={`https://youtu.be/${video.id}`}
+                  title={video.title}
+                  language="ja"
+                  motif={video.motif}
+                  index={video.index}
+                  meta={tx(video.topic, locale)}
+                  watch={tx(ui.watch, locale)}
+                />
+              </li>
+            ))}
+          </ul>
+        </article>
+      </div>
+
       <article className="invited" data-reveal>
         <span className="invited-label">{tx(ui.invited, locale)} · {tx(invitedTalk.date, locale)}</span>
         <h3>{invitedTalk.title}</h3>
@@ -71,34 +189,9 @@ export default function Teaching({ locale }: { locale: Locale }) {
         <blockquote>“{tx(invitedTalk.quote, locale)}”</blockquote>
       </article>
 
-      <div className="videos" data-reveal>
-        <div className="videos-head">
-          <h3 className="sub-heading">{tx(ui.videos, locale)}</h3>
-          <p>{tx(ui.videosNote, locale)}</p>
-        </div>
-        <ul>
-          {lectureVideos.map((video) => (
-            <li key={video.id}>
-              <a href={`https://youtu.be/${video.id}`} target="_blank" rel="noreferrer" className={`video-card motif-${video.motif}`}>
-                <span className="video-art">
-                  <VideoMotif kind={video.motif} />
-                  <span className="video-play"><Play /></span>
-                  <span className="video-index">{video.index}</span>
-                </span>
-                <span className="video-copy">
-                  <small>{tx(video.topic, locale)}</small>
-                  <strong lang="ja">{video.title}</strong>
-                  <em>{tx(ui.watch, locale)} <ArrowOut /></em>
-                </span>
-              </a>
-            </li>
-          ))}
-        </ul>
-      </div>
-
       <div className="talks-grid">
         <div data-reveal>
-          <h3 className="sub-heading">{tx(ui.selected, locale)}</h3>
+          <h3 className="teaching-heading">{tx(ui.selected, locale)}</h3>
           <ol className="talk-list" id="talk-list">
             {[...presentations, ...(showEarlier ? earlierPresentations : [])].map((talk, index) => (
               <li key={`${talk.year}-${index}`} className={index >= presentations.length ? "earlier" : ""}>
@@ -124,9 +217,9 @@ export default function Teaching({ locale }: { locale: Locale }) {
         </div>
 
         <div data-reveal>
-          <h3 className="sub-heading">{tx(ui.teaching, locale)}</h3>
+          <h3 className="teaching-heading">{tx(ui.teaching, locale)}</h3>
           <ol className="teach-list">
-            {teaching.map((item) => (
+            {teaching.slice(2).map((item) => (
               <li key={item.title.en}>
                 <span className="teach-period">{item.period}</span>
                 <div>

@@ -610,6 +610,36 @@ export const lectureVideos = [
   },
 ] as const;
 
+export const imageAnalysisSessions = [
+  {
+    id: "XSqU3dVJU50",
+    index: "01",
+    title: "From images to testable questions",
+    date: "2026-11-02",
+    dateLabel: localize("2 Nov", "11.02", "11月2日"),
+    participants: 8,
+    motif: "images",
+  },
+  {
+    id: "WTwphNsX9ks",
+    index: "02",
+    title: "Harder images: when one threshold is not enough",
+    date: "2026-11-03",
+    dateLabel: localize("3 Nov", "11.03", "11月3日"),
+    participants: 9,
+    motif: "segmentation",
+  },
+  {
+    id: "EXxXOhhZKSE",
+    index: "03",
+    title: "From curves to conclusions",
+    date: "2026-11-06",
+    dateLabel: localize("6 Nov", "11.06", "11月6日"),
+    participants: 14,
+    motif: "curves",
+  },
+] as const;
+
 export type TeachingItem = {
   period: string;
   title: LocalizedText;
