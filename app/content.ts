@@ -44,6 +44,17 @@ export const keyNumbers = [
 
 export const latest = [
   {
+    date: "2026-11",
+    label: localize("Nov 2026", "2026.11", "2026年11月"),
+    kind: localize("Teaching", "教学", "教育"),
+    text: localize(
+      "Held a three-session online image-analysis series for graduate students outside computer science (8, 9 and 14 participants); lecture videos and teaching materials are now public.",
+      "举办面向非信息专业研究生的三回线上图像分析系列课（参加者 8、9、14 人），讲义视频与教材已公开。",
+      "非情報系大学院生向けの画像解析オンライン講座（全3回、参加者8・9・14名）を開催し、講義動画と教材を公開しました。",
+    ),
+    href: "#teaching",
+  },
+  {
     date: "2026-10-08",
     label: localize("8 Oct 2026", "2026.10.08", "2026年10月8日"),
     kind: localize("News", "报道", "研究紹介"),
@@ -599,15 +610,26 @@ export const lectureVideos = [
   },
 ] as const;
 
-export const teaching = [
+export type TeachingItem = {
+  period: string;
+  title: LocalizedText;
+  text: LocalizedText;
+  links?: readonly { label: string | LocalizedText; href: string }[];
+};
+
+export const teaching: readonly TeachingItem[] = [
   {
-    period: "2026.11–",
+    period: "2026.11",
     title: localize("From images to testable questions: online image-analysis series", "从图像到可检验问题：在线图像分析系列课程", "画像データから検証可能な問いを立てる：画像解析オンライン連続講座"),
     text: localize(
-      "An independently organized three-session series for graduate students outside computer science is in progress. Sessions 1 and 2 were held on 2 and 3 November with 8 and 9 participants, respectively. Session 3 is scheduled for 6 November, with 14 registrations.",
-      "面向非信息专业研究生独立策划的三回系列正在实施：11 月 2 日第一回 8 人参加，11 月 3 日第二回 9 人参加；第三回计划于 11 月 6 日举行，已有 14 人报名。",
-      "非情報系大学院生に向けて個人企画した全3回の講座を実施中。11月2日の第1回は8名、3日の第2回は9名が参加。第3回は11月6日に開催予定で、14名が申込み。",
+      "Independently organized and taught a three-session online series in English for graduate students outside computer science, held on 2, 3 and 6 November 2026 with 8, 9 and 14 participants. Lecture videos are on YouTube; slides and Colab notebooks (synthetic data) are archived on Zenodo.",
+      "面向非信息专业研究生独立策划并主讲的三回英语线上系列课，于 2026 年 11 月 2、3、6 日举办，参加者分别为 8、9、14 人。讲义视频已发布于 YouTube，幻灯片与 Colab 笔记本（合成数据）已在 Zenodo 公开。",
+      "非情報系大学院生に向けて個人で企画・講義した全3回の英語オンライン講座。2026年11月2日・3日・6日に開催し、参加者は8名・9名・14名。講義動画はYouTube、スライドとColabノートブック（合成データ）はZenodoで公開。",
     ),
+    links: [
+      { label: localize("YouTube playlist", "YouTube 播放列表", "YouTube 再生リスト"), href: "https://www.youtube.com/playlist?list=PLSVeszjLI4ZQ" },
+      { label: "Zenodo (DOI)", href: "https://doi.org/10.5281/zenodo.24011041" },
+    ],
   },
   {
     period: "2025–2026",
@@ -663,6 +685,7 @@ export const teaching = [
 export type Track = "plant" | "industry" | "chemistry";
 
 export const pathway = [
+  { start: 2007.67, end: 2011.5, track: "chemistry", label: localize("BEng, Chemical Engineering and Technology", "化学工程与工艺工学学士", "学士（化学工学）"), place: localize("City College of Hebei University of Technology", "河北工业大学城市学院", "河北工業大学城市学院") },
   { start: 2009, end: 2012, track: "chemistry", label: localize("BS, Chemistry", "化学理学学士", "学士（化学）"), place: localize("Winona State University", "Winona State University", "ウィノナ州立大学") },
   { start: 2012, end: 2015, track: "chemistry", label: localize("MS, Chemistry · bioaerosols", "化学硕士 · 生物气溶胶", "修士（化学）・バイオエアロゾル"), place: localize("University of Denver", "丹佛大学", "デンバー大学") },
   { start: 2016, end: 2017.25, track: "industry", label: localize("Quality-control manager", "质量控制经理", "品質管理マネージャー"), place: localize("YIBO Inc., USA", "YIBO Inc.（美国）", "YIBO Inc.（米国）") },
@@ -671,7 +694,7 @@ export const pathway = [
   { start: 2024.75, end: 2026.83, track: "plant", label: localize("Postdoc · phenotyping & rice", "博士后 · 表型与水稻", "学術研究員・表現型とイネ"), place: localize("Hokkaido University", "北海道大学", "北海道大学"), current: true },
 ] as const;
 
-export const pathwayRange = { start: 2009, end: 2027 };
+export const pathwayRange = { start: 2007, end: 2027 };
 
 export const trackLabels: Record<Track, LocalizedText> = {
   chemistry: localize("Chemistry & analysis", "化学与分析", "化学・分析"),

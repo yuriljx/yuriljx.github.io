@@ -77,13 +77,13 @@ test("server-renders the CV-aligned academic portfolio", async () => {
   assert.match(html, /Plant, Cell &amp; Environment/);
   assert.match(html, /within-family genomic prediction in rice nested association mapping families/);
 
-  // Software: two open packages, five showcase tools, STRIDE-DH retired.
+  // Software: three open packages, four showcase tools, STRIDE-DH retired.
   assert.match(html, /Grape_Length/);
   assert.match(html, /Rice genomic selection: frozen-prediction reproduction/);
   assert.match(html, /10\.5281\/zenodo\.23438608/);
   assert.match(html, /https:\/\/github\.com\/yuriljx\/rice-genomic-selection-validation/);
-  assert.equal((html.match(/class="open-card"/g) ?? []).length, 2);
-  assert.equal((html.match(/class="tool-card"/g) ?? []).length, 5);
+  assert.equal((html.match(/class="open-card"/g) ?? []).length, 3);
+  assert.equal((html.match(/class="tool-card"/g) ?? []).length, 4);
   for (const repo of ["rice-dh-record-system-showcase", "callustrack-showcase", "rice-genome-resource-finder-showcase", "rice-trait-evidence-explorer-showcase", "riceperturbnet-showcase"]) {
     assert.match(html, new RegExp(`https://github\\.com/yuriljx/${repo}`));
   }

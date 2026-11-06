@@ -51,7 +51,7 @@ function Pathway({ locale }: { locale: Locale }) {
   const [ref, seen] = useInViewOnce<HTMLDivElement>({ threshold: 0.25 });
   const span = pathwayRange.end - pathwayRange.start;
   const pos = (year: number) => ((year - pathwayRange.start) / span) * 100;
-  const years = Array.from({ length: span / 3 + 1 }, (_, i) => pathwayRange.start + i * 3);
+  const years = Array.from({ length: Math.ceil(span / 3) + 1 }, (_, i) => Math.min(pathwayRange.start + i * 3, pathwayRange.end));
 
   return (
     <div className="pathway-scroll" data-reveal>

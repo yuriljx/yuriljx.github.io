@@ -132,6 +132,18 @@ export default function Teaching({ locale }: { locale: Locale }) {
                 <div>
                   <h4>{tx(item.title, locale)}</h4>
                   <p>{tx(item.text, locale)}</p>
+                  {item.links && (
+                    <div className="theme-links">
+                      {item.links.map((link) => {
+                        const external = link.href.startsWith("http");
+                        return (
+                          <a key={link.href} href={link.href} {...(external ? { target: "_blank", rel: "noreferrer" } : {})}>
+                            {typeof link.label === "string" ? link.label : tx(link.label, locale)}{external && <ArrowOut />}
+                          </a>
+                        );
+                      })}
+                    </div>
+                  )}
                 </div>
               </li>
             ))}
