@@ -55,7 +55,7 @@ const personJsonLd = {
     { "@type": "CollegeOrUniversity", name: "Hokkaido University" },
     { "@type": "CollegeOrUniversity", name: "University of Denver" },
     { "@type": "CollegeOrUniversity", name: "Winona State University" },
-    { "@type": "CollegeOrUniversity", name: "City College of Hebei University of Technology" },
+    { "@type": "CollegeOrUniversity", name: "Hebei University of Technology" },
   ],
   knowsAbout: ["Plant breeding", "Plant phenotyping", "Rice anther culture", "Doubled haploids", "Polyploidy", "Computer vision", "GC–MS", "Genomic prediction"],
   sameAs: [

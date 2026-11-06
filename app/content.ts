@@ -685,7 +685,7 @@ export const teaching: readonly TeachingItem[] = [
 export type Track = "plant" | "industry" | "chemistry";
 
 export const pathway = [
-  { start: 2007.67, end: 2011.5, track: "chemistry", label: localize("BEng, Chemical Engineering and Technology", "化学工程与工艺工学学士", "学士（化学工学）"), place: localize("City College of Hebei University of Technology", "河北工业大学城市学院", "河北工業大学城市学院") },
+  { start: 2007.67, end: 2011.5, track: "chemistry", label: localize("BEng, Chemical Engineering and Technology", "化学工程与工艺工学学士", "学士（化学工学）"), place: localize("Hebei University of Technology", "河北工业大学", "河北工業大学") },
   { start: 2009, end: 2012, track: "chemistry", label: localize("BS, Chemistry", "化学理学学士", "学士（化学）"), place: localize("Winona State University", "Winona State University", "ウィノナ州立大学") },
   { start: 2012, end: 2015, track: "chemistry", label: localize("MS, Chemistry · bioaerosols", "化学硕士 · 生物气溶胶", "修士（化学）・バイオエアロゾル"), place: localize("University of Denver", "丹佛大学", "デンバー大学") },
   { start: 2016, end: 2017.25, track: "industry", label: localize("Quality-control manager", "质量控制经理", "品質管理マネージャー"), place: localize("YIBO Inc., USA", "YIBO Inc.（美国）", "YIBO Inc.（米国）") },
@@ -749,7 +749,7 @@ export const education = [
   {
     year: "2011",
     degree: localize("BEng, Chemical Engineering and Technology", "化学工程与工艺工学学士", "学士（化学工学）"),
-    place: localize("City College of Hebei University of Technology, China", "河北工业大学城市学院（中国）", "河北工業大学城市学院（中国）"),
+    place: localize("Hebei University of Technology, China", "河北工业大学（中国）", "河北工業大学（中国）"),
   },
 ] as const;
 
