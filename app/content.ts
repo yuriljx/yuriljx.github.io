@@ -346,6 +346,7 @@ export const manuscripts = [
     title: "Phenotyping part of the target family improves within-family genomic prediction in rice nested association mapping families",
     journal: "Rice",
     status: localize("Submitted · Oct 2026 · sole author", "已投稿 · 2026 年 10 月 · 唯一作者", "投稿中・2026年10月・単著"),
+    preprint: { label: localize("Preprint (DOI)", "预印本（DOI）", "プレプリント（DOI）"), href: "https://doi.org/10.21203/rs.3.rs-11533831/v1" },
     extra: { label: localize("Reproduction package", "复现软件包", "再現パッケージ"), href: "https://doi.org/10.5281/zenodo.23438608" },
   },
   {

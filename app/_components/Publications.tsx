@@ -156,6 +156,9 @@ export default function Publications({ locale }: { locale: Locale }) {
                 <p className="ms-venue">
                   <i>{m.journal}</i>
                   <span className="ms-status">{tx(m.status, locale)}</span>
+                  {"preprint" in m && m.preprint && (
+                    <a href={m.preprint.href} target="_blank" rel="noreferrer">{tx(m.preprint.label, locale)} <ArrowOut /></a>
+                  )}
                   {"extra" in m && m.extra && (
                     <a href={m.extra.href} target="_blank" rel="noreferrer">{tx(m.extra.label, locale)} <ArrowOut /></a>
                   )}
