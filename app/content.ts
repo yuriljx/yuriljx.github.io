@@ -842,7 +842,7 @@ export const funding = {
 };
 
 export const service = [
-  { label: localize("Peer review", "同行评审", "査読"), text: localize("BMC Plant Biology and other plant-science journals (2026 – present)", "BMC Plant Biology 及其他植物科学期刊（2026 – 至今）", "BMC Plant Biology ほか植物科学誌（2026年 – 現在）") },
+  { label: localize("Peer review", "同行评审", "査読"), text: localize("BMC Plant Biology, Discover Plants, Postharvest Biology and Technology, and other plant-science journals (2026 – present)", "BMC Plant Biology、Discover Plants、Postharvest Biology and Technology 等植物科学期刊（2026 – 至今）", "BMC Plant Biology、Discover Plants、Postharvest Biology and Technology ほか植物科学誌（2026年 – 現在）") },
   { label: localize("Memberships", "学会", "所属学会"), text: localize("Japanese Society for Horticultural Science; International Society for Horticultural Science", "日本园艺学会（JSHS）；国际园艺学会（ISHS）", "園芸学会（JSHS）、国際園芸学会（ISHS）") },
   { label: localize("Languages", "语言", "言語"), text: localize("Chinese (native); English (fluent); Japanese (professional working proficiency)", "中文（母语）；英语（流利）；日语（工作熟练）", "中国語（母語）、英語（流暢）、日本語（業務上支障なし）") },
 ] as const;
