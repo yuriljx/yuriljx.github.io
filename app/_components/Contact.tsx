@@ -51,6 +51,8 @@ export default function Contact({ locale }: { locale: Locale }) {
         </span>
         <a href={profile.orcidUrl} target="_blank" rel="noreferrer">ORCID {profile.orcid} <ArrowOut /></a>
         <a href={profile.scholarUrl} target="_blank" rel="noreferrer">Google Scholar <ArrowOut /></a>
+        <a href={profile.researchmapUrl} target="_blank" rel="noreferrer">researchmap <ArrowOut /></a>
+        <a href={profile.wosUrl} target="_blank" rel="noreferrer">Web of Science · D-8799-2015 <ArrowOut /></a>
         <a href={profile.githubUrl} target="_blank" rel="noreferrer">GitHub · yuriljx <ArrowOut /></a>
       </address>
     </section>

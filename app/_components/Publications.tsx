@@ -31,7 +31,7 @@ const ui = {
   copy: localize("Copy citation", "复制引用", "引用をコピー"),
   copied: localize("Copied", "已复制", "コピーしました"),
   code: localize("Code", "代码", "コード"),
-  review: localize("Submitted & under review", "已投稿与在审稿件", "投稿中・審査中"),
+  review: localize("Preprint / Submitted & under review", "预印本 / 已投稿与在审稿件", "プレプリント・投稿中・審査中"),
   scholar: localize("Full record on Google Scholar", "在 Google Scholar 查看完整记录", "Google Scholar で全記録を見る"),
   orcid: localize("ORCID record", "ORCID 记录", "ORCID 記録"),
 };
@@ -172,6 +172,8 @@ export default function Publications({ locale }: { locale: Locale }) {
       <div className="section-links" data-reveal>
         <a href={profile.scholarUrl} target="_blank" rel="noreferrer">{tx(ui.scholar, locale)} <ArrowOut /></a>
         <a href={profile.orcidUrl} target="_blank" rel="noreferrer">{tx(ui.orcid, locale)} · {profile.orcid} <ArrowOut /></a>
+        <a href={profile.researchmapUrl} target="_blank" rel="noreferrer">researchmap <ArrowOut /></a>
+        <a href={profile.wosUrl} target="_blank" rel="noreferrer">Web of Science · D-8799-2015 <ArrowOut /></a>
       </div>
     </section>
   );

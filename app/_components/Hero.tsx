@@ -193,6 +193,8 @@ export default function Hero({ locale }: { locale: Locale }) {
             <a href={`mailto:${profile.email}`} title={profile.email} aria-label={`Email ${profile.email}`}><Mail /></a>
             <a href={profile.orcidUrl} target="_blank" rel="noreferrer" title={`ORCID ${profile.orcid}`} aria-label="ORCID"><OrcidMark /></a>
             <a href={profile.scholarUrl} target="_blank" rel="noreferrer" title="Google Scholar" aria-label="Google Scholar"><ScholarMark /></a>
+            <a href={profile.researchmapUrl} target="_blank" rel="noreferrer" title="researchmap" aria-label="researchmap"><svg viewBox="0 0 20 20" aria-hidden="true"><text x="10" y="13" fill="currentColor" textAnchor="middle" fontSize="9" fontWeight="600">rm</text></svg></a>
+            <a href={profile.wosUrl} target="_blank" rel="noreferrer" title="Web of Science ResearcherID D-8799-2015" aria-label="Web of Science ResearcherID D-8799-2015"><svg viewBox="0 0 20 20" aria-hidden="true"><text x="10" y="13" fill="currentColor" textAnchor="middle" fontSize="9" fontWeight="600">WoS</text></svg></a>
             <a href={profile.githubUrl} target="_blank" rel="noreferrer" title="GitHub" aria-label="GitHub"><GithubMark /></a>
           </div>
         </div>

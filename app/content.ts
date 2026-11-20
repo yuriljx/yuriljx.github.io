@@ -27,6 +27,8 @@ export const profile = {
   orcid: "0000-0003-2377-1011",
   orcidUrl: "https://orcid.org/0000-0003-2377-1011",
   scholarUrl: "https://scholar.google.com/citations?user=m2FLOrUAAAAJ&hl=en",
+  researchmapUrl: "https://researchmap.jp/lijixiao",
+  wosUrl: "https://www.webofscience.com/wos/author/record/D-8799-2015",
   githubUrl: "https://github.com/yuriljx",
   updated: localize("Updated November 2026", "更新于 2026 年 11 月", "2026年11月更新"),
 };
@@ -34,7 +36,7 @@ export const profile = {
 export const keyNumbers = [
   { value: 8, label: localize("Peer-reviewed journal articles", "篇同行评审期刊论文", "査読付き原著論文") },
   { value: 4, label: localize("First-author articles", "篇第一作者论文", "筆頭著者論文") },
-  { value: 3, label: localize("Manuscripts submitted / under review", "篇稿件已投稿 / 在审", "投稿中・審査中の原稿") },
+  { value: 2, label: localize("Manuscripts submitted / under review", "篇稿件已投稿 / 在审", "投稿中・審査中の原稿") },
   { value: 2, label: localize("PI grant proposals under review", "项主持基金申请在审", "研究代表者として審査中の助成申請") },
 ] as const;
 
@@ -80,9 +82,9 @@ export const latest = [
     label: localize("Oct 2026", "2026.10", "2026年10月"),
     kind: localize("Manuscript", "稿件", "論文"),
     text: localize(
-      "Sole-author study on within-family genomic prediction in rice NAM families submitted to Rice; reproduction package archived on Zenodo.",
-      "水稻 NAM 家系内基因组预测的唯一作者研究已投稿 Rice；配套复现软件包已在 Zenodo 存档。",
-      "イネNAM家系内のゲノム予測に関する単著論文を Rice に投稿。再現用パッケージを Zenodo に公開。",
+      "Sole-author preprint on within-family genomic prediction in rice NAM families posted on Research Square; reproduction package archived on Zenodo.",
+      "水稻 NAM 家系内基因组预测的唯一作者预印本发布于 Research Square；配套复现软件包已在 Zenodo 存档。",
+      "イネNAM家系内のゲノム予測に関する単著プレプリントを Research Square で公開。再現用パッケージを Zenodo に公開。",
     ),
     href: "#publications",
   },
@@ -102,9 +104,9 @@ export const latest = [
     label: localize("2026", "2026", "2026年"),
     kind: localize("Teaching", "教学", "教育"),
     text: localize(
-      "Three Japanese-language video lectures on AI in agriculture, produced for Hokkaido University's Smart Agriculture Education Hub (MAFF-commissioned).",
-      "为北海道大学智能农业教育基地制作的 3 部日语 AI 农业教学视频（农林水产省委托项目）。",
-      "北海道大学スマート農業教育拠点向けに、農業AIに関する日本語講義動画3本を制作（農林水産省委託事業）。",
+      "Three Japanese-language video lectures on deep learning in agriculture, produced for Hokkaido University's Smart Agriculture Education Hub (MAFF-commissioned).",
+      "为北海道大学智能农业教育基地制作的 3 部日语农业深度学习教学视频（农林水产省委托项目）。",
+      "北海道大学スマート農業教育拠点向けに、農業における深層学習に関する日本語講義動画3本を制作（農林水産省委託事業）。",
     ),
     href: "#teaching",
   },
@@ -132,13 +134,13 @@ export const researchThemes = [
       "どの葯培養カルスが緑色シュートを形成するのか。培養を乱さず、画像だけで早期に判定できるか。",
     ),
     body: localize(
-      "Rice anther-culture and microspore-isolation experiments for doubled-haploid production, with individual calli tracked by time-series imaging and every step kept in traceable experiment records. In parallel, a sole-author computational study (submitted to Rice) reports that phenotyping part of a target family improves within-family genomic prediction in rice NAM families.",
-      "开展面向双单倍体（DH）生产的水稻花药培养与小孢子分离实验，以时间序列图像追踪单个愈伤组织，并保留完整可追溯的实验记录。同时独立完成的计算研究（已投稿 Rice）显示：对目标家系部分个体进行表型测定，可提升水稻 NAM 家系内的基因组预测。",
-      "倍加半数体（DH）作出のためのイネ葯培養・小胞子単離実験を行い、個々のカルスを時系列画像で追跡し、全工程を追跡可能な実験記録として残しています。並行して、標的家系の一部を表現型評価するとイネNAM家系内のゲノム予測が向上することを、単著の計算研究として報告しました（Rice 投稿中）。",
+      "Rice anther-culture and microspore-isolation experiments for doubled-haploid production, with individual calli tracked by time-series imaging and every step kept in traceable experiment records. In parallel, a sole-author computational study (preprint on Research Square) reports that phenotyping part of a target family improves within-family genomic prediction in rice NAM families.",
+      "开展面向双单倍体（DH）生产的水稻花药培养与小孢子分离实验，以时间序列图像追踪单个愈伤组织，并保留完整可追溯的实验记录。同时独立完成的计算研究（预印本发布于 Research Square）显示：对目标家系部分个体进行表型测定，可提升水稻 NAM 家系内的基因组预测。",
+      "倍加半数体（DH）作出のためのイネ葯培養・小胞子単離実験を行い、個々のカルスを時系列画像で追跡し、全工程を追跡可能な実験記録として残しています。並行して、標的家系の一部を表現型評価するとイネNAM家系内のゲノム予測が向上することを、単著の計算研究として報告しました（Research Square でプレプリント公開）。",
     ),
     evidence: [
       { value: "PI", label: localize("JSPS KAKENHI proposal, under review", "JSPS 科研费申请（主持，在审）", "科研費・若手研究（代表、審査中）") },
-      { value: "1", label: localize("Sole-author manuscript submitted to Rice", "篇唯一作者稿件已投 Rice", "Rice 投稿中の単著論文") },
+      { value: "1", label: localize("Sole-author preprint (Research Square)", "篇唯一作者预印本（Research Square）", "単著プレプリント（Research Square）") },
       { value: "DOI", label: localize("Open reproduction package (Zenodo)", "开放复现软件包（Zenodo）", "再現用パッケージ（Zenodo）") },
     ],
     links: [
@@ -344,8 +346,8 @@ export const manuscripts = [
     authors: ["Li, J."],
     self: 0,
     title: "Phenotyping part of the target family improves within-family genomic prediction in rice nested association mapping families",
-    journal: "Rice",
-    status: localize("Submitted · Oct 2026 · sole author", "已投稿 · 2026 年 10 月 · 唯一作者", "投稿中・2026年10月・単著"),
+    journal: "Research Square (preprint)",
+    status: localize("Preprint · Oct 2026 · sole author", "预印本 · 2026 年 10 月 · 唯一作者", "プレプリント・2026年10月・単著"),
     preprint: { label: localize("Preprint (DOI)", "预印本（DOI）", "プレプリント（DOI）"), href: "https://doi.org/10.21203/rs.3.rs-11533831/v1" },
     extra: { label: localize("Reproduction package", "复现软件包", "再現パッケージ"), href: "https://doi.org/10.5281/zenodo.23438608" },
   },
@@ -592,13 +594,13 @@ export const lectureVideos = [
     id: "tVO-jczRqH4",
     index: "01",
     title: "AIから深層学習へ、その進化の軌跡",
-    topic: localize("AI foundations", "AI 基础", "AIの基礎"),
+    topic: localize("Deep learning foundations", "深度学习基础", "深層学習の基礎"),
     motif: "network",
   },
   {
     id: "vgzPPp1OPFU",
     index: "02",
-    title: "農場現場における深層学習とコンピュータビジョンの実装",
+    title: "農業現場における深層学習とコンピュータビジョンの実装",
     topic: localize("Computer vision on the farm", "农业图像与计算机视觉", "農業現場のコンピュータビジョン"),
     motif: "vision",
   },
@@ -666,9 +668,9 @@ export const teaching: readonly TeachingItem[] = [
     period: "2025–2026",
     title: localize("Open educational resources (MAFF-commissioned)", "开放教学资源（农林水产省委托）", "オープン教材（農林水産省委託事業）"),
     text: localize(
-      "Independently planned, scripted, produced and edited three Japanese-language educational videos on agricultural AI (49 min 51 s in total) for Hokkaido University's Smart Agriculture Education Hub; included in MAFF's smart-agriculture online materials.",
-      "为北海道大学智能农业教育基地独立承担 3 部日语农业 AI 教学视频的策划、撰稿、制作与编辑（共 49 分 51 秒），已列入农林水产省智能农业在线教材。",
-      "北海道大学スマート農業教育拠点のため、農業AIに関する日本語教育動画3本（計49分51秒）の企画・構成、原稿執筆、制作・編集を単独で担当。農林水産省のスマート農業オンライン教材に収録。",
+      "Independently planned, scripted, produced and edited three Japanese-language educational videos on deep learning in agriculture (49 min 51 s in total) for Hokkaido University's Smart Agriculture Education Hub; included in MAFF's smart-agriculture online materials.",
+      "为北海道大学智能农业教育基地独立承担 3 部日语农业深度学习教学视频的策划、撰稿、制作与编辑（共 49 分 51 秒），已列入农林水产省智能农业在线教材。",
+      "北海道大学スマート農業教育拠点のため、農業における深層学習に関する日本語教育動画3本（計49分51秒）の企画・構成、原稿執筆、制作・編集を単独で担当。農林水産省のスマート農業オンライン教材に収録。",
     ),
   },
   {
