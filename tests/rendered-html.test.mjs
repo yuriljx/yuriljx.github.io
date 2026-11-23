@@ -75,7 +75,9 @@ test("server-renders the CV-aligned academic portfolio", async () => {
   assert.match(html, /doi\.org\/10\.2503\/hortj\.SZD-110/);
   assert.match(html, /95\(3\), 378–388/);
   assert.match(html, /Plant, Cell &amp; Environment/);
-  assert.match(html, /within-family genomic prediction in rice nested association mapping families/);
+  assert.match(html, /Target-family phenotyping improves genomic prediction and selection under fixed record budgets/);
+  assert.match(html, /<i>Theoretical and Applied Genetics<\/i><span class="ms-status">Submitted · Nov 2026 · sole author/);
+  assert.match(html, /10\.21203\/rs\.3\.rs-11533831\/v1/);
 
   // Software: three open packages, four showcase tools, STRIDE-DH retired.
   assert.match(html, /Grape_Length/);

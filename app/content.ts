@@ -36,7 +36,7 @@ export const profile = {
 export const keyNumbers = [
   { value: 8, label: localize("Peer-reviewed journal articles", "篇同行评审期刊论文", "査読付き原著論文") },
   { value: 4, label: localize("First-author articles", "篇第一作者论文", "筆頭著者論文") },
-  { value: 2, label: localize("Manuscripts submitted / under review", "篇稿件已投稿 / 在审", "投稿中・審査中の原稿") },
+  { value: 3, label: localize("Manuscripts submitted / under review", "篇稿件已投稿 / 在审", "投稿中・審査中の原稿") },
   { value: 2, label: localize("PI grant proposals under review", "项主持基金申请在审", "研究代表者として審査中の助成申請") },
 ] as const;
 
@@ -45,6 +45,17 @@ export const keyNumbers = [
 /* ------------------------------------------------------------------ */
 
 export const latest = [
+  {
+    date: "2026-11",
+    label: localize("Nov 2026", "2026.11", "2026年11月"),
+    kind: localize("Manuscript", "稿件", "論文"),
+    text: localize(
+      "Sole-author manuscript on allocating phenotyping records in genomic prediction submitted to Theoretical and Applied Genetics; an earlier version is available as a Research Square preprint, with a reproduction package on Zenodo.",
+      "关于基因组预测中表型测定分配的唯一作者稿件已投 Theoretical and Applied Genetics；早期版本以预印本发布于 Research Square，复现软件包存档于 Zenodo。",
+      "ゲノム予測における表現型測定の配分に関する単著論文を Theoretical and Applied Genetics に投稿。旧版は Research Square でプレプリント公開、再現用パッケージは Zenodo に公開。",
+    ),
+    href: "#publications",
+  },
   {
     date: "2026-11",
     label: localize("Nov 2026", "2026.11", "2026年11月"),
@@ -76,17 +87,6 @@ export const latest = [
       "转入北方生物圈领域科学中心 生物生产研究农场，任博士后研究员。",
       "北方生物圏フィールド科学センター 生物生産研究農場の学術研究員に着任。",
     ),
-  },
-  {
-    date: "2026-10",
-    label: localize("Oct 2026", "2026.10", "2026年10月"),
-    kind: localize("Manuscript", "稿件", "論文"),
-    text: localize(
-      "Sole-author preprint on within-family genomic prediction in rice NAM families posted on Research Square; reproduction package archived on Zenodo.",
-      "水稻 NAM 家系内基因组预测的唯一作者预印本发布于 Research Square；配套复现软件包已在 Zenodo 存档。",
-      "イネNAM家系内のゲノム予測に関する単著プレプリントを Research Square で公開。再現用パッケージを Zenodo に公開。",
-    ),
-    href: "#publications",
   },
   {
     date: "2026-09",
@@ -134,13 +134,13 @@ export const researchThemes = [
       "どの葯培養カルスが緑色シュートを形成するのか。培養を乱さず、画像だけで早期に判定できるか。",
     ),
     body: localize(
-      "Rice anther-culture and microspore-isolation experiments for doubled-haploid production, with individual calli tracked by time-series imaging and every step kept in traceable experiment records. In parallel, a sole-author computational study (preprint on Research Square) reports that phenotyping part of a target family improves within-family genomic prediction in rice NAM families.",
-      "开展面向双单倍体（DH）生产的水稻花药培养与小孢子分离实验，以时间序列图像追踪单个愈伤组织，并保留完整可追溯的实验记录。同时独立完成的计算研究（预印本发布于 Research Square）显示：对目标家系部分个体进行表型测定，可提升水稻 NAM 家系内的基因组预测。",
-      "倍加半数体（DH）作出のためのイネ葯培養・小胞子単離実験を行い、個々のカルスを時系列画像で追跡し、全工程を追跡可能な実験記録として残しています。並行して、標的家系の一部を表現型評価するとイネNAM家系内のゲノム予測が向上することを、単著の計算研究として報告しました（Research Square でプレプリント公開）。",
+      "Rice anther-culture and microspore-isolation experiments for doubled-haploid production, with individual calli tracked by time-series imaging and every step kept in traceable experiment records. In parallel, a sole-author computational study (submitted to Theoretical and Applied Genetics; earlier version as a Research Square preprint) reports that phenotyping part of a target family improves within-family genomic prediction in rice NAM families.",
+      "开展面向双单倍体（DH）生产的水稻花药培养与小孢子分离实验，以时间序列图像追踪单个愈伤组织，并保留完整可追溯的实验记录。同时独立完成的计算研究（已投稿 Theoretical and Applied Genetics；早期版本为 Research Square 预印本）显示：对目标家系部分个体进行表型测定，可提升水稻 NAM 家系内的基因组预测。",
+      "倍加半数体（DH）作出のためのイネ葯培養・小胞子単離実験を行い、個々のカルスを時系列画像で追跡し、全工程を追跡可能な実験記録として残しています。並行して、標的家系の一部を表現型評価するとイネNAM家系内のゲノム予測が向上することを、単著の計算研究として報告しました（Theoretical and Applied Genetics に投稿中。旧版は Research Square でプレプリント公開）。",
     ),
     evidence: [
       { value: "PI", label: localize("JSPS KAKENHI proposal, under review", "JSPS 科研费申请（主持，在审）", "科研費・若手研究（代表、審査中）") },
-      { value: "1", label: localize("Sole-author preprint (Research Square)", "篇唯一作者预印本（Research Square）", "単著プレプリント（Research Square）") },
+      { value: "1", label: localize("Sole-author manuscript submitted (Theoretical and Applied Genetics)", "篇唯一作者在投稿件（Theoretical and Applied Genetics）", "単著論文（Theoretical and Applied Genetics 投稿中）") },
       { value: "DOI", label: localize("Open reproduction package (Zenodo)", "开放复现软件包（Zenodo）", "再現用パッケージ（Zenodo）") },
     ],
     links: [
@@ -345,10 +345,10 @@ export const manuscripts = [
     id: "M3",
     authors: ["Li, J."],
     self: 0,
-    title: "Phenotyping part of the target family improves within-family genomic prediction in rice nested association mapping families",
-    journal: "Research Square (preprint)",
-    status: localize("Preprint · Oct 2026 · sole author", "预印本 · 2026 年 10 月 · 唯一作者", "プレプリント・2026年10月・単著"),
-    preprint: { label: localize("Preprint (DOI)", "预印本（DOI）", "プレプリント（DOI）"), href: "https://doi.org/10.21203/rs.3.rs-11533831/v1" },
+    title: "Target-family phenotyping improves genomic prediction and selection under fixed record budgets",
+    journal: "Theoretical and Applied Genetics",
+    status: localize("Submitted · Nov 2026 · sole author", "已投稿 · 2026 年 11 月 · 唯一作者", "投稿中・2026年11月・単著"),
+    preprint: { label: localize("Earlier version (preprint, DOI)", "早期版本（预印本，DOI）", "旧版プレプリント（DOI）"), href: "https://doi.org/10.21203/rs.3.rs-11533831/v1" },
     extra: { label: localize("Reproduction package", "复现软件包", "再現パッケージ"), href: "https://doi.org/10.5281/zenodo.23438608" },
   },
   {
