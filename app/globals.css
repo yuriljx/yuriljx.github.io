@@ -840,7 +840,8 @@ h1:lang(zh-CN), h1:lang(ja) { line-height: 1.22; letter-spacing: -.02em; font-si
 .print-button { display: inline-flex; align-items: center; gap: 8px; min-height: 42px; margin-top: 28px; padding: 8px 14px; border: 1px solid var(--line-strong); background: var(--bg); color: var(--text-2); font-size: 13px; cursor: pointer; transition: border-color 160ms ease, color 160ms ease; }
 .print-button svg { width: 16px; height: 16px; }
 .print-button:hover, .print-button:focus-visible { border-color: var(--accent); color: var(--accent-ink); }
-.cv-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.cv-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-top: 28px; }
+.cv-actions a { color: var(--accent-ink); text-decoration: underline; text-underline-offset: .2em; }
 .cv-actions .print-button { margin-top: 0; }
 
 /* ==========================================================================

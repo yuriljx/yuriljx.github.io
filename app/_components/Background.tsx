@@ -11,12 +11,13 @@ import {
   patents,
   pathway,
   pathwayRange,
+  profile,
   service,
   trackLabels,
   type Locale,
   type Track,
 } from "../content";
-import { ArrowDown, ArrowOut, Chevron, Printer } from "./icons";
+import { ArrowOut, Chevron, Printer } from "./icons";
 import { tx, useInViewOnce } from "./hooks";
 
 const ui = {
@@ -48,7 +49,7 @@ const ui = {
   showPatents: localize("Show patent records", "查看专利记录", "特許の一覧を見る"),
   hidePatents: localize("Hide patent records", "收起专利记录", "特許の一覧を閉じる"),
   print: localize("Print or save as PDF", "打印或保存为 PDF", "印刷・PDFで保存"),
-  downloadCv: localize("Download English CV (PDF, 2 pages)", "下载英文简历（PDF，2页）", "英語CVをダウンロード（PDF・2ページ）"),
+  requestCv: localize("Full CV available upon request.", "如需完整简历，欢迎来信索取。", "詳しい履歴書をご希望の方は、メールでご連絡ください。"),
 };
 
 const tracks: Track[] = ["chemistry", "industry", "plant"];
@@ -212,9 +213,7 @@ export default function Background({ locale }: { locale: Locale }) {
       </div>
 
       <div className="cv-actions" data-reveal>
-        <a className="print-button" href="/CV_Jixiao_Li.pdf" download>
-          <ArrowDown /> {tx(ui.downloadCv, locale)}
-        </a>
+        <a href={`mailto:${profile.email}`}>{tx(ui.requestCv, locale)}</a>
         <button type="button" className="print-button" onClick={() => window.print()}>
           <Printer /> {tx(ui.print, locale)}
         </button>

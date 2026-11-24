@@ -111,6 +111,8 @@ test("server-renders the CV-aligned academic portfolio", async () => {
   assert.doesNotMatch(html, /Science and Engineering Fair/);
 
   // Background, patents, language and theme controls.
+  assert.match(html, /href="mailto:jixiao\.li@elms\.hokudai\.ac\.jp">Full CV available upon request\.<\/a>/);
+  assert.doesNotMatch(html, /CV_Jixiao_Li\.pdf/i);
   assert.match(html, /Hebei Tongbiao Testing Technology/);
   assert.match(html, /1,480/);
   assert.match(html, /class="patent-summary"[^>]*aria-expanded="false"/);
@@ -135,7 +137,6 @@ test("emits canonical social metadata and ships required assets", async () => {
   assert.match(html, /name="twitter:card" content="summary_large_image"/);
 
   const requiredAssets = [
-    "../public/CV_Jixiao_Li.pdf",
     "../public/og.png",
     "../public/brand/li-calligraphy-seal.png",
     "../public/research/anther-culture.webp",
@@ -156,6 +157,7 @@ test("emits canonical social metadata and ships required assets", async () => {
     "../public/publications/ice-nuclei-microscopy.webp",
   ];
   await Promise.all(requiredAssets.map((path) => access(new URL(path, import.meta.url))));
+  await assert.rejects(access(new URL("../public/CV_Jixiao_Li.pdf", import.meta.url)), { code: "ENOENT" });
 
   const og = await readFile(new URL("../public/og.png", import.meta.url));
   assert.deepEqual([...og.subarray(0, 8)], [137, 80, 78, 71, 13, 10, 26, 10]);
