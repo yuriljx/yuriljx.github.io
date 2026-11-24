@@ -844,7 +844,7 @@ export const funding = {
 };
 
 export const service = [
-  { label: localize("Peer review", "同行评审", "査読"), text: localize("9 reviews completed in 2026: BMC Plant Biology, Scientific Reports, Postharvest Biology and Technology, and Discover Plants", "2026 年完成 9 次审稿：BMC Plant Biology、Scientific Reports、Postharvest Biology and Technology、Discover Plants", "2026年に9件の査読を完了：BMC Plant Biology、Scientific Reports、Postharvest Biology and Technology、Discover Plants") },
+  { label: localize("Peer review", "同行评审", "査読"), text: localize("9 peer-review reports completed in 2026 on 8 manuscripts across 4 journals (all verified by Web of Science): BMC Plant Biology, Scientific Reports, Postharvest Biology and Technology, and Discover Plants", "2026 年为 4 本期刊的 8 篇稿件完成 9 份审稿报告，均获 Web of Science 核验：BMC Plant Biology、Scientific Reports、Postharvest Biology and Technology、Discover Plants", "2026年に4誌の原稿8編に対し査読報告9件を提出（すべてWeb of Scienceで確認済み）：BMC Plant Biology、Scientific Reports、Postharvest Biology and Technology、Discover Plants") },
   { label: localize("Memberships", "学会", "所属学会"), text: localize("Japanese Society for Horticultural Science; International Society for Horticultural Science", "日本园艺学会（JSHS）；国际园艺学会（ISHS）", "園芸学会（JSHS）、国際園芸学会（ISHS）") },
   { label: localize("Languages", "语言", "言語"), text: localize("Chinese (native); English (fluent); Japanese (professional working proficiency)", "中文（母语）；英语（流利）；日语（工作熟练）", "中国語（母語）、英語（流暢）、日本語（業務上支障なし）") },
 ] as const;
