@@ -16,7 +16,7 @@ import {
   type Locale,
   type Track,
 } from "../content";
-import { ArrowOut, Chevron, Printer } from "./icons";
+import { ArrowDown, ArrowOut, Chevron, Printer } from "./icons";
 import { tx, useInViewOnce } from "./hooks";
 
 const ui = {
@@ -40,9 +40,15 @@ const ui = {
     "授权实用新型 4 项、已公开发明专利申请 3 项（2014–2024），其中包括食品组胺快速检测装置。",
     "中国の実用新案（登録）4件、特許出願（公開）3件（2014–2024年）。食品中ヒスタミンの迅速検出装置を含みます。",
   ),
+  patentContext: localize(
+    "The 2014–2021 records cover inspection and food testing, air purification, solar lighting and pipe cleaning; the two 2024 applications concern battery technologies.",
+    "2014–2021 年的记录涵盖检测与食品检验、空气净化、太阳能照明和管道清垢；2024 年两项申请涉及电池技术。",
+    "2014–2021年の記録は検査・食品検査、空気清浄、太陽光照明、配管のスケール除去に関するものです。2024年の出願2件は電池技術に関するものです。",
+  ),
   showPatents: localize("Show patent records", "查看专利记录", "特許の一覧を見る"),
   hidePatents: localize("Hide patent records", "收起专利记录", "特許の一覧を閉じる"),
   print: localize("Print or save as PDF", "打印或保存为 PDF", "印刷・PDFで保存"),
+  downloadCv: localize("Download English CV (PDF, 2 pages)", "下载英文简历（PDF，2页）", "英語CVをダウンロード（PDF・2ページ）"),
 };
 
 const tracks: Track[] = ["chemistry", "industry", "plant"];
@@ -154,8 +160,8 @@ export default function Background({ locale }: { locale: Locale }) {
                 <span className="cv-when">{item.year}</span>
                 <div>
                   <h4>{tx(item.title, locale)}</h4>
-                  <p lang="ja">{item.project}</p>
-                  {tx(item.gloss, locale) && locale !== "ja" && <p className="cv-note">{tx(item.gloss, locale)}</p>}
+                  <p lang={locale === "en" ? "en" : "ja"}>{locale === "en" ? item.gloss.en : item.project}</p>
+                  {locale === "zh" && <p className="cv-note" lang="zh-CN">{item.gloss.zh}</p>}
                 </div>
               </li>
             ))}
@@ -184,6 +190,7 @@ export default function Background({ locale }: { locale: Locale }) {
           <span className="patent-summary-copy">
             <small>{tx(ui.patents, locale)} · 7</small>
             <strong>{tx(ui.patentSummary, locale)}</strong>
+            <span className="patent-context">{tx(ui.patentContext, locale)}</span>
           </span>
           <span className="patent-summary-action">
             {tx(showPatents ? ui.hidePatents : ui.showPatents, locale)}
@@ -204,9 +211,14 @@ export default function Background({ locale }: { locale: Locale }) {
         </ol>
       </div>
 
-      <button type="button" className="print-button" onClick={() => window.print()} data-reveal>
-        <Printer /> {tx(ui.print, locale)}
-      </button>
+      <div className="cv-actions" data-reveal>
+        <a className="print-button" href="/CV_Jixiao_Li.pdf" download>
+          <ArrowDown /> {tx(ui.downloadCv, locale)}
+        </a>
+        <button type="button" className="print-button" onClick={() => window.print()}>
+          <Printer /> {tx(ui.print, locale)}
+        </button>
+      </div>
     </section>
   );
 }

@@ -2,11 +2,10 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import test from "node:test";
 import {
-  LANGUAGE_ENDPOINT,
   LANGUAGE_STORAGE_KEY,
   isSupportedLocale,
   readSavedLocale,
-  requestDetectedLocale,
+  resolveLocale,
   saveLocale,
 } from "../app/language-preference.js";
 import {
@@ -42,20 +41,17 @@ test("validates and persists only supported manual language choices", () => {
   assert.equal(readSavedLocale(storage), "ja");
 });
 
-test("uses the Cloudflare locale endpoint and falls back safely to English", async () => {
-  const requested = [];
-  const japanese = await requestDetectedLocale(async (url, options) => {
-    requested.push({ url, options });
-    return Response.json({ locale: "ja" });
-  });
-  assert.equal(japanese, "ja");
-  assert.equal(requested[0].url, LANGUAGE_ENDPOINT);
-  assert.equal(requested[0].options.credentials, "omit");
-  assert.equal(requested[0].options.referrerPolicy, "no-referrer");
-
-  assert.equal(await requestDetectedLocale(async () => Response.json({ locale: "fr" })), "en");
-  assert.equal(await requestDetectedLocale(async () => new Response(null, { status: 500 })), "en");
-  assert.equal(await requestDetectedLocale(async () => { throw new Error("offline"); }), "en");
+test("resolves the first language synchronously from a link, saved choice or English", () => {
+  const japanese = memoryStorage("ja");
+  assert.equal(resolveLocale("?lang=zh", japanese), "zh");
+  assert.equal(resolveLocale("?lang=en", japanese), "en");
+  assert.equal(resolveLocale("?lang=fr", japanese), "ja");
+  assert.equal(resolveLocale("", japanese), "ja");
+  assert.equal(resolveLocale("", memoryStorage("fr")), "en");
+  assert.equal(resolveLocale("", memoryStorage()), "en");
+  const unavailable = { getItem() { throw new Error("Storage is disabled"); } };
+  assert.equal(resolveLocale("", unavailable), "en");
+  assert.equal(resolveLocale("?lang=ja", unavailable), "ja");
 });
 
 test("renders one globe dropdown with theme and menu controls grouped on the right", async () => {
@@ -71,7 +67,6 @@ test("renders one globe dropdown with theme and menu controls grouped on the rig
   assert.match(headerSource, /className="menu-toggle"/);
   assert.match(headerSource, /className="scroll-progress"/);
   assert.match(pageSource, /jixiao-theme/);
-  assert.match(pageSource, /searchParams\.get\("lang"\)|get\("lang"\)/);
   assert.doesNotMatch(headerSource, /className="language-switch"/);
   assert.match(styles, /@media \(max-width: 980px\)[\s\S]*?\.menu-toggle \{ display: inline-flex;/);
 });

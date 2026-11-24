@@ -1,8 +1,8 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useLayoutEffect, useState, useSyncExternalStore } from "react";
 import { localize, profile, type Locale } from "./content";
-import { detectDefaultLocale, isSupportedLocale, readSavedLocale, saveLocale } from "./language-preference";
+import { resolveLocale, saveLocale } from "./language-preference";
 import { scrollPageToTop } from "./page-navigation";
 import { startVisitorAnalytics } from "./visitor-analytics";
 import Background from "./_components/Background";
@@ -24,18 +24,17 @@ const ui = {
 
 const htmlLang = (locale: Locale) => (locale === "zh" ? "zh-CN" : locale);
 
-function readQueryLocale(): Locale | null {
-  try {
-    const value = new URLSearchParams(window.location.search).get("lang");
-    return isSupportedLocale(value) ? (value as Locale) : null;
-  } catch {
-    return null;
-  }
-}
+const readBrowserLocale = () => resolveLocale(window.location.search) as Locale;
+const readServerLocale = (): Locale => "en";
+const subscribeToPreferences = (notify: () => void) => {
+  window.addEventListener("storage", notify);
+  return () => window.removeEventListener("storage", notify);
+};
 
 export default function Home() {
-  const [locale, setLocaleState] = useState<Locale>("en");
-  const [switching, setSwitching] = useState(false);
+  const preferredLocale = useSyncExternalStore(subscribeToPreferences, readBrowserLocale, readServerLocale);
+  const [selectedLocale, setSelectedLocale] = useState<Locale | null>(null);
+  const locale = selectedLocale ?? preferredLocale;
   const [showBackToTop, setShowBackToTop] = useState(false);
   const [theme, setTheme] = useState<Theme>(() => {
     if (typeof document === "undefined") return "light";
@@ -54,43 +53,20 @@ export default function Home() {
     }
   }, [theme]);
 
-  // Initial language: ?lang= link > saved choice > location-aware default.
-  useEffect(() => {
-    let cancelled = false;
-    const explicit = readQueryLocale() ?? (readSavedLocale() as Locale | null);
-    const initial: Promise<Locale> = explicit ? Promise.resolve(explicit) : (detectDefaultLocale() as Promise<Locale>);
-    void initial.then((next) => {
-      if (cancelled) return;
-      if (explicit || !readSavedLocale()) setLocaleState(next);
-    });
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
-  useEffect(() => {
+  useLayoutEffect(() => {
     document.documentElement.lang = htmlLang(locale);
   }, [locale]);
 
   const changeLocale = useCallback((next: Locale) => {
+    setSelectedLocale(next);
     saveLocale(next);
     try {
       const url = new URL(window.location.href);
-      if (next === "en") url.searchParams.delete("lang");
-      else url.searchParams.set("lang", next);
-      window.history.replaceState(null, "", url);
+      url.searchParams.set("lang", next);
+      window.history.replaceState(window.history.state, "", url);
     } catch {
       // URL sharing is a convenience only.
     }
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      setLocaleState(next);
-      return;
-    }
-    setSwitching(true);
-    window.setTimeout(() => {
-      setLocaleState(next);
-      window.requestAnimationFrame(() => setSwitching(false));
-    }, 160);
   }, []);
 
   useEffect(() => {
@@ -116,7 +92,7 @@ export default function Home() {
         entry.target.classList.add("is-visible");
         observer.unobserve(entry.target);
       });
-    }, { rootMargin: "0px 0px -6%", threshold: 0.06 });
+    }, { rootMargin: "0px 0px 40px 0px", threshold: 0.06 });
     elements.forEach((element) => observer.observe(element));
     return () => observer.disconnect();
   }, [locale]);
@@ -130,7 +106,7 @@ export default function Home() {
         theme={theme}
         onTheme={() => setTheme((current) => (current === "dark" ? "light" : "dark"))}
       />
-      <main id="main-content" className={switching ? "locale-switching" : ""} lang={htmlLang(locale)}>
+      <main id="main-content" lang={htmlLang(locale)}>
         <Hero locale={locale} />
         <Latest locale={locale} />
         <Research locale={locale} />

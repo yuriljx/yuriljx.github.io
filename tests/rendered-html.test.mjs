@@ -42,7 +42,7 @@ test("server-renders the CV-aligned academic portfolio", async () => {
   assert.match(html, /Experimental Farm, Field Science Center for Northern Biosphere, Hokkaido University/);
   assert.doesNotMatch(html, /Graduate School of Agriculture, Hokkaido University/);
   assert.match(html, /Postdoctoral Researcher/);
-  assert.match(html, /mailto:[^"\s<>]+@[^"\s<>]+/);
+  assert.match(html, /href="mailto:jixiao\.li@elms\.hokudai\.ac\.jp"/);
   assert.match(html, /0000-0003-2377-1011/);
   assert.doesNotMatch(html, /tel:|\+\d[\d\s().-]{7,}/i, "phone numbers must stay off the public site");
   assert.doesNotMatch(html, /\b\d+\s+citations\b|h-index/i, "citation counts are not emphasised");
@@ -135,6 +135,7 @@ test("emits canonical social metadata and ships required assets", async () => {
   assert.match(html, /name="twitter:card" content="summary_large_image"/);
 
   const requiredAssets = [
+    "../public/CV_Jixiao_Li.pdf",
     "../public/og.png",
     "../public/brand/li-calligraphy-seal.png",
     "../public/research/anther-culture.webp",

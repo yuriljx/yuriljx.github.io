@@ -11,7 +11,7 @@ export const profile = {
   englishName: "Jixiao Li",
   nativeName: localize("Jixiao Li, PhD", "李继潇", "李 継瀟"),
   role: localize("Postdoctoral Researcher", "博士后研究员", "学術研究員"),
-  roleDetail: localize("Postdoctoral Researcher (学術研究員)", "博士后研究员（学術研究員）", "学術研究員（博士研究員）"),
+  roleDetail: localize("Postdoctoral Researcher", "博士后研究员（学術研究員）", "学術研究員（博士研究員）"),
   affiliation: localize(
     "Experimental Farm, Field Science Center for Northern Biosphere, Hokkaido University",
     "北海道大学北方生物圈领域科学中心 生物生产研究农场",
@@ -23,7 +23,7 @@ export const profile = {
     "北海道大学 北方生物圏フィールド科学センター",
   ),
   location: localize("Sapporo, Japan", "日本札幌", "札幌"),
-  email: "lijixiao327@gmail.com",
+  email: "jixiao.li@elms.hokudai.ac.jp",
   orcid: "0000-0003-2377-1011",
   orcidUrl: "https://orcid.org/0000-0003-2377-1011",
   scholarUrl: "https://scholar.google.com/citations?user=m2FLOrUAAAAJ&hl=en",
@@ -593,6 +593,7 @@ export const lectureVideos = [
   {
     id: "tVO-jczRqH4",
     index: "01",
+    titleEn: "From AI to deep learning: tracing its evolution",
     title: "AIから深層学習へ、その進化の軌跡",
     topic: localize("Deep learning foundations", "深度学习基础", "深層学習の基礎"),
     motif: "network",
@@ -600,6 +601,7 @@ export const lectureVideos = [
   {
     id: "vgzPPp1OPFU",
     index: "02",
+    titleEn: "Implementing deep learning and computer vision in agriculture",
     title: "農業現場における深層学習とコンピュータビジョンの実装",
     topic: localize("Computer vision on the farm", "农业图像与计算机视觉", "農業現場のコンピュータビジョン"),
     motif: "vision",
@@ -607,6 +609,7 @@ export const lectureVideos = [
   {
     id: "hOwTLg4ojQg",
     index: "03",
+    titleEn: "Hands-on deep learning: a comprehensive guide to Teachable Machine",
     title: "深層学習の実践授業：Teachable Machine操作徹底ガイド",
     topic: localize("Hands-on tutorial", "实践教学", "実践チュートリアル"),
     motif: "hands-on",
@@ -738,17 +741,17 @@ export const trackLabels: Record<Track, LocalizedText> = {
 export const appointments = [
   {
     period: localize("Oct 2026 – present", "2026.10 – 至今", "2026年10月 – 現在"),
-    title: localize("Postdoctoral Researcher (学術研究員)", "博士后研究员（学術研究員）", "学術研究員"),
+    title: localize("Postdoctoral Researcher", "博士后研究员（学術研究員）", "学術研究員"),
     place: localize("Experimental Farm, Field Science Center for Northern Biosphere, Hokkaido University", "北海道大学北方生物圈领域科学中心 生物生产研究农场", "北海道大学 北方生物圏フィールド科学センター 生物生産研究農場"),
   },
   {
     period: localize("Apr – Sep 2026", "2026.04 – 2026.09", "2026年4月 – 9月"),
-    title: localize("Postdoctoral Researcher (学術研究員)", "博士后研究员（学術研究員）", "学術研究員"),
+    title: localize("Postdoctoral Researcher", "博士后研究员（学術研究員）", "学術研究員"),
     place: localize("Research Faculty of Agriculture, Hokkaido University", "北海道大学农学研究院", "北海道大学大学院農学研究院"),
   },
   {
     period: localize("Oct 2024 – Mar 2026", "2024.10 – 2026.03", "2024年10月 – 2026年3月"),
-    title: localize("Postdoctoral Researcher (専門研究員, 学術研究員)", "博士后研究员（専門研究員、学術研究員）", "専門研究員・学術研究員"),
+    title: localize("Postdoctoral Researcher", "博士后研究员（専門研究員、学術研究員）", "専門研究員・学術研究員"),
     place: localize("Field Science Center for Northern Biosphere, Hokkaido University", "北海道大学北方生物圈领域科学中心", "北海道大学 北方生物圏フィールド科学センター"),
   },
 ] as const;

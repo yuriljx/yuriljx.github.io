@@ -309,7 +309,10 @@ export default function LiveFigure({ locale }: { locale: Locale }) {
       onMouseLeave={() => setHovering(false)}
     >
       <div className="lf-head">
-        <span className="lf-code">{tx(label.figure, locale)}</span>
+        <div className="lf-topline">
+          <span className="lf-code">{tx(label.figure, locale)}</span>
+          <small>{tx(label.schematic, locale)}</small>
+        </div>
         <div className="lf-tabs" role="tablist" aria-label={tx(label.pick, locale)}>
           {panels.map((item) => (
             <button
@@ -342,7 +345,6 @@ export default function LiveFigure({ locale }: { locale: Locale }) {
           {panel.facts.map((fact) => <span key={fact}>{fact}</span>)}
           <a href={panel.href}>{tx(label.more, locale)} →</a>
         </div>
-        <small>{tx(label.schematic, locale)}</small>
       </div>
     </div>
   );

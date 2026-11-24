@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { profile } from "./content";
 import "./globals.css";
 
 const title = "Jixiao Li, PhD | Plant Breeding & Non-destructive Phenotyping";
@@ -45,7 +46,7 @@ const personJsonLd = {
   honorificSuffix: "PhD",
   jobTitle: "Postdoctoral Researcher",
   url: siteUrl,
-  email: "mailto:lijixiao327@gmail.com",
+  email: `mailto:${profile.email}`,
   affiliation: {
     "@type": "Organization",
     name: "Experimental Farm, Field Science Center for Northern Biosphere, Hokkaido University",

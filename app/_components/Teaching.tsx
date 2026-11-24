@@ -18,6 +18,7 @@ const ui = {
   invited: localize("Invited talk", "受邀报告", "招待講演"),
   watchLecture: localize("Watch lecture video", "观看讲义视频", "講義動画を見る"),
   watch: localize("Watch on YouTube", "在 YouTube 观看", "YouTubeで見る"),
+  videoInJapanese: localize("Video in Japanese", "日语视频", "日本語の動画"),
   selected: localize("Selected presentations", "代表性报告", "主な発表"),
   earlierShow: localize("Show earlier presentations", "查看更早的报告", "それ以前の発表を見る"),
   earlierHide: localize("Hide earlier presentations", "收起更早的报告", "それ以前の発表を閉じる"),
@@ -169,11 +170,11 @@ export default function Teaching({ locale }: { locale: Locale }) {
               <li key={video.id}>
                 <CourseVideo
                   href={`https://youtu.be/${video.id}`}
-                  title={video.title}
-                  language="ja"
+                  title={locale === "en" ? video.titleEn : video.title}
+                  language={locale === "en" ? "en" : "ja"}
                   motif={video.motif}
                   index={video.index}
-                  meta={tx(video.topic, locale)}
+                  meta={<>{tx(video.topic, locale)}{locale === "en" && <> · [{tx(ui.videoInJapanese, locale)}]</>}</>}
                   watch={tx(ui.watch, locale)}
                 />
               </li>

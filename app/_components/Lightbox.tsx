@@ -37,6 +37,7 @@ export function LightboxProvider({ locale, children }: { locale: Locale; childre
     });
 
   const item = gallery?.items[gallery.index];
+  const image = item && <img src={item.src} alt={tx(item.alt, locale)} width={item.width} height={item.height} key={item.src} />;
 
   return (
     <LightboxContext.Provider value={open}>
@@ -62,7 +63,9 @@ export function LightboxProvider({ locale, children }: { locale: Locale; childre
               <button type="button" onClick={close} aria-label={tx(ui.close, locale)}><Close /></button>
             </div>
             <figure>
-              <img src={item.src} alt={tx(item.alt, locale)} width={item.width} height={item.height} key={item.src} />
+              {item.src === "/software/callustrack/annotation-workspace.webp"
+                ? <div className="lightbox-callustrack-media">{image}</div>
+                : image}
               <figcaption>{tx(item.caption, locale)}</figcaption>
             </figure>
             {gallery.items.length > 1 && (
